@@ -1,0 +1,7 @@
+project_id = "bcsdagoxubxycodeiqmb"
+
+[functions.generate-image-prompt]
+verify_jwt = false
+
+[functions.generate-image]
+verify_jwt = false
