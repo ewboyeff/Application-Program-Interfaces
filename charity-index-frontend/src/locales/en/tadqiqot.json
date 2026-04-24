@@ -1,0 +1,98 @@
+{
+  "breadcrumb": { "home": "Home", "current": "Research" },
+  "title": "Research & Analysis",
+  "subtitle": "Independent research and reports in the charity sector",
+  "close": "Close",
+
+  "cards": {
+    "report":      { "title": "State of Charity in Uzbekistan 2024", "desc": "Annual analysis covering the activities of charity funds in the country", "tag": "Year 2024",    "btn": "View" },
+    "methodology": { "title": "Transparency Index Methodology",       "desc": "Index calculation methods and factor analysis",                          "tag": "Methodology",  "btn": "Read" },
+    "analysis":    { "title": "Charity Trends 2023–2024",             "desc": "Changes over the last two years",                                        "tag": "Analysis",     "btn": "Read" },
+    "comparison":  { "title": "International Comparison",             "desc": "Uzbekistan's charity sector in regional comparison",                     "tag": "International", "btn": "Read" }
+  },
+
+  "report": {
+    "title": "State of Charity in Uzbekistan 2024",
+    "subtitle": "Annual analysis report — key indicators",
+    "statActive": "Active charity funds",
+    "statBeneficiaries": "Beneficiaries",
+    "statRaised": "Total funds raised",
+    "statTransparency": "Avg. transparency",
+    "distributionTitle": "Distribution by activity area",
+    "areas": ["Children & Education", "Medicine & Healthcare", "Social Support", "Emergency Aid"],
+    "findingsTitle": "Key Findings",
+    "findingsRows": [
+      { "label": "Funds in rating",           "value": "87"    },
+      { "label": "Platinum-level funds",      "value": "6"     },
+      { "label": "Gold-level funds",          "value": "21"    },
+      { "label": "Average index score",       "value": "62.4"  },
+      { "label": "Growth vs previous year",   "value": "+8.3%" }
+    ],
+    "notePrefix": "Note:",
+    "noteText": "This report was prepared by the Charity Index platform. The ability to download the full report will be added soon."
+  },
+
+  "methodology": {
+    "title": "Transparency Index Methodology",
+    "subtitle": "How funds are evaluated",
+    "formulaTitle": "Overall Index Formula",
+    "formulaLine1": "Overall = (Transparency × 40%)",
+    "formulaLine2": "+ (Openness × 30%)",
+    "formulaLine3": "+ (Trustworthiness × 30%)",
+    "scoreLevelsTitle": "Score Levels",
+    "scoreRanges": ["90-100 pts", "75-89 pts", "60-74 pts", "45-59 pts", "0-44 pts"],
+    "transparencyTitle": "Transparency Index (40%)",
+    "opennessTitle": "Openness Index (30%)",
+    "trustTitle": "Trustworthiness Index (30%)",
+    "factors": {
+      "transparency": ["Financial Reports", "Expense Details", "Project Results", "Audit Conducted", "Donor Information"],
+      "openness":     ["Official Website", "Social Media", "Media Presence", "Contact Accessibility", "News Frequency"],
+      "trust":        ["Officially Registered", "Activity Duration", "User Rating", "Complaint History", "International Partners"]
+    }
+  },
+
+  "analysis": {
+    "title": "Charity Trends 2023–2024",
+    "subtitle": "Analysis of changes over the last two years",
+    "statNewFunds": "New funds",
+    "statOnlineReports": "Online reports",
+    "statUserRatings": "User ratings",
+    "avgTitle": "Average index by year",
+    "avgRows": [
+      { "label": "2022 average", "value": "51.2 pts" },
+      { "label": "2023 average", "value": "57.6 pts (+6.4)" },
+      { "label": "2024 average", "value": "62.4 pts (+4.8)" }
+    ],
+    "growingTitle": "Fastest growing areas",
+    "growing": ["Digital reporting", "Social media activity", "Donor transparency level", "Independent auditing"],
+    "challengesTitle": "Challenges and problems",
+    "challenges": [
+      "Many funds lack a financial reporting system",
+      "Audit services are expensive and unsupported",
+      "Low level of digital literacy"
+    ]
+  },
+
+  "comparison": {
+    "title": "International Comparison",
+    "subtitle": "Uzbekistan's charity sector in regional comparison",
+    "regionalTitle": "Comparison with regional countries (2024)",
+    "countries": ["🇰🇿 Kazakhstan", "🇰🇬 Kyrgyzstan", "🇺🇿 Uzbekistan", "🇹🇯 Tajikistan", "🇹🇲 Turkmenistan"],
+    "globalTitle": "Global trends",
+    "globalRows": [
+      { "label": "World average transparency index",       "value": "58.3 pts"   },
+      { "label": "Developed countries average",            "value": "79.1 pts"   },
+      { "label": "Central Asia average",                   "value": "55.2 pts"   },
+      { "label": "Uzbekistan's position (in region)",      "value": "2nd place"  }
+    ],
+    "recommendationsTitle": "Recommendations based on international standards",
+    "recommendations": [
+      { "text": "Expand independent audit system",             "priority": "High"   },
+      { "text": "Develop online reporting platform",           "priority": "High"   },
+      { "text": "Establish international NGO partnerships",    "priority": "Medium" },
+      { "text": "Improve legislation on fund activities",      "priority": "Medium" }
+    ],
+    "high": "High",
+    "medium": "Medium"
+  }
+}

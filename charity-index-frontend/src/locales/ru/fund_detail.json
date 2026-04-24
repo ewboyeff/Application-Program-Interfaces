@@ -1,0 +1,46 @@
+{
+  "compare": "Сравнить",
+  "removeCompare": "Убрать из сравнения",
+  "downloadPDF": "Скачать PDF",
+  "complaint": "Оставить жалобу",
+  "tabs": {
+    "overview": "Обзор",
+    "projects": "Проекты",
+    "reports": "Отчёты",
+    "reviews": "Отзывы"
+  },
+  "projects": {
+    "title": "Проекты",
+    "noProjects": "Проекты не найдены",
+    "status": {
+      "active": "Активный",
+      "completed": "Завершён",
+      "planned": "Запланирован"
+    }
+  },
+  "reports": {
+    "title": "Финансовые отчёты",
+    "noReports": "Отчёты не найдены",
+    "income": "Доход",
+    "expense": "Расход",
+    "annual": "Годовой",
+    "quarterly": "Квартальный"
+  },
+  "chart": {
+    "title": "Финансовые показатели",
+    "income": "Доход",
+    "expense": "Расход",
+    "noData": "Нет данных"
+  },
+  "reviews": {
+    "title": "Отзывы",
+    "noReviews": "Отзывов пока нет",
+    "writeReview": "Написать отзыв",
+    "loginRequired": "Войдите, чтобы оставить отзыв"
+  },
+  "pdf": {
+    "preparing": "Подготовка PDF...",
+    "success": "PDF загружен!",
+    "error": "Ошибка при загрузке PDF"
+  }
+}

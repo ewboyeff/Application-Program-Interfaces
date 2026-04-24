@@ -1,0 +1,13 @@
+{
+  "title": "Sahifa Topilmadi",
+  "subtitle": "Siz qidirayotgan sahifa mavjud emas yoki ko'chirilgan bo'lishi mumkin",
+  "backHome": "← Bosh sahifaga qaytish",
+  "viewFunds": "Fondlarni ko'rish",
+  "quickLinks": "Foydali havolalar:",
+  "links": {
+    "funds": "🏛️ Fondlar",
+    "ranking": "🏆 Reyting",
+    "news": "📰 Yangiliklar",
+    "tadqiqot": "🔍 Tadqiqot"
+  }
+}

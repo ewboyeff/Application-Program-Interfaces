@@ -1,0 +1,154 @@
+{
+  "compare": "Compare",
+  "removeCompare": "Remove from compare",
+  "downloadPDF": "Download PDF",
+  "complaint": "File a complaint",
+  "breadcrumb": { "home": "Home", "funds": "Funds" },
+  "website": "Website",
+  "since": "since {{year}}",
+  "overallIndex": "Overall Index",
+  "inCompare": "In Comparison",
+  "indexMetrics": "Index Metrics",
+  "overallScore": "Overall Index Score",
+  "transparency": "Transparency",
+  "openness": "Openness",
+  "trust": "Trustworthiness",
+  "lastCalculated": "Last calculated",
+  "weeklyUpdate": "Updated weekly automatically",
+  "factors": "Factors",
+  "gradeLabels": {
+    "platinum": "Platinum level",
+    "gold": "Gold level",
+    "silver": "Silver level",
+    "bronze": "Bronze level",
+    "unrated": "Not rated"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "projects": "Projects",
+    "reports": "Reports",
+    "reviews": "Reviews"
+  },
+  "projects": {
+    "title": "Projects",
+    "noProjects": "No projects found",
+    "count": "{{count}}",
+    "budget": "Budget",
+    "spent": "{{amount}} spent",
+    "beneficiaries": "{{count}} beneficiaries",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "planned": "Planned",
+      "completed": "Completed"
+    },
+    "status": {
+      "active": "Active",
+      "completed": "Completed",
+      "planned": "Planned"
+    }
+  },
+  "reports": {
+    "title": "Financial Reports",
+    "subtitle": "Official documents and financial reports",
+    "noReports": "No reports found",
+    "noReportsYet": "No reports yet",
+    "loading": "Loading...",
+    "income": "Income",
+    "expense": "Expense",
+    "annual": "Annual",
+    "quarterly": "Quarterly",
+    "monthly": "Monthly",
+    "showLess": "Show less",
+    "showAll": "Show all {{count}} reports",
+    "fileUnavailable": "File not available"
+  },
+  "chart": {
+    "title": "Financial Transparency",
+    "subtitle": "Annual income and expense statistics",
+    "income": "Income",
+    "expense": "Expense",
+    "noData": "No data",
+    "noFinancialData": "No financial data has been entered yet",
+    "loading": "Loading...",
+    "totalIncome": "Total Income",
+    "totalExpense": "Total Expense",
+    "basedOnReports": "Based on {{count}} reports",
+    "efficiency": "{{pct}}% effective spending",
+    "tooltipTitle": "{{year}} annual report",
+    "million": "M",
+    "thousand": "K"
+  },
+  "reviews": {
+    "title": "User Ratings",
+    "subtitle": "Community opinion about fund activities",
+    "noReviews": "No reviews yet",
+    "noReviewsApproved": "No approved reviews yet",
+    "writeReview": "Write a review",
+    "loginRequired": "Log in to write a review",
+    "basedOnReviews": "Based on {{count}} reviews",
+    "noReviewsYet": "No reviews yet",
+    "loginCta": {
+      "title": "Share your opinion",
+      "subtitle": "Log in to rate this fund",
+      "button": "Log In"
+    },
+    "form": {
+      "title": "Rate this fund",
+      "subtitle": "Your opinion matters to others",
+      "placeholder": "Write your thoughts about the fund...",
+      "submit": "Submit Review",
+      "submitting": "Submitting..."
+    },
+    "toast": {
+      "ratingRequired": "Please give a rating",
+      "success": "Thank you! Your review has been submitted for moderation",
+      "error": "An error occurred"
+    }
+  },
+  "complaintModal": {
+    "title": "File a Complaint",
+    "reasonLabel": "Reason for complaint",
+    "descriptionLabel": "Describe in detail",
+    "placeholder": "At least 20 characters...",
+    "charCount": "{{count}} / 20 characters",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "reasons": [
+      "Incorrect information",
+      "Suspected fraud",
+      "Inactive fund",
+      "Other reason"
+    ],
+    "toast": {
+      "loginRequired": "Log in to submit a complaint",
+      "reasonRequired": "Please select a reason",
+      "descriptionRequired": "Please describe in more detail (at least 20 characters)",
+      "success": "Your complaint has been received and will be reviewed by our specialists",
+      "error": "Error submitting complaint"
+    }
+  },
+  "pdf": {
+    "preparing": "Preparing PDF... ⏳",
+    "success": "PDF downloaded! ✓",
+    "error": "Error downloading PDF"
+  },
+  "factorNames": {
+    "Moliyaviy hisobotlar": "Financial Reports",
+    "Sarflash tafsiloti": "Expense Details",
+    "Loyiha natijalari": "Project Results",
+    "Audit o'tkazilgan": "Audit Conducted",
+    "Donor ma'lumotlari": "Donor Information",
+    "Rasmiy veb-sayt": "Official Website",
+    "Ijtimoiy tarmoq": "Social Media",
+    "Media ko'rinishi": "Media Presence",
+    "Murojaat imkoniyati": "Contact Accessibility",
+    "Yangiliklar chastotasi": "News Frequency",
+    "Rasmiy ro'yxatdan o'tgan": "Officially Registered",
+    "Faoliyat davomiyligi": "Activity Duration",
+    "Foydalanuvchi reytingi": "User Rating",
+    "Shikoyatlar tarixi": "Complaint History",
+    "Xalqaro hamkorlar": "International Partners"
+  }
+}

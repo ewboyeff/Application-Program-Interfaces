@@ -1,0 +1,30 @@
+{
+  "title": "Yangiliklar",
+  "subtitle": "Fondlar va platforma yangiliklari",
+  "breadcrumb": { "home": "Bosh sahifa", "news": "Yangiliklar" },
+  "categories": {
+    "all": "Barchasi",
+    "fund": "Fond yangiligi",
+    "platform": "Platforma",
+    "news": "Yangiliklar"
+  },
+  "readTime": "{{count}} daqiqa",
+  "platform": "Platforma",
+  "detail": {
+    "source": "Manba",
+    "viewFund": "Fondni ko'rish",
+    "share": "Ulashish:",
+    "copyLink": "Havolani nusxalash",
+    "linkCopied": "Havola nusxalandi ✓"
+  },
+  "searchPlaceholder": "Yangilik qidirish...",
+  "notFound": "Yangilik topilmadi",
+  "notFoundDesc": "Boshqa kalit so'z kiriting",
+  "newsletter": {
+    "title": "Yangiliklar obunasi",
+    "subtitle": "Eng so'nggi yangiliklar va platforma yangilanishlari to'g'ridan-to'g'ri elektron pochtangizga",
+    "placeholder": "Email manzilingiz...",
+    "subscribe": "Obuna bo'lish",
+    "comingSoon": "Obuna tez orada ishga tushadi"
+  }
+}

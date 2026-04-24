@@ -1,0 +1,30 @@
+{
+  "title": "News",
+  "subtitle": "Fund and platform news",
+  "breadcrumb": { "home": "Home", "news": "News" },
+  "categories": {
+    "all": "All",
+    "fund": "Fund news",
+    "platform": "Platform",
+    "news": "News"
+  },
+  "readTime": "{{count}} min",
+  "platform": "Platform",
+  "detail": {
+    "source": "Source",
+    "viewFund": "View fund",
+    "share": "Share:",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied ✓"
+  },
+  "searchPlaceholder": "Search news...",
+  "notFound": "No news found",
+  "notFoundDesc": "Try a different keyword",
+  "newsletter": {
+    "title": "Newsletter subscription",
+    "subtitle": "The latest news and platform updates directly to your email",
+    "placeholder": "Your email address...",
+    "subscribe": "Subscribe",
+    "comingSoon": "Subscription coming soon"
+  }
+}
