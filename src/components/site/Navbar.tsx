@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
+import { useShop } from "@/store/shop";
+import { SearchOverlay } from "./SearchOverlay";
 
-const NAV_ITEMS = [
-  { label: "Bosh sahifa", href: "#home" },
-  { label: "Kolleksiya", href: "#collections" },
-  { label: "Muzeylar", href: "#story" },
-  { label: "Blog", href: "#featured" },
-  { label: "Aloqa", href: "#footer" },
+type NavItem = { label: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" };
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Bosh sahifa", to: "/" },
+  { label: "Kolleksiya", to: "/shop" },
+  { label: "Muzeylar", to: "/museums" },
+  { label: "Blog", to: "/blog" },
+  { label: "Aloqa", to: "/contact" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const { cartCount, wishlistCount } = useShop();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  // Force solid bg on inner pages where there is no full-bleed hero behind navbar
+  const forceSolid = pathname !== "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -20,17 +31,23 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || forceSolid
           ? "backdrop-blur-xl bg-background/80 border-b border-border/60"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 lg:px-10">
         {/* Logo */}
-        <a href="#home" className="group flex items-center gap-3">
+        <Link to="/" className="group flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-full border border-primary/40 text-primary transition-smooth group-hover:bg-primary/10">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path d="M3 10 12 3l9 7M5 10v9h14v-9M9 19v-6h6v6" />
@@ -40,27 +57,35 @@ export function Navbar() {
             <span className="text-foreground">Museum</span>{" "}
             <span className="text-primary italic">Shop</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-9 lg:flex">
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              activeProps={{ className: "text-primary" }}
               className="group relative text-sm font-medium text-foreground/75 transition-colors hover:text-primary"
             >
               {item.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full" />
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Icons */}
         <div className="flex items-center gap-2">
-          <IconBtn label="Qidirish"><Search className="h-4 w-4" /></IconBtn>
-          <IconBtn label="Sevimlilar"><Heart className="h-4 w-4" /></IconBtn>
-          <IconBtn label="Savat" badge={2}><ShoppingBag className="h-4 w-4" /></IconBtn>
+          <IconBtn label="Qidirish" onClick={() => setSearchOpen(true)}>
+            <Search className="h-4 w-4" />
+          </IconBtn>
+          <IconBtn label="Sevimlilar" to="/wishlist" badge={wishlistCount || undefined}>
+            <Heart className="h-4 w-4" />
+          </IconBtn>
+          <IconBtn label="Savat" to="/cart" badge={cartCount || undefined}>
+            <ShoppingBag className="h-4 w-4" />
+          </IconBtn>
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Menyu"
@@ -79,18 +104,21 @@ export function Navbar() {
       >
         <nav className="flex flex-col px-6 py-4">
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              activeProps={{ className: "text-primary" }}
               className="border-b border-border/30 py-3 text-sm font-medium text-foreground/80 last:border-0 hover:text-primary"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
     </header>
+    <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   );
 }
 
@@ -98,22 +126,37 @@ function IconBtn({
   children,
   label,
   badge,
+  to,
+  onClick,
 }: {
   children: React.ReactNode;
   label: string;
   badge?: number;
+  to?: "/cart" | "/wishlist";
+  onClick?: () => void;
 }) {
-  return (
-    <button
-      aria-label={label}
-      className="relative grid h-10 w-10 place-items-center rounded-full border border-border/60 text-foreground/80 transition-smooth hover:border-primary hover:bg-primary/5 hover:text-primary"
-    >
+  const cls =
+    "relative grid h-10 w-10 place-items-center rounded-full border border-border/60 text-foreground/80 transition-smooth hover:border-primary hover:bg-primary/5 hover:text-primary";
+  const inner = (
+    <>
       {children}
       {badge ? (
         <span className="absolute -right-0.5 -top-0.5 grid h-4 w-4 place-items-center rounded-full bg-accent text-[10px] font-semibold text-accent-foreground">
           {badge}
         </span>
       ) : null}
+    </>
+  );
+  if (to) {
+    return (
+      <Link to={to} aria-label={label} className={cls}>
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <button aria-label={label} onClick={onClick} className={cls}>
+      {inner}
     </button>
   );
 }
