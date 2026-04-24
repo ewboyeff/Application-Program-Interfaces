@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useReveal } from "./useReveal";
 import museum from "@/assets/story-museum.jpg";
 
@@ -72,15 +73,15 @@ export function Story() {
             ))}
           </div>
 
-          <a
-            href="#collections"
+          <Link
+            to="/museums"
             className="group mt-10 inline-flex items-center gap-3 text-sm font-medium text-primary"
           >
             <span className="border-b border-primary/40 pb-1 transition-all group-hover:border-primary">
-              Kolleksiyaga o'tish
+              Muzeylarni ko'rish
             </span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
