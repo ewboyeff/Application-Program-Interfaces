@@ -1,6 +1,9 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useReveal } from "./useReveal";
+import { Link } from "@tanstack/react-router";
+import { useShop } from "@/store/shop";
+import { toast } from "./Toaster";
 import p1 from "@/assets/p1.jpg";
 import p2 from "@/assets/p2.jpg";
 import p3 from "@/assets/p3.jpg";
@@ -9,17 +12,18 @@ import p5 from "@/assets/p5.jpg";
 import p6 from "@/assets/p6.jpg";
 
 const PRODUCTS = [
-  { image: p1, name: "Ko'k naqshli choynak", price: "320 000", museum: "Rishton State Museum" },
-  { image: p2, name: "Ipak ikat ro'mol", price: "540 000", museum: "Margilon Atlas Museum" },
-  { image: p3, name: "Yog'och lauh kitobligi", price: "780 000", museum: "Khiva Heritage Center" },
-  { image: p4, name: "Suzani gilam (mini)", price: "1 200 000", museum: "Bukhara Suzani Hall" },
-  { image: p5, name: "Bronza yog' chiroq", price: "920 000", museum: "Tashkent Applied Arts" },
-  { image: p6, name: "Registon miniaturasi", price: "650 000", museum: "Samarkand Afrosiyob" },
+  { id: "kok-choynak", image: p1, name: "Ko'k naqshli choynak", price: "320 000", museum: "Rishton State Museum" },
+  { id: "ipak-ikat", image: p2, name: "Ipak ikat ro'mol", price: "540 000", museum: "Margilon Atlas Museum" },
+  { id: "lauh", image: p3, name: "Yog'och lauh kitobligi", price: "780 000", museum: "Khiva Heritage Center" },
+  { id: "suzani", image: p4, name: "Suzani gilam (mini)", price: "1 200 000", museum: "Bukhara Suzani Hall" },
+  { id: "yog-chiroq", image: p5, name: "Bronza yog' chiroq", price: "740 000", museum: "Tashkent Applied Arts" },
+  { id: "registon-mini", image: p6, name: "Registon miniaturasi", price: "650 000", museum: "Samarkand Afrosiyob" },
 ];
 
 export function Featured() {
   const ref = useReveal<HTMLElement>();
   const scroller = useRef<HTMLDivElement | null>(null);
+  const { addToCart } = useShop();
 
   const scroll = (dir: number) => {
     const el = scroller.current;
@@ -71,7 +75,11 @@ export function Featured() {
               key={p.name}
               className="group relative w-[280px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 sm:w-[320px]"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+              <Link
+                to="/product/$id"
+                params={{ id: p.id }}
+                className="relative block aspect-[4/5] overflow-hidden bg-muted"
+              >
                 <img
                   src={p.image}
                   alt={p.name}
@@ -87,19 +95,28 @@ export function Featured() {
 
                 <button
                   aria-label="Savatga qo'shish"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addToCart(p.id);
+                    toast("Savatga qo'shildi");
+                  }}
                   className="absolute bottom-4 right-4 grid h-12 w-12 translate-y-3 place-items-center rounded-full bg-gradient-gold text-primary-foreground opacity-0 shadow-glow transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
                 >
                   <Plus className="h-5 w-5" />
                 </button>
-              </div>
+              </Link>
 
               <div className="space-y-2 p-5">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
                   {p.museum}
                 </p>
-                <h3 className="font-serif text-lg leading-snug text-foreground">
+                <Link
+                  to="/product/$id"
+                  params={{ id: p.id }}
+                  className="block font-serif text-lg leading-snug text-foreground transition-colors hover:text-primary"
+                >
                   {p.name}
-                </h3>
+                </Link>
                 <div className="flex items-baseline justify-between pt-2">
                   <span className="font-serif text-xl text-primary">
                     {p.price}

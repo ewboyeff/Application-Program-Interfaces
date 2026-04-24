@@ -1,4 +1,7 @@
 import { Instagram, Facebook, Youtube, Send, ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
+type FooterLink = { label: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" | "/cart" | "/wishlist" };
 
 export function Footer() {
   return (
@@ -67,15 +70,25 @@ export function Footer() {
 
           <FooterCol
             title="Do'kon"
-            links={["Yangi kolleksiya", "Keramika", "Zargarlik", "Haykallar", "Milliy naqshlar"]}
+            links={[
+              { label: "Yangi kolleksiya", to: "/shop" },
+              { label: "Sevimlilar", to: "/wishlist" },
+              { label: "Savat", to: "/cart" },
+            ]}
           />
           <FooterCol
             title="Muzey"
-            links={["Bizning hikoya", "Hamkor muzeylar", "Kuratorlar", "Sertifikat", "Press"]}
+            links={[
+              { label: "Hamkor muzeylar", to: "/museums" },
+              { label: "Blog", to: "/blog" },
+            ]}
           />
           <FooterCol
             title="Yordam"
-            links={["Aloqa", "Yetkazib berish", "Qaytarish", "FAQ", "Maxfiylik"]}
+            links={[
+              { label: "Aloqa", to: "/contact" },
+              { label: "Bosh sahifa", to: "/" },
+            ]}
           />
         </div>
 
@@ -92,7 +105,7 @@ export function Footer() {
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: string[] }) {
+function FooterCol({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
       <h4 className="font-serif text-sm uppercase tracking-[0.22em] text-primary">
@@ -100,14 +113,14 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
       </h4>
       <ul className="mt-5 space-y-3">
         {links.map((l) => (
-          <li key={l}>
-            <a
-              href="#"
+          <li key={l.label}>
+            <Link
+              to={l.to}
               className="group inline-flex items-center gap-1.5 text-sm text-foreground/70 transition-colors hover:text-primary"
             >
-              {l}
+              {l.label}
               <ArrowRight className="h-3 w-3 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

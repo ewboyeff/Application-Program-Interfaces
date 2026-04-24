@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useReveal } from "./useReveal";
+import { Link } from "@tanstack/react-router";
 import rishton from "@/assets/col-rishton.jpg";
 import samarkand from "@/assets/col-samarkand.jpg";
 import bukhara from "@/assets/col-bukhara.jpg";
@@ -9,17 +10,18 @@ import p3 from "@/assets/p3.jpg";
 import p4 from "@/assets/p4.jpg";
 import p5 from "@/assets/p5.jpg";
 
-type Item = { image: string; name: string; price: string; cat: string };
+type Item = { id: string; image: string; name: string; price: string; cat: string };
 
 const ITEMS: Item[] = [
-  { image: rishton, name: "Rishton lagan", price: "420 000", cat: "Keramika" },
-  { image: samarkand, name: "Samarqand kosa", price: "560 000", cat: "Keramika" },
-  { image: bukhara, name: "Buxoro marjon", price: "1 800 000", cat: "Zargarlik" },
-  { image: figurines, name: "Bronza chavandoz", price: "920 000", cat: "Haykallar" },
-  { image: p5, name: "Yog' chiroq", price: "740 000", cat: "Haykallar" },
-  { image: p2, name: "Ipak ikat", price: "540 000", cat: "Milliy naqshlar" },
-  { image: p4, name: "Suzani panel", price: "1 100 000", cat: "Milliy naqshlar" },
-  { image: p3, name: "Yog'och lauh", price: "780 000", cat: "Milliy naqshlar" },
+  { id: "rishton-lagan", image: rishton, name: "Rishton lagan", price: "420 000", cat: "Keramika" },
+  { id: "samarkand-kosa", image: samarkand, name: "Samarqand kosa", price: "560 000", cat: "Keramika" },
+  { id: "bukhara-marjon", image: bukhara, name: "Buxoro marjon", price: "1 800 000", cat: "Zargarlik" },
+  { id: "kumush-uzuk", image: bukhara, name: "Kumush uzuk", price: "480 000", cat: "Zargarlik" },
+  { id: "bronza-chavandoz", image: figurines, name: "Bronza chavandoz", price: "920 000", cat: "Haykallar" },
+  { id: "yog-chiroq", image: p5, name: "Yog' chiroq", price: "740 000", cat: "Haykallar" },
+  { id: "ipak-ikat", image: p2, name: "Ipak ikat", price: "540 000", cat: "Milliy naqshlar" },
+  { id: "suzani", image: p4, name: "Suzani panel", price: "1 200 000", cat: "Milliy naqshlar" },
+  { id: "lauh", image: p3, name: "Yog'och lauh", price: "780 000", cat: "Milliy naqshlar" },
 ];
 
 const TABS = ["Barchasi", "Keramika", "Zargarlik", "Haykallar", "Milliy naqshlar"] as const;
@@ -70,9 +72,10 @@ export function Categories() {
 
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {filtered.map((p) => (
-            <a
-              key={p.name + p.cat}
-              href="#"
+            <Link
+              key={p.id + p.cat}
+              to="/product/$id"
+              params={{ id: p.id }}
               className="group block animate-float-up overflow-hidden rounded-xl border border-border/50 bg-card transition-smooth hover:border-primary/50"
             >
               <div className="relative aspect-square overflow-hidden">
@@ -95,7 +98,7 @@ export function Categories() {
                   {p.price}
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

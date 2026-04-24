@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "./useReveal";
+import { Link } from "@tanstack/react-router";
 import rishton from "@/assets/col-rishton.jpg";
 import samarkand from "@/assets/col-samarkand.jpg";
 import bukhara from "@/assets/col-bukhara.jpg";
@@ -7,24 +8,28 @@ import figurines from "@/assets/col-figurines.jpg";
 
 const ITEMS = [
   {
+    id: "rishton-lagan",
     image: rishton,
     title: "Rishton keramika",
     desc: "Feruza va ko'k naqshlardagi an'anaviy laganlar — qo'lda chizilgan.",
     tag: "01",
   },
   {
+    id: "samarkand-kosa",
     image: samarkand,
     title: "Samarqand naqshli idishlar",
     desc: "Oltin va lojuvardning XV asr saroylaridan ilhomlangan uyg'unligi.",
     tag: "02",
   },
   {
+    id: "bukhara-marjon",
     image: bukhara,
     title: "Buxoro zargarlik buyumlari",
     desc: "Filigran kumush, qizil agat va feruza — amir saroyi xazinasidan.",
     tag: "03",
   },
   {
+    id: "bronza-chavandoz",
     image: figurines,
     title: "Miniature haykalchalar",
     desc: "Buyuk Ipak yo'li jangchilarining bronza siymolari.",
@@ -57,9 +62,10 @@ export function Collections() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {ITEMS.map((item) => (
-            <a
+            <Link
               key={item.title}
-              href="#"
+              to="/product/$id"
+              params={{ id: item.id }}
               className="reveal group relative block overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 hover:-translate-y-1"
             >
               <div className="relative aspect-[4/5] overflow-hidden">
@@ -87,7 +93,7 @@ export function Collections() {
                   {item.desc}
                 </p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
