@@ -1,0 +1,50 @@
+{
+  "title": "Hamkorlik",
+  "subtitle": "Biz bilan birgalikda xayriya sohasini rivojlantiring",
+  "types": {
+    "fond": {
+      "title": "Fond Sifatida",
+      "desc": "Fondingizni platformaga qo'shing va shaffoflik indeksingizni oling",
+      "features": ["Bepul ro'yxatdan o'tish", "Shaffoflik sertifikati", "Reyting tizimida qatnashish"],
+      "button": "Murojaat qilish"
+    },
+    "investor": {
+      "title": "Investor Sifatida",
+      "desc": "Ishonchli fondlarni qo'llab-quvvatlang va ta'sirni kuzating",
+      "features": ["Moliyaviy hisobotlar", "Real-time monitoring", "Maxsus dashboard"],
+      "button": "Bog'lanish"
+    },
+    "media": {
+      "title": "Media Sifatida",
+      "desc": "Xayriya sohasidagi tadqiqot va ma'lumotlarga kirish imkoniyati",
+      "features": ["Press-kit", "Ma'lumot bazasi", "Ekspert fikrlari"],
+      "button": "Press-kit olish"
+    }
+  },
+  "other": {
+    "title": "Boshqa Hamkorlik Imkoniyatlari",
+    "items": [
+      { "title": "Ma'lumotlar uchun foydalanish", "desc": "Platformadagi ochiq ma'lumotlardan o'z loyihalaringizda foydalaning." },
+      { "title": "Tadqiqotlar uchun hamkorlik", "desc": "Xayriya sohasini o'rganish bo'yicha qo'shma tadqiqotlar o'tkazing." },
+      { "title": "Musobaqalar va Grantlar", "desc": "Ijtimoiy loyihalar uchun grant dasturlari va tanlovlarda qatnashing." }
+    ],
+    "cta": "Maxsus takliflaringiz bormi? Biz bilan bog'laning!",
+    "ctaButton": "Murojaat qoldirish"
+  },
+  "partners": "Bizning Hamkorlarimiz",
+  "modal": {
+    "title": "Hamkorlik Murojaati",
+    "fullName": "Ismingiz",
+    "fullNamePlaceholder": "Ismingizni kiriting",
+    "organization": "Tashkilot nomi",
+    "organizationPlaceholder": "Tashkilot yoki fond nomi",
+    "phone": "Telefon raqamingiz",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "message": "Xabar (ixtiyoriy)",
+    "messagePlaceholder": "Qo'shimcha ma'lumot yoki savollaringiz...",
+    "submit": "Yuborish",
+    "submitting": "Yuborilmoqda...",
+    "success": "Murojaatingiz muvaffaqiyatli yuborildi!",
+    "error": "Xatolik yuz berdi, qayta urinib ko'ring"
+  }
+}

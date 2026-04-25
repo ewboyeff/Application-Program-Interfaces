@@ -1,0 +1,36 @@
+{
+  "title": "Рейтинг",
+  "titleHighlight": "Фондов",
+  "independentSystem": "Независимая система оценки",
+  "subtitle": "Лучшие благотворительные фонды Узбекистана, отсортированные по прозрачности и надёжности",
+  "searchPlaceholder": "Поиск фондов...",
+  "categories": { "all": "Все" },
+  "stats": {
+    "platinum": "Платиновые",
+    "gold": "Золотые",
+    "silver": "Серебряные",
+    "bronze": "Бронзовые"
+  },
+  "table": {
+    "rank": "Место",
+    "fund": "Фонд",
+    "transparency": "Прозрачность",
+    "openness": "Открытость",
+    "trust": "Надёжность",
+    "overall": "Итого",
+    "grade": "Уровень"
+  },
+  "podium": {
+    "champion": "Чемпион",
+    "second": "2-е место",
+    "third": "3-е место"
+  },
+  "score": "Балл",
+  "totalFunds": "Всего фондов",
+  "avgScore": "Средний балл",
+  "fundCount_one": "{{count}} фонд",
+  "fundCount_few": "{{count}} фонда",
+  "fundCount_many": "{{count}} фондов",
+  "fundCount_other": "{{count}} фондов",
+  "noFunds": "Фонды не найдены"
+}

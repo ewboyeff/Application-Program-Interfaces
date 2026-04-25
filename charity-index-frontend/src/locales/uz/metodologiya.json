@@ -1,0 +1,71 @@
+{
+  "pageTitle": "Indeks Metodologiyasi",
+  "pageSubtitle": "Fondlar qanday baholanadi — to'liq formula va omillar",
+  "formula": {
+    "title": "Umumiy Indeks Formulasi",
+    "text": "Umumiy = (Shaffoflik × 40%) + (Ochiqlik × 30%) + (Ishonchlilik × 30%)",
+    "example": "Misol: (95 × 0.40) + (88 × 0.30) + (90 × 0.30) = 91.4 ≈ 92"
+  },
+  "scoreLevels": {
+    "title": "Ball Darajalari",
+    "scoreCol": "Ball",
+    "levelCol": "Daraja",
+    "colorCol": "Rang"
+  },
+  "weight": "Og'irlik",
+  "method": "Hisoblash usuli",
+  "transparency": {
+    "title": "Shaffoflik Indeksi",
+    "subtitle": "Fondning moliyaviy va operatsion ochiqligi",
+    "badge": "Umumiy ballning 40%",
+    "formula": "Shaffoflik = Σ(omil_ball × og'irlik)",
+    "example": "Misol: (95×0.25) + (98×0.20) + (90×0.20) + (100×0.20) + (88×0.15) = 94.6",
+    "factors": {
+      "reports": "Moliyaviy hisobotlar",
+      "expenses": "Sarflash tafsiloti",
+      "results": "Loyiha natijalari",
+      "audit": "Audit",
+      "donors": "Donor ma'lumotlari",
+      "total": "Jami"
+    },
+    "methods": {
+      "reports": "PDF hisobot mavjudligi",
+      "expenses": "Har bir xarajat ko'rsatilgan",
+      "results": "Natijalar hujjatlashtirilgan",
+      "audit": "Mustaqil audit o'tkazilgan",
+      "donors": "Donorlar ro'yxati mavjud"
+    }
+  },
+  "openness": {
+    "title": "Ochiqlik Indeksi",
+    "subtitle": "Fondning jamoatchilik bilan aloqasi",
+    "badge": "Umumiy ballning 30%",
+    "formula": "Ochiqlik = Σ(omil_ball × og'irlik)",
+    "factors": {
+      "website": "Rasmiy veb-sayt",
+      "social": "Ijtimoiy tarmoq",
+      "media": "Media ko'rinishi",
+      "contact": "Murojaat imkoniyati",
+      "news": "Yangiliklar chastotasi"
+    }
+  },
+  "trust": {
+    "title": "Ishonchlilik Indeksi",
+    "subtitle": "Fondning barqarorligi va obro'si",
+    "badge": "Umumiy ballning 30%",
+    "formula": "Ishonchlilik = Σ(omil_ball × og'irlik)",
+    "factors": {
+      "registration": "Rasmiy ro'yxat",
+      "activity": "Faoliyat davri",
+      "users": "Foydalanuvchi",
+      "complaints": "Shikoyatlar",
+      "partners": "Hamkorlar"
+    }
+  },
+  "update": {
+    "title": "Yangilanish tartibi",
+    "step1": { "title": "Ma'lumot kiritish", "desc": "Admin fondga ball kiritadi" },
+    "step2": { "title": "Avtomatik hisoblash", "desc": "Tizim formula bo'yicha hisoblaydi" },
+    "step3": { "title": "Har hafta yangilanish", "desc": "Celery scheduler qayta hisoblaydi" }
+  }
+}

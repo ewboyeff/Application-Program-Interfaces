@@ -1,0 +1,52 @@
+{
+  "logout": "Chiqish",
+  "tabs": {
+    "personal": "Shaxsiy ma'lumotlar",
+    "donations": "Xayriyalarim",
+    "saved": "Saqlangan fondlar",
+    "settings": "Sozlamalar"
+  },
+  "stats": {
+    "donations": "Xayriyalar",
+    "saved": "Saqlangan"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "user": "Foydalanuvchi"
+  },
+  "personal": {
+    "title": "Shaxsiy ma'lumotlar",
+    "fullName": "To'liq ism",
+    "email": "Email manzil",
+    "phone": "Telefon raqam",
+    "region": "Hudud",
+    "save": "O'zgarishlarni saqlash",
+    "errors": {
+      "fullName": "Ism kiritilishi shart",
+      "phone": "Telefon raqam formati noto'g'ri (+998 90 123 45 67)"
+    }
+  },
+  "donations": {
+    "empty": "Xayriyalar mavjud emas",
+    "emptyDesc": "Siz hali birorta ham xayriya amalga oshirmagansiz.",
+    "viewFunds": "Fondlarni ko'rish"
+  },
+  "saved": {
+    "empty": "Saqlangan fondlar yo'q",
+    "emptyDesc": "O'zingizga yoqqan fondlarni saqlab qo'yishingiz mumkin.",
+    "searchFunds": "Fondlarni qidirish"
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "notifications": "Bildirishnomalar",
+    "notificationsDesc": "Email orqali yangiliklarni olish",
+    "security": "Xavfsizlik",
+    "securityDesc": "Parolni o'zgartirish va seanslar",
+    "change": "O'zgartirish",
+    "payment": "To'lov usullari",
+    "paymentDesc": "Kartalarni boshqarish",
+    "add": "Qo'shish",
+    "danger": "Xavfli hudud",
+    "deleteAccount": "Hisobni o'chirish"
+  }
+}

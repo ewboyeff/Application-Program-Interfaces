@@ -1,0 +1,50 @@
+{
+  "title": "Partnership",
+  "subtitle": "Develop the charity sector together with us",
+  "types": {
+    "fond": {
+      "title": "As a Fund",
+      "desc": "Add your fund to the platform and get your transparency index",
+      "features": ["Free registration", "Transparency certificate", "Participation in the rating system"],
+      "button": "Apply"
+    },
+    "investor": {
+      "title": "As an Investor",
+      "desc": "Support trusted funds and track their impact",
+      "features": ["Financial reports", "Real-time monitoring", "Custom dashboard"],
+      "button": "Get in touch"
+    },
+    "media": {
+      "title": "As Media",
+      "desc": "Access research and data in the charity sector",
+      "features": ["Press kit", "Data base", "Expert opinions"],
+      "button": "Get press kit"
+    }
+  },
+  "other": {
+    "title": "Other Partnership Opportunities",
+    "items": [
+      { "title": "Data Access", "desc": "Use open platform data in your own projects." },
+      { "title": "Research Collaboration", "desc": "Conduct joint research in the charity sector." },
+      { "title": "Competitions and Grants", "desc": "Participate in grant programs and competitions for social projects." }
+    ],
+    "cta": "Have a special proposal? Contact us!",
+    "ctaButton": "Leave a request"
+  },
+  "partners": "Our Partners",
+  "modal": {
+    "title": "Partnership Request",
+    "fullName": "Your Name",
+    "fullNamePlaceholder": "Enter your name",
+    "organization": "Organization Name",
+    "organizationPlaceholder": "Organization or fund name",
+    "phone": "Your Phone",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Additional information or questions...",
+    "submit": "Send",
+    "submitting": "Sending...",
+    "success": "Your request has been sent successfully!",
+    "error": "An error occurred, please try again"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Fondlar Katalogi",
+  "subtitle": "O'zbekistondagi xayriya fondlari mustaqil baholash platformasi",
+  "breadcrumb": { "home": "Bosh sahifa", "funds": "Fondlar" },
+  "filters": {
+    "title": "Filtrlar",
+    "clear": "Tozalash",
+    "category": "Kategoriya",
+    "region": "Viloyat",
+    "grade": "Daraja",
+    "verifiedOnly": "Faqat tasdiqlanganlar",
+    "searchPlaceholder": "Fond qidirish...",
+    "applyFilters": "Qo'llash",
+    "allGrades": "Barchasi"
+  },
+  "sort": { "rating": "Reyting bo'yicha", "name": "Nom bo'yicha", "nameAZ": "Nom bo'yicha (A-Z)", "newest": "Yangi" },
+  "noResults": "Filtrlar bo'yicha fondlar topilmadi",
+  "noResultsDesc": "Filtrlarni o'zgartirib ko'ring yoki qidiruv so'rovini tekshiring",
+  "clearFilters": "Filtrlarni tozalash",
+  "foundCount": "{{count}} ta fond topildi",
+  "compare": {
+    "title": "Taqqoslash",
+    "clear": "Barchasini o'chirish",
+    "compare": "Taqqoslash",
+    "hint": "Taqqoslash uchun 3 tagacha fond tanlang",
+    "added": "Qo'shildi",
+    "add": "Taqqoslash",
+    "barSelected": "{{count}} ta fond tanlandi",
+    "barClear": "Tozalash",
+    "barStart": "Taqqoslashni boshlash"
+  },
+  "projects": "{{count}} loyiha",
+  "score": "Ball",
+  "viewDetails": "Batafsil",
+  "overall": "Umumiy ball",
+  "transparency": "Shaffoflik",
+  "openness": "Ochiqlik",
+  "trust": "Ishonchlilik"
+}

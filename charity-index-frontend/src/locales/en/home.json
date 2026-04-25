@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "line1": "Uzbekistan",
+    "line2": "Charity Funds",
+    "line3": "Index",
+    "subtitle": "Evaluate each fund objectively based on Transparency, Openness and Trustworthiness indices",
+    "searchPlaceholder": "Search by fund name or category...",
+    "searchButton": "Search",
+    "scrollHint": "Scroll down",
+    "popular": "Popular",
+    "tags": {
+      "education": "Education",
+      "verified": "Verified",
+      "topRating": "Top Rating",
+      "ecology": "Ecology"
+    }
+  },
+  "stats": {
+    "activeFunds": "Active Funds",
+    "projects": "Projects",
+    "beneficiaries": "Beneficiaries",
+    "verified": "Verified"
+  },
+  "topFunds": {
+    "title": "Top Rated Funds",
+    "subtitle": "Highest rated funds based on transparency",
+    "viewAll": "View All Funds",
+    "noFunds": "No funds found",
+    "projects": "projects",
+    "details": "Details"
+  },
+  "statsSection": {
+    "activeFunds": "Active Funds",
+    "verified": "Verified",
+    "projects": "Projects",
+    "beneficiaries": "Beneficiaries"
+  },
+  "news": {
+    "title": "Latest News",
+    "viewAll": "All News"
+  },
+  "cta": {
+    "title": "Add Your Fund",
+    "subtitle": "Add your charity fund to the platform and get your transparency index",
+    "addFund": "Add Fund",
+    "learnMore": "Learn More"
+  },
+  "howItWorks": {
+    "title": "How It Works?",
+    "step1": {
+      "title": "Choose a Fund",
+      "text": "Filter by category, region and index level"
+    },
+    "step2": {
+      "title": "Check the Index",
+      "text": "Transparency, Openness, Trustworthiness — explore each factor in detail"
+    },
+    "step3": {
+      "title": "Make a Decision",
+      "text": "Choose a trustworthy fund based on objective data"
+    }
+  }
+}
