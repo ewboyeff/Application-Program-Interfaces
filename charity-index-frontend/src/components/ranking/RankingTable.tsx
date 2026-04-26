@@ -59,23 +59,23 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
   return (
     <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 overflow-hidden">
       <div className="overflow-x-auto custom-scrollbar">
-        <table className="w-full border-collapse min-w-[800px]">
+        <table className="w-full border-collapse min-w-[480px]">
           <thead>
             <tr className="bg-slate-50/50 border-b border-slate-100">
               <th className="w-20 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.rank')}</th>
               <th className="py-5 px-4 text-left text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.fund')}</th>
               <th className="hidden md:table-cell py-5 px-4 text-left text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.category')}</th>
-              <th className="w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('transparency')}>
                   {t('table.transparency')} <SortIcon columnKey="transparency" />
                 </div>
               </th>
-              <th className="w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('openness')}>
                   {t('table.openness')} <SortIcon columnKey="openness" />
                 </div>
               </th>
-              <th className="w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('trust')}>
                   {t('table.trust')} <SortIcon columnKey="trust" />
                 </div>
@@ -139,13 +139,13 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
                       {getCategoryName(fund.category)}
                     </span>
                   </td>
-                  <td className="py-5 px-4 text-center">
+                  <td className="hidden sm:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.transparency} />
                   </td>
-                  <td className="py-5 px-4 text-center">
+                  <td className="hidden sm:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.openness} />
                   </td>
-                  <td className="py-5 px-4 text-center">
+                  <td className="hidden sm:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.trust} />
                   </td>
                   <td className="py-5 px-4 text-center">

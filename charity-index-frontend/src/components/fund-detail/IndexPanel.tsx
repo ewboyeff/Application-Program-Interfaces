@@ -73,7 +73,7 @@ export const IndexPanel: React.FC<IndexPanelProps> = ({ fund, className }) => {
       </div>
 
       {/* OVERALL SCORE BANNER */}
-      <div className="bg-gradient-to-br from-[#1A56DB] to-[#0EA5E9] rounded-[32px] p-8 md:p-10 flex flex-col lg:flex-row items-center gap-6 mb-8 shadow-xl shadow-blue-600/20 overflow-hidden">
+      <div className="bg-gradient-to-br from-[#1A56DB] to-[#0EA5E9] rounded-[32px] p-5 sm:p-8 md:p-10 flex flex-col lg:flex-row items-center gap-6 mb-8 shadow-xl shadow-blue-600/20 overflow-hidden">
         <div className="flex-1 min-w-0 text-center lg:text-left">
           <span className="text-white/80 text-xs font-bold uppercase tracking-[0.2em]">
             {t('overallScore')}
@@ -93,24 +93,26 @@ export const IndexPanel: React.FC<IndexPanelProps> = ({ fund, className }) => {
         </div>
 
         {/* Formula Display */}
-        <div className="flex-1 min-w-0 flex items-center justify-center gap-1 md:gap-2">
-          {[
-            { labelKey: 'transparency', weight: '40%', score: fund.indexes.transparency },
-            { labelKey: 'openness', weight: '30%', score: fund.indexes.openness },
-            { labelKey: 'trust', weight: '30%', score: fund.indexes.trust },
-          ].map((item, idx) => (
-            <React.Fragment key={item.labelKey}>
-              <div className="bg-white/15 backdrop-blur-md rounded-2xl p-2 md:p-3 text-center w-[76px] md:w-[88px] border border-white/10">
-                <div className="text-white/70 text-[8px] font-bold uppercase tracking-wide mb-1 truncate">{t(item.labelKey)}</div>
-                <div className="text-white/40 text-[8px] font-medium mb-1.5">×{item.weight}</div>
-                <div className="text-white font-black text-lg md:text-xl">{item.score}</div>
-              </div>
-              {idx < 2 && <Plus className="w-3 h-3 text-white/40 shrink-0" />}
-            </React.Fragment>
-          ))}
-          <Equal className="w-3 h-3 text-white/40 shrink-0" />
-          <div className="bg-white/25 backdrop-blur-md rounded-2xl p-2 md:p-3 text-center w-[76px] md:w-[88px] border-2 border-white/40">
-            <div className="text-white font-black text-xl md:text-2xl">{fund.indexes.overall}</div>
+        <div className="w-full lg:flex-1 overflow-x-auto">
+          <div className="flex items-center justify-center gap-1 md:gap-2 min-w-max mx-auto">
+            {[
+              { labelKey: 'transparency', weight: '40%', score: fund.indexes.transparency },
+              { labelKey: 'openness', weight: '30%', score: fund.indexes.openness },
+              { labelKey: 'trust', weight: '30%', score: fund.indexes.trust },
+            ].map((item, idx) => (
+              <React.Fragment key={item.labelKey}>
+                <div className="bg-white/15 backdrop-blur-md rounded-2xl p-2 md:p-3 text-center w-[68px] sm:w-[76px] md:w-[88px] border border-white/10">
+                  <div className="text-white/70 text-[7px] sm:text-[8px] font-bold uppercase tracking-wide mb-1 truncate">{t(item.labelKey)}</div>
+                  <div className="text-white/40 text-[7px] sm:text-[8px] font-medium mb-1.5">×{item.weight}</div>
+                  <div className="text-white font-black text-base sm:text-lg md:text-xl">{item.score}</div>
+                </div>
+                {idx < 2 && <Plus className="w-3 h-3 text-white/40 shrink-0" />}
+              </React.Fragment>
+            ))}
+            <Equal className="w-3 h-3 text-white/40 shrink-0" />
+            <div className="bg-white/25 backdrop-blur-md rounded-2xl p-2 md:p-3 text-center w-[68px] sm:w-[76px] md:w-[88px] border-2 border-white/40">
+              <div className="text-white font-black text-lg sm:text-xl md:text-2xl">{fund.indexes.overall}</div>
+            </div>
           </div>
         </div>
 

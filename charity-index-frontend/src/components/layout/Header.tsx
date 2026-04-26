@@ -133,8 +133,8 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-3">
 
           {/* Inline Search */}
-          <div ref={wrapperRef} className="relative">
-            <div className="flex items-center gap-2 h-9 w-52 bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:border-blue-400 focus-within:bg-white transition-colors">
+          <div ref={wrapperRef} className="relative hidden sm:block">
+            <div className="flex items-center gap-2 h-9 w-40 md:w-52 bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:border-blue-400 focus-within:bg-white transition-colors">
               {searching
                 ? <Loader2 className="w-4 h-4 text-blue-500 shrink-0 animate-spin" />
                 : <Search className="w-4 h-4 text-slate-400 shrink-0" />

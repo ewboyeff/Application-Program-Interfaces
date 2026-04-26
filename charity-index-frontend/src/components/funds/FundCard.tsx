@@ -50,7 +50,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
         className={cn(
           "bg-white rounded-[20px] shadow-[0_2px_8px_rgba(0,0,0,0.06)]",
           "border-[1.5px] border-[#E2E8F0] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-          "cursor-pointer relative overflow-visible p-4 flex items-center gap-6",
+          "cursor-pointer relative overflow-visible p-4 flex items-center gap-3 sm:gap-6",
           "hover:border-[#1A56DB] hover:shadow-[0_0_0_4px_rgba(26,86,219,0.08),0_20px_40px_rgba(26,86,219,0.12),0_8px_16px_rgba(0,0,0,0.08)]",
           "hover:bg-gradient-to-b hover:from-white hover:to-[#F8FBFF]",
           "before:content-[''] before:absolute before:inset-[-1px] before:rounded-[21px]",
@@ -76,7 +76,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
           <p className="text-xs text-[#64748B] line-clamp-1 font-medium">{fund.description_uz}</p>
         </div>
 
-        <div className="flex items-center gap-8 px-6 border-x border-[#F1F5F9]">
+        <div className="hidden sm:flex items-center gap-4 sm:gap-8 px-3 sm:px-6 border-x border-[#F1F5F9]">
           <div className="text-center">
             <div className={cn('text-[32px] font-black leading-none text-[#1E293B] transition-colors duration-300 group-hover:text-[#1A56DB]')}>
               {fund.indexes.overall}

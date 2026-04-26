@@ -192,7 +192,7 @@ export default function Home() {
               <div className="w-px h-6 bg-white/20 shrink-0" />
               <button
                 type="submit"
-                className="bg-white text-[#1A56DB] rounded-[14px] px-7 py-3 font-bold text-[15px] whitespace-nowrap cursor-pointer shrink-0 flex items-center gap-2 hover:bg-[#F0F7FF] hover:scale-[1.02] active:scale-[0.98] transition-all duration-150"
+                className="bg-white text-[#1A56DB] rounded-[14px] px-4 sm:px-7 py-3 font-bold text-[14px] sm:text-[15px] whitespace-nowrap cursor-pointer shrink-0 flex items-center gap-2 hover:bg-[#F0F7FF] hover:scale-[1.02] active:scale-[0.98] transition-all duration-150"
               >
                 {t('hero.searchButton')}
               </button>
