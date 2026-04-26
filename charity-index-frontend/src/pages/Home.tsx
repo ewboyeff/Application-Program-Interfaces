@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center relative overflow-hidden">
+      <section className="min-h-[90vh] sm:min-h-screen flex items-center relative overflow-hidden">
         {/* Background Layer */}
         <div className="absolute inset-0 z-0">
           {/* Layer 1 — Image (Nature Landscape) */}
@@ -141,7 +141,7 @@ export default function Home() {
           }}
         />
 
-        <div className="max-w-5xl mx-auto px-4 py-24 w-full relative z-[2] text-center flex flex-col items-center">
+        <div className="max-w-5xl mx-auto px-4 py-14 sm:py-24 w-full relative z-[2] text-center flex flex-col items-center">
           {/* Headline */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -149,7 +149,7 @@ export default function Home() {
             transition={{ delay: 0.1 }}
             className="text-center max-w-3xl mx-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
           >
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight">
               {t('hero.line1')} <br />
               {t('hero.line2')} <br />
               <span className="bg-gradient-to-r from-[#60A5FA] to-[#34D399] bg-clip-text text-transparent drop-shadow-sm">
@@ -163,13 +163,13 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-6 text-xl text-white max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+            className="mt-4 sm:mt-6 text-base sm:text-xl text-white max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
           >
             {t('hero.subtitle')}
           </motion.p>
 
           {/* Search Container */}
-          <div className="mt-10 w-full max-w-2xl mx-auto relative" ref={searchRef}>
+          <div className="mt-6 sm:mt-10 w-full max-w-2xl mx-auto relative" ref={searchRef}>
             <motion.form
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -269,7 +269,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mt-12 bg-white/6 border border-white/10 rounded-[20px] p-5 px-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
+            className="mt-6 sm:mt-12 bg-white/6 border border-white/10 rounded-[20px] p-4 sm:p-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto w-full"
           >
             {[
               { value: publicStats.total_funds, label: t('stats.activeFunds') },
