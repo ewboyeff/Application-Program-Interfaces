@@ -135,7 +135,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
                     </div>
                   </td>
                   <td className="hidden md:table-cell py-5 px-4">
-                    <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                    <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-lg uppercase tracking-wider max-w-[140px] truncate block">
                       {getCategoryName(fund.category)}
                     </span>
                   </td>

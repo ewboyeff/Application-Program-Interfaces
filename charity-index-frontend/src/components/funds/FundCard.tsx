@@ -65,11 +65,11 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
             <h3 className="font-extrabold text-[17px] text-[#1E293B] tracking-[-0.3px] truncate group-hover:text-[#1A56DB] transition-colors duration-300">{fund.name_uz}</h3>
             <VerifiedBadge isVerified={fund.is_verified} />
           </div>
-          <div className="flex gap-2 mb-2">
-            <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px]">
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px] max-w-[130px] truncate">
               {getCategoryName(fund.category)}
             </span>
-            <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px]">
+            <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px] max-w-[130px] truncate">
               {t(`regions.${fund.region}`, { ns: 'common', defaultValue: fund.region })}
             </span>
           </div>
@@ -137,11 +137,11 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
           </div>
         </div>
 
-        <div className="flex gap-2 mb-3">
-          <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px]">
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px] max-w-[140px] truncate">
             {getCategoryName(fund.category)}
           </span>
-          <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px]">
+          <span className="px-2 py-0.5 bg-[#F1F5F9] text-[#64748B] text-[11px] font-bold rounded uppercase tracking-[0.8px] max-w-[140px] truncate">
             {t(`regions.${fund.region}`, { ns: 'common', defaultValue: fund.region })}
           </span>
         </div>
@@ -161,7 +161,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
             <div className="space-y-1.5">
               {scoreItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2">
-                  <span className="text-[9px] text-[#94A3B8] font-bold uppercase tracking-[0.4px] w-[88px] shrink-0 truncate">{item.label}</span>
+                  <span className="text-[9px] text-[#94A3B8] font-bold uppercase tracking-[0.4px] w-[96px] shrink-0 truncate">{item.label}</span>
                   <div className="flex-1 h-1 bg-[#E2E8F0] rounded-full overflow-hidden">
                     <div
                       className={cn('h-full rounded-full transition-all duration-300 group-hover:saturate-150', getScoreBg(item.score))}
