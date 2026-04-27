@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 import { PRODUCTS, formatPrice } from "@/data/products";
+import { useI18n } from "@/i18n/i18n";
 
 export function SearchOverlay({
   open,
@@ -12,6 +13,7 @@ export function SearchOverlay({
 }) {
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (open) {
@@ -51,10 +53,10 @@ export function SearchOverlay({
     <div className="fixed inset-0 z-[90] flex flex-col bg-background/95 backdrop-blur-2xl animate-float-up">
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 py-8">
         <div className="flex items-center justify-between">
-          <p className="eyebrow">— Qidiruv</p>
+          <p className="eyebrow">{t("search.eyebrow")}</p>
           <button
             onClick={onClose}
-            aria-label="Yopish"
+            aria-label={t("search.close")}
             className="grid h-10 w-10 place-items-center rounded-full border border-border text-foreground/80 transition-smooth hover:border-primary hover:text-primary"
           >
             <X className="h-4 w-4" />
@@ -67,7 +69,7 @@ export function SearchOverlay({
             ref={inputRef}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Mahsulot, kategoriya yoki muzey nomi..."
+            placeholder={t("search.placeholder")}
             className="flex-1 bg-transparent font-serif text-2xl text-foreground outline-none placeholder:text-muted-foreground sm:text-3xl"
           />
         </div>
@@ -75,11 +77,11 @@ export function SearchOverlay({
         <div className="mt-8 flex-1 overflow-y-auto">
           {q.trim() === "" ? (
             <div className="text-sm text-muted-foreground">
-              Yozishni boshlang — masalan, "Rishton", "Zargarlik" yoki "Buxoro".
+              {t("search.hint")}
             </div>
           ) : results.length === 0 ? (
             <div className="text-sm text-muted-foreground">
-              Hech narsa topilmadi.
+              {t("search.empty")}
             </div>
           ) : (
             <ul className="divide-y divide-border/50">

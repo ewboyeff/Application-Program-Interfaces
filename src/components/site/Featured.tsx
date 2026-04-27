@@ -4,6 +4,7 @@ import { useReveal } from "./useReveal";
 import { Link } from "@tanstack/react-router";
 import { useShop } from "@/store/shop";
 import { toast } from "./Toaster";
+import { useI18n } from "@/i18n/i18n";
 import p1 from "@/assets/p1.jpg";
 import p2 from "@/assets/p2.jpg";
 import p3 from "@/assets/p3.jpg";
@@ -24,6 +25,7 @@ export function Featured() {
   const ref = useReveal<HTMLElement>();
   const scroller = useRef<HTMLDivElement | null>(null);
   const { addToCart } = useShop();
+  const { t } = useI18n();
 
   const scroll = (dir: number) => {
     const el = scroller.current;
@@ -42,9 +44,10 @@ export function Featured() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mb-14 flex items-end justify-between gap-6">
           <div className="reveal">
-            <p className="eyebrow">— Tanlangan</p>
+            <p className="eyebrow">{t("sec.featuredEyebrow")}</p>
             <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Mashhur <span className="italic text-primary">Suvenirlar</span>
+              {t("sec.featuredTitle1")}{" "}
+              <span className="italic text-primary">{t("sec.featuredTitle2")}</span>
             </h2>
           </div>
 
@@ -94,11 +97,11 @@ export function Featured() {
                 </span>
 
                 <button
-                  aria-label="Savatga qo'shish"
+                  aria-label={t("cta.addToCart")}
                   onClick={(e) => {
                     e.preventDefault();
                     addToCart(p.id);
-                    toast("Savatga qo'shildi");
+                    toast(t("cta.addToCart"));
                   }}
                   className="absolute bottom-4 right-4 grid h-12 w-12 translate-y-3 place-items-center rounded-full bg-gradient-gold text-primary-foreground opacity-0 shadow-glow transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
                 >

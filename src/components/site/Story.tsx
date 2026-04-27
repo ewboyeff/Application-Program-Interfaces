@@ -1,10 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useReveal } from "./useReveal";
+import { useI18n } from "@/i18n/i18n";
 import museum from "@/assets/story-museum.jpg";
 
 export function Story() {
   const ref = useReveal<HTMLElement>();
+  const { t } = useI18n();
   return (
     <section
       id="story"
@@ -40,7 +42,7 @@ export function Story() {
 
         {/* Text */}
         <div className="reveal">
-          <p className="eyebrow">— Bizning hikoyamiz</p>
+          <p className="eyebrow">{t("sec.storyEyebrow")}</p>
           <h2 className="mt-4 font-serif text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
             Har bir buyum — <br />
             <span className="italic text-primary">tarix</span>.
@@ -78,7 +80,7 @@ export function Story() {
             className="group mt-10 inline-flex items-center gap-3 text-sm font-medium text-primary"
           >
             <span className="border-b border-primary/40 pb-1 transition-all group-hover:border-primary">
-              Muzeylarni ko'rish
+              {t("cta.viewMuseums")}
             </span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
