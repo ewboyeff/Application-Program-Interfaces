@@ -44,11 +44,15 @@
     "Sog'liqni saqlash": "Healthcare",
     "Bolalar": "Children",
     "Ekologiya": "Ecology",
-    "Kambag'alikni qisqartirish": "Poverty Reduction",
-    "Ijtimoiy ko'mak": "Social Support"
+    "Kambag'likni qisqartirish": "Poverty Reduction",
+    "Ijtimoiy yordam": "Social Support",
+    "Favqulodda yordam": "Emergency Aid",
+    "Huquq himoyasi": "Human Rights",
+    "Madaniyat": "Culture"
   },
   "regions": {
-    "Toshkent": "Tashkent",
+    "Toshkent shahri": "Tashkent city",
+    "Toshkent viloyati": "Tashkent region",
     "Samarqand": "Samarkand",
     "Farg'ona": "Fergana",
     "Buxoro": "Bukhara",

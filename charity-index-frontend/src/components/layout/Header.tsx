@@ -15,8 +15,8 @@ const NAV_LINKS = [
   { name: 'funds', href: '/funds' },
   { name: 'ranking', href: '/ranking' },
   { name: 'compare', href: '/compare' },
-  { name: 'news', href: '/news' },
   { name: 'research', href: '/tadqiqot' },
+  { name: 'news', href: '/news' },
   { name: 'partnership', href: '/hamkorlik' },
 ];
 

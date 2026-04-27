@@ -35,12 +35,17 @@
   "best": "Eng yaxshi",
   "radarTitle": "Indekslar Taqqoslanishi",
   "states": {
-    "selectTwo": "Taqqoslash uchun 2-3 ta fond tanlang",
-    "selectTwoDesc": "Fondlar katalogidagi \"Taqqoslash\" tugmasi orqali 2–3 ta fond tanlang",
+    "selectTwo": "2 ta fond tanlang va taqqoslang",
+    "selectTwoDesc": "Fondlar ko'rsatkichlarini bir-biriga solishtirish uchun quyidagi qadamlarni bajaring",
     "needOne": "Yana 1 ta fond tanlang",
     "needOneDesc": "Taqqoslash uchun kamida 2 ta fond kerak",
     "readyTitle": "{{count}} ta fond tanlandi",
     "readyDesc": "Taqqoslash natijasini ko'rish uchun quyidagi tugmani bosing",
     "goCatalog": "Fondlar katalogiga o'tish"
+  },
+  "guide": {
+    "step1": "Fondlar katalogiga o'ting",
+    "step2": "Har bir fondda \"Taqqoslash\" tugmasini bosing (2–3 ta)",
+    "step3": "Bu sahifaga qayting va natijani ko'ring"
   }
 }

@@ -278,14 +278,28 @@ export default function Compare() {
               <p className="text-slate-500 text-sm">{t('states.needOneDesc')}</p>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm py-24 text-center">
-              <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <BarChart3 className="w-10 h-10 text-slate-400" />
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-6 py-14 text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Scale className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-xl font-bold text-slate-800 mb-3">{t('title')}</h2>
-              <p className="text-slate-500 mb-8 max-w-xs mx-auto">
-                {t('states.selectTwoDesc')}
-              </p>
+              <h2 className="text-xl font-black text-slate-800 mb-2">{t('states.selectTwo')}</h2>
+              <p className="text-slate-500 text-sm mb-10 max-w-sm mx-auto">{t('states.selectTwoDesc')}</p>
+
+              {/* Step-by-step guide */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-10">
+                {[
+                  { step: '1', icon: '🔍', label: t('guide.step1') },
+                  { step: '2', icon: '➕', label: t('guide.step2') },
+                  { step: '3', icon: '📊', label: t('guide.step3') },
+                ].map(({ step, icon, label }) => (
+                  <div key={step} className="flex flex-col items-center gap-2 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-black">{step}</div>
+                    <span className="text-2xl">{icon}</span>
+                    <p className="text-xs text-slate-600 font-medium text-center">{label}</p>
+                  </div>
+                ))}
+              </div>
+
               <button
                 onClick={() => navigate('/funds')}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all"

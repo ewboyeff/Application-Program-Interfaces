@@ -35,12 +35,17 @@
   "best": "Best",
   "radarTitle": "Index Comparison",
   "states": {
-    "selectTwo": "Select 2–3 funds to compare",
-    "selectTwoDesc": "Select 2–3 funds using the \"Compare\" button in the funds catalog",
+    "selectTwo": "Select 2 funds and compare",
+    "selectTwoDesc": "Follow the steps below to compare fund indicators side by side",
     "needOne": "Add 1 more fund",
     "needOneDesc": "At least 2 funds are needed for comparison",
     "readyTitle": "{{count}} funds selected",
     "readyDesc": "Click the button below to see the comparison results",
     "goCatalog": "Go to funds catalog"
+  },
+  "guide": {
+    "step1": "Go to the funds catalog",
+    "step2": "Click \"Compare\" on 2–3 funds",
+    "step3": "Return here and view the results"
   }
 }
