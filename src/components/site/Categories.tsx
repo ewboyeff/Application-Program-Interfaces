@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useReveal } from "./useReveal";
 import { Link } from "@tanstack/react-router";
+import { useI18n } from "@/i18n/i18n";
 import rishton from "@/assets/col-rishton.jpg";
 import samarkand from "@/assets/col-samarkand.jpg";
 import bukhara from "@/assets/col-bukhara.jpg";
@@ -24,11 +25,21 @@ const ITEMS: Item[] = [
   { id: "lauh", image: p3, name: "Yog'och lauh", price: "780 000", cat: "Milliy naqshlar" },
 ];
 
-const TABS = ["Barchasi", "Keramika", "Zargarlik", "Haykallar", "Milliy naqshlar"] as const;
+const TAB_KEYS = ["cat.all", "cat.ceramics", "cat.jewelry", "cat.statues", "cat.patterns"] as const;
+// Internal canonical category values (kept in Uzbek to match item.cat)
+const TAB_VALUES = ["Barchasi", "Keramika", "Zargarlik", "Haykallar", "Milliy naqshlar"] as const;
+
+const CAT_LABEL_KEY: Record<string, string> = {
+  Keramika: "cat.ceramics",
+  Zargarlik: "cat.jewelry",
+  Haykallar: "cat.statues",
+  "Milliy naqshlar": "cat.patterns",
+};
 
 export function Categories() {
   const ref = useReveal<HTMLElement>();
-  const [active, setActive] = useState<(typeof TABS)[number]>("Barchasi");
+  const { t } = useI18n();
+  const [active, setActive] = useState<(typeof TAB_VALUES)[number]>("Barchasi");
 
   const filtered = active === "Barchasi" ? ITEMS : ITEMS.filter((i) => i.cat === active);
 
@@ -41,25 +52,27 @@ export function Categories() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="reveal mb-10 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">— Toifalar</p>
+            <p className="eyebrow">{t("sec.categoriesEyebrow")}</p>
             <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Sayohat <span className="italic text-primary">toifalar bo'ylab</span>
+              {t("sec.categoriesTitle1")}{" "}
+              <span className="italic text-primary">{t("sec.categoriesTitle2")}</span>
             </h2>
           </div>
         </div>
 
         <div className="reveal mb-12 flex flex-wrap items-center gap-2 border-b border-border/50">
-          {TABS.map((t) => {
-            const isActive = active === t;
+          {TAB_VALUES.map((value, i) => {
+            const isActive = active === value;
+            const key = TAB_KEYS[i];
             return (
               <button
-                key={t}
-                onClick={() => setActive(t)}
+                key={value}
+                onClick={() => setActive(value)}
                 className={`relative -mb-px px-4 py-3 text-sm font-medium transition-colors ${
                   isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {t}
+                {t(key)}
                 <span
                   className={`absolute inset-x-3 bottom-0 h-px transition-all duration-500 ${
                     isActive ? "bg-primary opacity-100" : "bg-primary opacity-0"
@@ -87,7 +100,7 @@ export function Categories() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-80" />
                 <span className="absolute left-3 top-3 rounded-full border border-border/60 bg-background/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] text-foreground/80 backdrop-blur-md">
-                  {p.cat}
+                  {CAT_LABEL_KEY[p.cat] ? t(CAT_LABEL_KEY[p.cat]) : p.cat}
                 </span>
               </div>
               <div className="flex items-baseline justify-between p-4">

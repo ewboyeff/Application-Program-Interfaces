@@ -1,9 +1,11 @@
 import { Instagram, Facebook, Youtube, Send, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useI18n } from "@/i18n/i18n";
 
 type FooterLink = { label: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" | "/cart" | "/wishlist" };
 
 export function Footer() {
+  const { t } = useI18n();
   return (
     <footer
       id="footer"
@@ -13,9 +15,9 @@ export function Footer() {
         {/* CTA strip */}
         <div className="mb-20 grid grid-cols-1 items-center gap-10 rounded-2xl border border-primary/30 bg-gradient-to-br from-card to-background p-8 shadow-glow lg:grid-cols-2 lg:p-12">
           <div>
-            <p className="eyebrow">— Yangiliklar</p>
+            <p className="eyebrow">{t("sec.newsletterEyebrow")}</p>
             <h3 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">
-              Yangi <span className="italic text-primary">eksponatlar</span> haqida birinchi bo'lib biling.
+              {t("sec.newsletter")}
             </h3>
           </div>
           <form
@@ -25,11 +27,11 @@ export function Footer() {
             <input
               type="email"
               required
-              placeholder="E-pochta manzilingiz"
+              placeholder={t("sec.emailPh")}
               className="flex-1 bg-transparent px-4 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground"
             />
             <button className="inline-flex items-center gap-2 rounded-full bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-smooth hover:scale-[1.02]">
-              Obuna
+              {t("cta.subscribe")}
               <Send className="h-3.5 w-3.5" />
             </button>
           </form>
@@ -50,8 +52,7 @@ export function Footer() {
               </span>
             </a>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              O'zbekistonning tarixiy merosini uyingizga olib keluvchi noyob
-              suvenirlar do'koni.
+              {t("footer.tagline")}
             </p>
 
             <div className="mt-6 flex items-center gap-2">
@@ -69,25 +70,25 @@ export function Footer() {
           </div>
 
           <FooterCol
-            title="Do'kon"
+            title={t("footer.shop")}
             links={[
-              { label: "Yangi kolleksiya", to: "/shop" },
-              { label: "Sevimlilar", to: "/wishlist" },
-              { label: "Savat", to: "/cart" },
+              { label: t("footer.newCollection"), to: "/shop" },
+              { label: t("icon.wishlist"), to: "/wishlist" },
+              { label: t("icon.cart"), to: "/cart" },
             ]}
           />
           <FooterCol
-            title="Muzey"
+            title={t("footer.museum")}
             links={[
-              { label: "Hamkor muzeylar", to: "/museums" },
-              { label: "Blog", to: "/blog" },
+              { label: t("footer.partnerMuseums"), to: "/museums" },
+              { label: t("nav.blog"), to: "/blog" },
             ]}
           />
           <FooterCol
-            title="Yordam"
+            title={t("footer.help")}
             links={[
-              { label: "Aloqa", to: "/contact" },
-              { label: "Bosh sahifa", to: "/" },
+              { label: t("nav.contact"), to: "/contact" },
+              { label: t("nav.home"), to: "/" },
             ]}
           />
         </div>
@@ -95,10 +96,8 @@ export function Footer() {
         <div className="divider-gold" />
 
         <div className="flex flex-col items-center justify-between gap-4 py-8 text-xs text-muted-foreground sm:flex-row">
-          <p>© 2026 Museum Shop Uzbekistan. Barcha huquqlar himoyalangan.</p>
-          <p className="font-serif italic">
-            Toshkent · Samarqand · Buxoro · Xiva
-          </p>
+          <p>{t("footer.rights")}</p>
+          <p className="font-serif italic">{t("footer.cities")}</p>
         </div>
       </div>
     </footer>

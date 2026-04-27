@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "./useReveal";
 import { Link } from "@tanstack/react-router";
+import { useI18n } from "@/i18n/i18n";
 import rishton from "@/assets/col-rishton.jpg";
 import samarkand from "@/assets/col-samarkand.jpg";
 import bukhara from "@/assets/col-bukhara.jpg";
@@ -39,6 +40,7 @@ const ITEMS = [
 
 export function Collections() {
   const ref = useReveal<HTMLElement>();
+  const { t } = useI18n();
 
   return (
     <section
@@ -49,14 +51,14 @@ export function Collections() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="reveal max-w-2xl">
-            <p className="eyebrow">— Yangiliklar</p>
+            <p className="eyebrow">{t("sec.collectionsEyebrow")}</p>
             <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Yangi <span className="italic text-primary">kolleksiyalar</span>
+              {t("sec.collectionsTitle1")}{" "}
+              <span className="italic text-primary">{t("sec.collectionsTitle2")}</span>
             </h2>
           </div>
           <p className="reveal max-w-md text-sm leading-relaxed text-muted-foreground md:text-right">
-            Har bir buyum — O'zbekiston hududidan topilgan haqiqiy eksponatga
-            sodiq qo'lda tayyorlangan zamonaviy talqin.
+            {t("sec.collectionsLead")}
           </p>
         </div>
 
