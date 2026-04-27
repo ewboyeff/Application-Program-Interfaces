@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useI18n } from "@/i18n/i18n";
 import hero1 from "@/assets/hero-statue.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -35,6 +36,7 @@ const SLIDES = [
 
 export function Hero() {
   const [active, setActive] = useState(0);
+  const { t } = useI18n();
 
   const go = useCallback((dir: number) => {
     setActive((i) => (i + dir + SLIDES.length) % SLIDES.length);
@@ -118,14 +120,14 @@ export function Hero() {
               to="/shop"
               className="group inline-flex items-center gap-3 rounded-full bg-gradient-gold px-7 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] hover:shadow-[0_0_50px_-8px_oklch(0.78_0.16_65/0.6)]"
             >
-              Kolleksiyani ko'rish
+              {t("cta.viewCollection")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               to="/blog"
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-4 text-sm font-medium text-foreground/80 transition-smooth hover:border-primary hover:text-primary"
             >
-              Hikoyani o'qish
+              {t("cta.readStory")}
             </Link>
           </div>
 
@@ -151,7 +153,7 @@ export function Hero() {
       <div className="absolute bottom-10 right-6 z-10 flex items-center gap-3 lg:right-10">
         <button
           onClick={() => go(-1)}
-          aria-label="Oldingi"
+          aria-label={t("hero.prev")}
           className="grid h-11 w-11 place-items-center rounded-full border border-border/70 bg-background/40 text-foreground/80 backdrop-blur transition-smooth hover:border-primary hover:text-primary"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -170,7 +172,7 @@ export function Hero() {
         </div>
         <button
           onClick={() => go(1)}
-          aria-label="Keyingi"
+          aria-label={t("hero.next")}
           className="grid h-11 w-11 place-items-center rounded-full border border-border/70 bg-background/40 text-foreground/80 backdrop-blur transition-smooth hover:border-primary hover:text-primary"
         >
           <ChevronRight className="h-4 w-4" />
