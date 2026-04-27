@@ -485,15 +485,27 @@ const Tadqiqot = () => {
     }
   };
 
-  const researchCards = [
-    { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),      desc: t('cards.report.desc'),      tag: t('cards.report.tag'),      buttonText: t('cards.report.btn'),      action: 'report'      as const },
-    { icon: <BarChart3 className="w-8 h-8" />,  title: t('cards.methodology.title'), desc: t('cards.methodology.desc'), tag: t('cards.methodology.tag'), buttonText: t('cards.methodology.btn'), action: 'methodology' as const },
-    { icon: <TrendingUp className="w-8 h-8" />, title: t('cards.analysis.title'),    desc: t('cards.analysis.desc'),    tag: t('cards.analysis.tag'),    buttonText: t('cards.analysis.btn'),    action: 'analysis'    as const },
-    { icon: <Globe className="w-8 h-8" />,      title: t('cards.comparison.title'),  desc: t('cards.comparison.desc'),  tag: t('cards.comparison.tag'),  buttonText: t('cards.comparison.btn'),  action: 'comparison'  as const },
+  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'download-annual' | 'download-semi';
+
+  const researchCards: { icon: React.ReactNode; title: string; desc: string; tag: string; buttonText: string; action: CardAction }[] = [
+    { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),             desc: t('cards.report.desc'),             tag: t('cards.report.tag'),             buttonText: t('cards.report.btn'),             action: 'report'          },
+    { icon: <BarChart3 className="w-8 h-8" />,  title: t('cards.methodology.title'),        desc: t('cards.methodology.desc'),        tag: t('cards.methodology.tag'),        buttonText: t('cards.methodology.btn'),        action: 'methodology'     },
+    { icon: <TrendingUp className="w-8 h-8" />, title: t('cards.analysis.title'),           desc: t('cards.analysis.desc'),           tag: t('cards.analysis.tag'),           buttonText: t('cards.analysis.btn'),           action: 'analysis'        },
+    { icon: <Globe className="w-8 h-8" />,      title: t('cards.comparison.title'),         desc: t('cards.comparison.desc'),         tag: t('cards.comparison.tag'),         buttonText: t('cards.comparison.btn'),         action: 'comparison'      },
+    { icon: <Download className="w-8 h-8" />,   title: t('reportSection.annual.title'),     desc: t('reportSection.annual.subtitle'), tag: t('reportSection.tag'),            buttonText: t('reportSection.annual.download'),action: 'download-annual' },
+    { icon: <Download className="w-8 h-8" />,   title: t('reportSection.semi.title'),       desc: t('reportSection.semi.subtitle'),   tag: t('reportSection.tag'),            buttonText: t('reportSection.semi.download'),  action: 'download-semi'   },
   ];
 
-  const accents  = ['border-blue-500', 'border-violet-500', 'border-emerald-500', 'border-amber-500'];
-  const iconBgs  = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-600'];
+  const accents = ['border-blue-500', 'border-violet-500', 'border-emerald-500', 'border-amber-500', 'border-rose-500', 'border-cyan-500'];
+  const iconBgs = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-600', 'bg-rose-50 text-rose-600', 'bg-cyan-50 text-cyan-600'];
+
+  const handleCardClick = (action: CardAction) => {
+    if (action === 'download-annual' || action === 'download-semi') {
+      handleDownloadReport();
+    } else {
+      setOpenDialog(action);
+    }
+  };
 
   return (
     <Layout>
@@ -536,94 +548,21 @@ const Tadqiqot = () => {
                 <div className="px-8 pb-8">
                   <button
                     type="button"
-                    onClick={() => setOpenDialog(card.action)}
+                    onClick={() => handleCardClick(card.action)}
                     className="group/btn flex w-full items-center justify-center gap-2 rounded-2xl bg-[#1A56DB] py-4 font-black text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:bg-[#1D4ED8]"
                   >
                     <span>{card.buttonText}</span>
-                    <ChevronRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
+                    {card.action.startsWith('download') ? (
+                      <Download className="h-5 w-5" />
+                    ) : (
+                      <ChevronRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
+                    )}
                   </button>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Xayriya Hisoboti */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-7 bg-[#1A56DB] rounded-full" />
-              <h2 className="text-2xl font-black text-[#1E293B]">{t('reportSection.title')}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Annual report card */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                className="bg-gradient-to-br from-[#1A56DB] to-[#0EA5E9] rounded-[24px] p-7 text-white flex flex-col gap-4"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
-                    <Download className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="font-black text-lg leading-tight">{t('reportSection.annual.title')}</p>
-                    <p className="text-white/70 text-xs mt-0.5">{t('reportSection.annual.subtitle')}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { val: researchStats.report.statActive, lbl: t('reportSection.annual.funds') },
-                    { val: researchStats.report.statBeneficiaries, lbl: t('reportSection.annual.beneficiaries') },
-                    { val: researchStats.report.statRaised, lbl: t('reportSection.annual.projects') },
-                    { val: researchStats.report.statTransparency, lbl: t('reportSection.annual.transparency') },
-                  ].map(({ val, lbl }) => (
-                    <div key={lbl} className="bg-white/15 rounded-xl p-3">
-                      <div className="text-xl font-black">{val}</div>
-                      <div className="text-white/70 text-[11px] mt-0.5">{lbl}</div>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={handleDownloadReport}
-                  disabled={isGenerating}
-                  className="flex items-center justify-center gap-2 bg-white text-[#1A56DB] font-black rounded-xl py-3 hover:bg-blue-50 transition-colors disabled:opacity-70"
-                >
-                  <Download className="w-4 h-4" />
-                  {isGenerating ? t('reportSection.generating') : t('reportSection.annual.download')}
-                </button>
-              </motion.div>
-
-              {/* Semi-annual report card */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-                className="bg-white border border-[#E2E8F0] rounded-[24px] p-7 flex flex-col gap-4"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <div>
-                    <p className="font-black text-lg text-[#1E293B] leading-tight">{t('reportSection.semi.title')}</p>
-                    <p className="text-slate-400 text-xs mt-0.5">{t('reportSection.semi.subtitle')}</p>
-                  </div>
-                </div>
-                <ul className="space-y-2 flex-1">
-                  {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={handleDownloadReport}
-                  disabled={isGenerating}
-                  className="flex items-center justify-center gap-2 bg-emerald-600 text-white font-black rounded-xl py-3 hover:bg-emerald-700 transition-colors disabled:opacity-70"
-                >
-                  <Download className="w-4 h-4" />
-                  {isGenerating ? t('reportSection.generating') : t('reportSection.semi.download')}
-                </button>
-              </motion.div>
-            </div>
-          </section>
 
           {/* Maqolalar */}
           {articles.length > 0 && (
@@ -660,14 +599,15 @@ const Tadqiqot = () => {
                     </p>
                     <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
                       <span className="text-xs text-slate-400 font-medium">
-                        {article.published_at ? new Date(article.published_at).toLocaleDateString('uz-UZ') : ''}
+                        {article.date ? new Date(article.date).toLocaleDateString('uz-UZ') : ''}
                       </span>
                       {article.file_url && (
                         <a
                           href={article.file_url}
+                          download
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs font-bold text-[#1A56DB] hover:text-blue-800"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors"
                         >
                           <Download className="w-3 h-3" /> {t('articlesSection.download')}
                         </a>

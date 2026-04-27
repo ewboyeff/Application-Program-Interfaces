@@ -203,6 +203,7 @@
   },
   "reportSection": {
     "title": "Charity Reports",
+    "tag": "Report",
     "generating": "Generating...",
     "annual": {
       "title": "Annual Report 2024",
