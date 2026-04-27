@@ -3,9 +3,11 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/src/components/layout/Layout';
-import { FileText, BarChart3, TrendingUp, Globe, ChevronRight, X } from 'lucide-react';
+import { FileText, BarChart3, TrendingUp, Globe, ChevronRight, X, Download, Newspaper } from 'lucide-react';
 import { motion } from 'motion/react';
 import { researchApi, ResearchStats, DEFAULT_RESEARCH_STATS } from '@/src/api/research';
+import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
+import { apiClient } from '@/src/api/client';
 
 type Factor = { name: string; weight: string };
 
@@ -16,10 +18,6 @@ const SCORE_LEVEL_STYLES = [
   { label: '🥉 Bronze',   bg: '#FFF7ED', color: '#92400E' },
   { label: '⚠️ Unrated',  bg: '#F8FAFC', color: '#94A3B8' },
 ];
-
-const TRANSPARENCY_WEIGHTS = ['25%', '20%', '20%', '20%', '15%'];
-const OPENNESS_WEIGHTS     = ['20%', '20%', '15%', '20%', '25%'];
-const TRUST_WEIGHTS        = ['25%', '20%', '20%', '20%', '15%'];
 
 const FactorSection = ({ title, color, factors }: { title: string; color: string; factors: Factor[] }) => (
   <section>
@@ -162,16 +160,16 @@ const ReportDialog = ({
 };
 
 // ── Dialog 2: Methodology ────────────────────────────────────────────────────
-const MethodologyDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) => {
+const MethodologyDialog = ({ open, onOpenChange, factors }: { open: boolean; onOpenChange: (v: boolean) => void; factors: FactorsGrouped }) => {
   const { t } = useTranslation('tadqiqot');
-  const scoreRanges = t('methodology.scoreRanges',         { returnObjects: true }) as string[];
-  const tNames      = t('methodology.factors.transparency', { returnObjects: true }) as string[];
-  const oNames      = t('methodology.factors.openness',     { returnObjects: true }) as string[];
-  const trNames     = t('methodology.factors.trust',        { returnObjects: true }) as string[];
+  const scoreRanges = t('methodology.scoreRanges', { returnObjects: true }) as string[];
 
-  const transparencyFactors: Factor[] = tNames.map((name, i) => ({ name, weight: TRANSPARENCY_WEIGHTS[i] }));
-  const opennessFactors: Factor[]     = oNames.map((name, i) => ({ name, weight: OPENNESS_WEIGHTS[i] }));
-  const trustFactors: Factor[]        = trNames.map((name, i) => ({ name, weight: TRUST_WEIGHTS[i] }));
+  const toFactors = (list: typeof factors.transparency): Factor[] =>
+    list.map(f => ({ name: f.name_uz, weight: `${Number(f.weight)}%` }));
+
+  const transparencyFactors = toFactors(factors.transparency);
+  const opennessFactors     = toFactors(factors.openness);
+  const trustFactors        = toFactors(factors.trust);
 
   return (
     <BaseDialog
@@ -344,10 +342,148 @@ const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
   const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
+  const [factors, setFactors] = useState<FactorsGrouped>({ transparency: [], openness: [], trust: [] });
+  const [articles, setArticles] = useState<any[]>([]);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
-    researchApi.get().then(setResearchStats).catch(() => {});
+    // Load real factors from API
+    indexesApi.getFactors().then(setFactors).catch(() => {});
+
+    // Load real stats from public API
+    Promise.all([
+      apiClient.get<any>('/api/v1/stats/public').catch(() => null),
+      apiClient.get<any>('/api/v1/indexes/ranking?per_page=100').catch(() => null),
+      apiClient.get<any>('/api/v1/funds?per_page=100').catch(() => null),
+    ]).then(([stats, ranking, fundsRes]) => {
+      const funds: any[] = ranking?.data ?? [];
+      const allFunds: any[] = fundsRes?.data ?? [];
+
+      if (funds.length === 0) return;
+
+      const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length * 10) / 10 : 0;
+
+      const overalls = funds.map((f: any) => Number(f.indexes?.overall_score ?? 0));
+      const transparencies = funds.map((f: any) => Number(f.indexes?.transparency_score ?? 0));
+      const opennesses = funds.map((f: any) => Number(f.indexes?.openness_score ?? 0));
+      const trusts = funds.map((f: any) => Number(f.indexes?.trust_score ?? 0));
+
+      // Count by grade
+      const gradeCount = (grade: string) => funds.filter((f: any) => f.indexes?.grade === grade).length;
+
+      // Category distribution
+      const catMap: Record<string, number> = {};
+      allFunds.forEach((f: any) => {
+        const cat = f.category?.name_uz ?? 'Boshqa';
+        catMap[cat] = (catMap[cat] ?? 0) + 1;
+      });
+      const total = allFunds.length || 1;
+      const topCats = Object.entries(catMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      const areaPcts = topCats.map(([, n]) => Math.round(n / total * 100));
+
+      const totalFunds = stats?.total_funds ?? funds.length;
+      const verifiedFunds = stats?.verified_funds ?? funds.filter((f: any) => f.is_verified).length;
+
+      setResearchStats({
+        report: {
+          statActive: `${totalFunds}`,
+          statBeneficiaries: `${stats?.total_beneficiaries ?? 0}+`,
+          statRaised: `${stats?.total_projects ?? 0}`,
+          statTransparency: `${avg(transparencies)}%`,
+          areaPcts: areaPcts.length ? areaPcts : [38, 28, 19, 15],
+          findingsValues: [
+            `${totalFunds} ta`,
+            `${verifiedFunds} ta`,
+            `${gradeCount('gold') + gradeCount('platinum')} ta`,
+            `${avg(overalls)} ball`,
+            `${avg(transparencies)} ball`,
+          ],
+        },
+        analysis: {
+          statNewFunds: `${totalFunds}`,
+          statOnlineReports: `${verifiedFunds}`,
+          statUserRatings: `${gradeCount('gold') + gradeCount('platinum')}`,
+          growingChanges: [
+            `${avg(transparencies)} ball`,
+            `${avg(opennesses)} ball`,
+            `${avg(trusts)} ball`,
+            `${avg(overalls)} ball`,
+          ],
+          avgValues: [
+            `${avg(transparencies)} ball`,
+            `${avg(opennesses)} ball`,
+            `${avg(trusts)} ball`,
+          ],
+        },
+        comparison: DEFAULT_RESEARCH_STATS.comparison,
+      });
+    });
+
+    // Load recent news/articles
+    apiClient.get<any>('/api/v1/news?per_page=4').catch(() => null).then((res) => {
+      if (res?.data?.length) setArticles(res.data);
+    });
   }, []);
+
+  const handleDownloadReport = async () => {
+    setIsGenerating(true);
+    try {
+      const stats = researchStats;
+      const reportWindow = window.open('', '_blank');
+      if (!reportWindow) return;
+      const now = new Date().toLocaleDateString('uz-UZ');
+      reportWindow.document.write(`<!DOCTYPE html><html><head>
+        <meta charset="UTF-8"><title>Xayriya Hisoboti ${now}</title>
+        <style>
+          body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; color: #1e293b; }
+          h1 { color: #1A56DB; border-bottom: 3px solid #1A56DB; padding-bottom: 12px; }
+          h2 { color: #334155; margin-top: 32px; }
+          .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+          .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
+          .card .num { font-size: 2rem; font-weight: 900; color: #1A56DB; }
+          .card .lbl { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+          th { background: #1A56DB; color: white; padding: 10px; text-align: left; }
+          td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; }
+          .footer { margin-top: 48px; text-align: center; color: #94a3b8; font-size: 0.8rem; }
+          @media print { button { display: none; } }
+        </style>
+      </head><body>
+        <h1>🇺🇿 O'zbekiston Xayriya Indeksi — Hisobot</h1>
+        <p>Sana: ${now} | Manba: xayriya.info</p>
+        <h2>📊 Asosiy Ko'rsatkichlar</h2>
+        <div class="grid">
+          <div class="card"><div class="num">${stats.report.statActive}</div><div class="lbl">Jami fondlar</div></div>
+          <div class="card"><div class="num">${stats.report.statTransparency}</div><div class="lbl">O'rtacha shaffoflik</div></div>
+          <div class="card"><div class="num">${stats.report.statBeneficiaries}</div><div class="lbl">Benefitsiarlar</div></div>
+          <div class="card"><div class="num">${stats.report.statRaised}</div><div class="lbl">Loyihalar soni</div></div>
+        </div>
+        <h2>📈 Indeks Natijalari</h2>
+        <table>
+          <tr><th>Ko'rsatkich</th><th>Qiymat</th></tr>
+          ${stats.report.findingsValues.map((v, i) => {
+            const labels = ['Jami fondlar', 'Tasdiqlangan fondlar', 'Yuqori daraja (Gold/Platinum)', "O'rtacha umumiy ball", "O'rtacha shaffoflik bali"];
+            return `<tr><td>${labels[i] ?? ''}</td><td><strong>${v}</strong></td></tr>`;
+          }).join('')}
+        </table>
+        <h2>🏆 Metodologiya</h2>
+        <p>Umumiy = (Shaffoflik × 40%) + (Ochiqlik × 30%) + (Ishonchlilik × 30%)</p>
+        <table>
+          <tr><th>Daraja</th><th>Ball oralig'i</th></tr>
+          <tr><td>👑 Platinum</td><td>90–100</td></tr>
+          <tr><td>🥇 Gold</td><td>75–89</td></tr>
+          <tr><td>🥈 Silver</td><td>60–74</td></tr>
+          <tr><td>🥉 Bronze</td><td>45–59</td></tr>
+          <tr><td>⚠️ Unrated</td><td>0–44</td></tr>
+        </table>
+        <div class="footer">© ${new Date().getFullYear()} Charity Index Uzbekistan — xayriya.info</div>
+        <script>window.onload = () => window.print();</script>
+      </body></html>`);
+      reportWindow.document.close();
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const researchCards = [
     { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),      desc: t('cards.report.desc'),      tag: t('cards.report.tag'),      buttonText: t('cards.report.btn'),      action: 'report'      as const },
@@ -374,7 +510,9 @@ const Tadqiqot = () => {
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 py-16">
+        <div className="max-w-5xl mx-auto px-4 py-16 space-y-16">
+
+          {/* Research cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {researchCards.map((card, index) => (
               <motion.div
@@ -408,11 +546,144 @@ const Tadqiqot = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Xayriya Hisoboti */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-7 bg-[#1A56DB] rounded-full" />
+              <h2 className="text-2xl font-black text-[#1E293B]">{t('reportSection.title')}</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Annual report card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                className="bg-gradient-to-br from-[#1A56DB] to-[#0EA5E9] rounded-[24px] p-7 text-white flex flex-col gap-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                    <Download className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-black text-lg leading-tight">{t('reportSection.annual.title')}</p>
+                    <p className="text-white/70 text-xs mt-0.5">{t('reportSection.annual.subtitle')}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { val: researchStats.report.statActive, lbl: t('reportSection.annual.funds') },
+                    { val: researchStats.report.statBeneficiaries, lbl: t('reportSection.annual.beneficiaries') },
+                    { val: researchStats.report.statRaised, lbl: t('reportSection.annual.projects') },
+                    { val: researchStats.report.statTransparency, lbl: t('reportSection.annual.transparency') },
+                  ].map(({ val, lbl }) => (
+                    <div key={lbl} className="bg-white/15 rounded-xl p-3">
+                      <div className="text-xl font-black">{val}</div>
+                      <div className="text-white/70 text-[11px] mt-0.5">{lbl}</div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={handleDownloadReport}
+                  disabled={isGenerating}
+                  className="flex items-center justify-center gap-2 bg-white text-[#1A56DB] font-black rounded-xl py-3 hover:bg-blue-50 transition-colors disabled:opacity-70"
+                >
+                  <Download className="w-4 h-4" />
+                  {isGenerating ? t('reportSection.generating') : t('reportSection.annual.download')}
+                </button>
+              </motion.div>
+
+              {/* Semi-annual report card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+                className="bg-white border border-[#E2E8F0] rounded-[24px] p-7 flex flex-col gap-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <p className="font-black text-lg text-[#1E293B] leading-tight">{t('reportSection.semi.title')}</p>
+                    <p className="text-slate-400 text-xs mt-0.5">{t('reportSection.semi.subtitle')}</p>
+                  </div>
+                </div>
+                <ul className="space-y-2 flex-1">
+                  {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={handleDownloadReport}
+                  disabled={isGenerating}
+                  className="flex items-center justify-center gap-2 bg-emerald-600 text-white font-black rounded-xl py-3 hover:bg-emerald-700 transition-colors disabled:opacity-70"
+                >
+                  <Download className="w-4 h-4" />
+                  {isGenerating ? t('reportSection.generating') : t('reportSection.semi.download')}
+                </button>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Maqolalar */}
+          {articles.length > 0 && (
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-1 h-7 bg-violet-500 rounded-full" />
+                  <h2 className="text-2xl font-black text-[#1E293B]">{t('articlesSection.title')}</h2>
+                </div>
+                <Link to="/news" className="text-sm font-bold text-[#1A56DB] flex items-center gap-1 hover:gap-2 transition-all">
+                  {t('articlesSection.viewAll')} <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {articles.map((article: any, i: number) => (
+                  <motion.div
+                    key={article.id}
+                    initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                    className="bg-white border border-[#E2E8F0] rounded-[20px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-violet-50 rounded-xl flex items-center justify-center shrink-0">
+                        <Newspaper className="w-4 h-4 text-violet-600" />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-violet-500 bg-violet-50 px-2 py-0.5 rounded-full">
+                        {article.category ?? t('articlesSection.tag')}
+                      </span>
+                    </div>
+                    <h3 className="font-black text-[#1E293B] text-base leading-snug line-clamp-2">
+                      {article.title_uz ?? article.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 line-clamp-2 flex-1">
+                      {article.excerpt_uz ?? article.excerpt ?? ''}
+                    </p>
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
+                      <span className="text-xs text-slate-400 font-medium">
+                        {article.published_at ? new Date(article.published_at).toLocaleDateString('uz-UZ') : ''}
+                      </span>
+                      {article.file_url && (
+                        <a
+                          href={article.file_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-xs font-bold text-[#1A56DB] hover:text-blue-800"
+                        >
+                          <Download className="w-3 h-3" /> {t('articlesSection.download')}
+                        </a>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          )}
+
         </div>
       </div>
 
       <ReportDialog      open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <MethodologyDialog open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} />
+      <MethodologyDialog open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
       <AnalysisDialog    open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
       <ComparisonDialog  open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
     </Layout>

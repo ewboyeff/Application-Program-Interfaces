@@ -50,6 +50,21 @@ export const AdminFundEdit: React.FC = () => {
   useEffect(() => {
     indexesApi.getFactors().then(setFactors).catch(() => {});
   }, []);
+
+  // Load existing factor scores when editing
+  useEffect(() => {
+    if (isEdit && id) {
+      indexesApi.getFundScores(id)
+        .then((data) => {
+          const scores: Record<string, number> = {};
+          data.factor_scores.forEach((fs) => {
+            scores[fs.factor_id] = Number(fs.score);
+          });
+          setFactorScores(scores);
+        })
+        .catch(() => {});
+    }
+  }, [isEdit, id]);
   const [formData, setFormData] = useState<Fund>({
     id: '',
     slug: '',
@@ -209,13 +224,16 @@ export const AdminFundEdit: React.FC = () => {
       description_en: (formData as any).description_en || undefined,
       director_name: formData.director || undefined,
       founded_year: formData.founded_year || undefined,
-      logo_url: formData.logo_url || undefined,
+      logo_url: (formData as any).logo_url || undefined,
       logo_initials: formData.logo_initials || undefined,
       logo_color: formData.logo_color || undefined,
       website_url: formData.website || undefined,
       telegram_url: formData.telegram || undefined,
       instagram_url: formData.instagram || undefined,
       donation_url: (formData as any).donation_url || undefined,
+      inn: formData.inn || undefined,
+      registration_number: formData.registration || undefined,
+      is_verified: formData.is_verified,
       category_id,
       region_id,
     };

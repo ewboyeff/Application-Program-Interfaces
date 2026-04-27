@@ -1,16 +1,37 @@
 {
-  "breadcrumb": { "home": "Bosh sahifa", "current": "Tadqiqot" },
+  "breadcrumb": {
+    "home": "Bosh sahifa",
+    "current": "Tadqiqot"
+  },
   "title": "Tadqiqot va Tahlil",
   "subtitle": "Xayriya sohasidagi mustaqil tadqiqotlar va hisobotlar",
   "close": "Yopish",
-
   "cards": {
-    "report":      { "title": "O'zbekistonda Xayriya Holati 2024",    "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil", "tag": "2024 yil",     "btn": "Ko'rish" },
-    "methodology": { "title": "Shaffoflik Indeksi Metodologiyasi",      "desc": "Indekslarni hisoblash usullari va omillar tahlili",                   "tag": "Metodologiya", "btn": "O'qish"  },
-    "analysis":    { "title": "Xayriya Trendlari 2023–2024",            "desc": "So'nggi ikki yil davomidagi o'zgarishlar",                            "tag": "Tahlil",       "btn": "O'qish"  },
-    "comparison":  { "title": "Xalqaro Taqqoslash",                     "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",                  "tag": "Xalqaro",      "btn": "O'qish"  }
+    "report": {
+      "title": "O'zbekistonda Xayriya Holati 2024",
+      "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil",
+      "tag": "2024 yil",
+      "btn": "Ko'rish"
+    },
+    "methodology": {
+      "title": "Shaffoflik Indeksi Metodologiyasi",
+      "desc": "Indekslarni hisoblash usullari va omillar tahlili",
+      "tag": "Metodologiya",
+      "btn": "O'qish"
+    },
+    "analysis": {
+      "title": "Xayriya Trendlari 2023–2024",
+      "desc": "So'nggi ikki yil davomidagi o'zgarishlar",
+      "tag": "Tahlil",
+      "btn": "O'qish"
+    },
+    "comparison": {
+      "title": "Xalqaro Taqqoslash",
+      "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",
+      "tag": "Xalqaro",
+      "btn": "O'qish"
+    }
   },
-
   "report": {
     "title": "O'zbekistonda Xayriya Holati 2024",
     "subtitle": "Yillik tahlil hisoboti — asosiy ko'rsatkichlar",
@@ -19,19 +40,38 @@
     "statRaised": "Jami yig'ilgan mablag'",
     "statTransparency": "O'rtacha shaffoflik",
     "distributionTitle": "Faoliyat sohalari bo'yicha taqsimlash",
-    "areas": ["Bolalar va ta'lim", "Tibbiyot va sog'liqni saqlash", "Ijtimoiy yordam", "Favqulodda yordam"],
+    "areas": [
+      "Bolalar va ta'lim",
+      "Tibbiyot va sog'liqni saqlash",
+      "Ijtimoiy yordam",
+      "Favqulodda yordam"
+    ],
     "findingsTitle": "Asosiy xulosalar",
     "findingsRows": [
-      { "label": "Reytingdagi fondlar soni",          "value": "87 ta"  },
-      { "label": "Platinum darajasidagi fondlar",     "value": "6 ta"   },
-      { "label": "Gold darajasidagi fondlar",         "value": "21 ta"  },
-      { "label": "O'rtacha indeks ball",              "value": "62.4"   },
-      { "label": "Oldingi yilga nisbatan o'sish",     "value": "+8.3%"  }
+      {
+        "label": "Reytingdagi fondlar soni",
+        "value": "87 ta"
+      },
+      {
+        "label": "Platinum darajasidagi fondlar",
+        "value": "6 ta"
+      },
+      {
+        "label": "Gold darajasidagi fondlar",
+        "value": "21 ta"
+      },
+      {
+        "label": "O'rtacha indeks ball",
+        "value": "62.4"
+      },
+      {
+        "label": "Oldingi yilga nisbatan o'sish",
+        "value": "+8.3%"
+      }
     ],
     "notePrefix": "Eslatma:",
     "noteText": "Ushbu hisobot Charity Index platformasi tomonidan tayyorlangan. To'liq hisobotni yuklab olish imkoniyati yaqin orada qo'shiladi."
   },
-
   "methodology": {
     "title": "Shaffoflik Indeksi Metodologiyasi",
     "subtitle": "Fondlar qanday baholanadi",
@@ -40,17 +80,40 @@
     "formulaLine2": "+ (Ochiqlik × 30%)",
     "formulaLine3": "+ (Ishonchlilik × 30%)",
     "scoreLevelsTitle": "Ball Darajalari",
-    "scoreRanges": ["90-100 ball", "75-89 ball", "60-74 ball", "45-59 ball", "0-44 ball"],
+    "scoreRanges": [
+      "90-100 ball",
+      "75-89 ball",
+      "60-74 ball",
+      "45-59 ball",
+      "0-44 ball"
+    ],
     "transparencyTitle": "Shaffoflik Indeksi (40%)",
     "opennessTitle": "Ochiqlik Indeksi (30%)",
     "trustTitle": "Ishonchlilik Indeksi (30%)",
     "factors": {
-      "transparency": ["Moliyaviy hisobotlar", "Sarflash tafsiloti", "Loyiha natijalari", "Audit o'tkazilgan", "Donor ma'lumotlari"],
-      "openness":     ["Rasmiy veb-sayt", "Ijtimoiy tarmoq", "Media ko'rinishi", "Murojaat imkoniyati", "Yangiliklar chastotasi"],
-      "trust":        ["Rasmiy ro'yxatdan o'tgan", "Faoliyat davomiyligi", "Foydalanuvchi reytingi", "Shikoyatlar tarixi", "Xalqaro hamkorlar"]
+      "transparency": [
+        "Moliyaviy hisobotlar",
+        "Sarflash tafsiloti",
+        "Loyiha natijalari",
+        "Audit o'tkazilgan",
+        "Donor ma'lumotlari"
+      ],
+      "openness": [
+        "Rasmiy veb-sayt",
+        "Ijtimoiy tarmoq",
+        "Media ko'rinishi",
+        "Murojaat imkoniyati",
+        "Yangiliklar chastotasi"
+      ],
+      "trust": [
+        "Rasmiy ro'yxatdan o'tgan",
+        "Faoliyat davomiyligi",
+        "Foydalanuvchi reytingi",
+        "Shikoyatlar tarixi",
+        "Xalqaro hamkorlar"
+      ]
     }
   },
-
   "analysis": {
     "title": "Xayriya Trendlari 2023–2024",
     "subtitle": "So'nggi ikki yil davomidagi o'zgarishlar tahlili",
@@ -59,12 +122,26 @@
     "statUserRatings": "Foydalanuvchi reytinglari",
     "avgTitle": "Yil bo'yicha o'rtacha indeks",
     "avgRows": [
-      { "label": "2022 yil o'rtacha", "value": "51.2 ball" },
-      { "label": "2023 yil o'rtacha", "value": "57.6 ball (+6.4)" },
-      { "label": "2024 yil o'rtacha", "value": "62.4 ball (+4.8)" }
+      {
+        "label": "2022 yil o'rtacha",
+        "value": "51.2 ball"
+      },
+      {
+        "label": "2023 yil o'rtacha",
+        "value": "57.6 ball (+6.4)"
+      },
+      {
+        "label": "2024 yil o'rtacha",
+        "value": "62.4 ball (+4.8)"
+      }
     ],
     "growingTitle": "Eng ko'p o'sgan yo'nalishlar",
-    "growing": ["Raqamli hisobot yuritish", "Ijtimoiy tarmoq faolligi", "Donor shaffoflik darajasi", "Mustaqil audit o'tkazish"],
+    "growing": [
+      "Raqamli hisobot yuritish",
+      "Ijtimoiy tarmoq faolligi",
+      "Donor shaffoflik darajasi",
+      "Mustaqil audit o'tkazish"
+    ],
     "challengesTitle": "Qiyinchiliklar va muammolar",
     "challenges": [
       "Ko'pgina fondlarda moliyaviy hisobot yuritish tizimi yo'q",
@@ -72,27 +149,87 @@
       "Raqamli savodxonlik darajasi pastligi"
     ]
   },
-
   "comparison": {
     "title": "Xalqaro Taqqoslash",
     "subtitle": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",
     "regionalTitle": "Mintaqa davlatlari bilan taqqoslash (2024)",
-    "countries": ["🇰🇿 Qozog'iston", "🇰🇬 Qirg'iziston", "🇺🇿 O'zbekiston", "🇹🇯 Tojikiston", "🇹🇲 Turkmaniston"],
+    "countries": [
+      "🇰🇿 Qozog'iston",
+      "🇰🇬 Qirg'iziston",
+      "🇺🇿 O'zbekiston",
+      "🇹🇯 Tojikiston",
+      "🇹🇲 Turkmaniston"
+    ],
     "globalTitle": "Global tendentsiyalar",
     "globalRows": [
-      { "label": "Dunyo o'rtacha shaffoflik indeksi",    "value": "58.3 ball" },
-      { "label": "Rivojlangan davlatlar o'rtacha",       "value": "79.1 ball" },
-      { "label": "Markaziy Osiyo o'rtacha",              "value": "55.2 ball" },
-      { "label": "O'zbekiston pozitsiyasi (mintaqada)",  "value": "2-o'rin"   }
+      {
+        "label": "Dunyo o'rtacha shaffoflik indeksi",
+        "value": "58.3 ball"
+      },
+      {
+        "label": "Rivojlangan davlatlar o'rtacha",
+        "value": "79.1 ball"
+      },
+      {
+        "label": "Markaziy Osiyo o'rtacha",
+        "value": "55.2 ball"
+      },
+      {
+        "label": "O'zbekiston pozitsiyasi (mintaqada)",
+        "value": "2-o'rin"
+      }
     ],
     "recommendationsTitle": "Xalqaro standartlar asosida tavsiyalar",
     "recommendations": [
-      { "text": "Mustaqil audit tizimini kengaytirish",                             "priority": "Yuqori" },
-      { "text": "Online hisobot platformasini rivojlantirish",                      "priority": "Yuqori" },
-      { "text": "Xalqaro NGO hamkorliklari o'rnatish",                              "priority": "O'rta"  },
-      { "text": "Fond faoliyati to'g'risidagi qonunchilikni takomillashtirish",     "priority": "O'rta"  }
+      {
+        "text": "Mustaqil audit tizimini kengaytirish",
+        "priority": "Yuqori"
+      },
+      {
+        "text": "Online hisobot platformasini rivojlantirish",
+        "priority": "Yuqori"
+      },
+      {
+        "text": "Xalqaro NGO hamkorliklari o'rnatish",
+        "priority": "O'rta"
+      },
+      {
+        "text": "Fond faoliyati to'g'risidagi qonunchilikni takomillashtirish",
+        "priority": "O'rta"
+      }
     ],
     "high": "Yuqori",
     "medium": "O'rta"
+  },
+  "reportSection": {
+    "title": "Xayriya Hisoboti",
+    "generating": "Tayyorlanmoqda...",
+    "annual": {
+      "title": "Yillik Hisobot 2024",
+      "subtitle": "O'zbekiston xayriya sektori to'liq statistikasi",
+      "funds": "Jami fondlar",
+      "beneficiaries": "Foyda ko'ruvchilar",
+      "projects": "Loyihalar soni",
+      "transparency": "O'rtacha shaffoflik",
+      "download": "Yillik hisobotni yuklab olish"
+    },
+    "semi": {
+      "title": "6 Oylik Hisobot",
+      "subtitle": "2024-yil birinchi yarmi statistikasi",
+      "includes": [
+        "Barcha fondlar reytingi va ballari",
+        "Kategoriya bo'yicha tahlil",
+        "Tasdiqlangan fondlar ro'yxati",
+        "Indeks ko'rsatkichlari dinamikasi",
+        "Tavsiyalar va xulosalar"
+      ],
+      "download": "6 oylik hisobotni yuklab olish"
+    }
+  },
+  "articlesSection": {
+    "title": "So'nggi Maqolalar",
+    "viewAll": "Barcha yangiliklar",
+    "tag": "Tadqiqot",
+    "download": "Yuklab olish"
   }
 }
