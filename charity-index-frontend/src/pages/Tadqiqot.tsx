@@ -513,7 +513,7 @@ const Tadqiqot = () => {
         <div className="max-w-5xl mx-auto px-4 py-16 space-y-16">
 
           {/* Research cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {researchCards.map((card, index) => (
               <motion.div
                 key={card.action}

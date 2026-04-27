@@ -20,6 +20,7 @@ function mapNews(n: any): News {
     gradient: n.gradient ?? 'from-blue-500 to-indigo-600',
     image_url: n.image_url ?? null,
     source_url: n.source_url ?? null,
+    file_url: n.file_url ?? null,
     is_featured: n.is_featured ?? false,
     active: n.is_active ?? true,
   };
@@ -59,6 +60,7 @@ export const newsApi = {
       content_en: data.content_en || undefined,
       image_url: data.image_url || undefined,
       source_url: data.source_url || undefined,
+      file_url: data.file_url || undefined,
       gradient: data.gradient,
       read_time: data.read_time,
       is_featured: data.is_featured,
@@ -82,6 +84,7 @@ export const newsApi = {
     if (data.fundId !== undefined) payload.fund_id = data.fundId || null;
     if (data.image_url !== undefined) payload.image_url = data.image_url || null;
     if (data.source_url !== undefined) payload.source_url = data.source_url || null;
+    if (data.file_url !== undefined) payload.file_url = data.file_url || null;
 
     const res = await apiClient.put<DataResponse<any>>(`/api/v1/news/${id}`, payload);
     return mapNews(res.data);

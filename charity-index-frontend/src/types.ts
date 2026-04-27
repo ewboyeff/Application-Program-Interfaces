@@ -67,6 +67,7 @@ export interface News {
   gradient: string;
   image_url?: string | null;
   source_url?: string | null;
+  file_url?: string | null;
   is_featured: boolean;
   active?: boolean;
 }

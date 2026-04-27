@@ -16,11 +16,14 @@ import {
   ImageIcon,
   Upload,
   Link as LinkIcon,
+  FileText,
+  Download,
 } from 'lucide-react';
 import { useDataStore } from '@/src/store/useDataStore';
 import { News } from '@/src/types';
 import { useToast } from '@/src/context/ToastContext';
 import { newsApi } from '@/src/api/news';
+import { reportsApi } from '@/src/api/reports';
 import { cn, API_BASE, assetUrl } from '@/src/lib/utils';
 import { getAdminToken } from '@/src/api/client';
 
@@ -41,6 +44,7 @@ const EMPTY_FORM = {
   fundId: '',
   image_url: '',
   source_url: '',
+  file_url: '',
   gradient: GRADIENTS[0],
   read_time: 3,
   is_featured: false,
@@ -58,7 +62,9 @@ export const AdminNews: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const pdfInputRef = useRef<HTMLInputElement>(null);
 
   const BASE_URL = API_BASE;
 
@@ -91,6 +97,7 @@ export const AdminNews: React.FC = () => {
       fundId: item.fundId || '',
       image_url: (item as any).image_url || '',
       source_url: (item as any).source_url || '',
+      file_url: (item as any).file_url || '',
       gradient: item.gradient || GRADIENTS[0],
       read_time: item.read_time || 3,
       is_featured: item.is_featured || false,
@@ -129,6 +136,22 @@ export const AdminNews: React.FC = () => {
     }
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingFile(true);
+    try {
+      const url = await reportsApi.uploadDocument(file);
+      setForm(p => ({ ...p, file_url: url }));
+      showToast('Fayl yuklandi', 'success');
+    } catch {
+      showToast('Fayl yuklashda xatolik', 'error');
+    } finally {
+      setIsUploadingFile(false);
+      if (pdfInputRef.current) pdfInputRef.current.value = '';
+    }
+  };
+
   const handleSave = async () => {
     if (!form.title_uz.trim()) {
       showToast('Sarlavha majburiy', 'error');
@@ -148,6 +171,7 @@ export const AdminNews: React.FC = () => {
         fundId: form.fundId || undefined,
         image_url: form.image_url || undefined,
         source_url: form.source_url || undefined,
+        file_url: form.file_url || undefined,
         gradient: form.gradient,
         read_time: form.read_time,
         is_featured: form.is_featured,
@@ -371,6 +395,61 @@ export const AdminNews: React.FC = () => {
                     )}
                   </button>
                 )}
+              </div>
+
+              {/* PDF / File upload */}
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-slate-400" /> Fayl biriktirish (PDF, ixtiyoriy)
+                </label>
+                <input
+                  ref={pdfInputRef}
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
+                {form.file_url ? (
+                  <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+                    <FileText className="w-5 h-5 text-emerald-600 shrink-0" />
+                    <span className="text-sm font-bold text-emerald-700 truncate flex-1">
+                      {form.file_url.split('/').pop()}
+                    </span>
+                    <a
+                      href={form.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => { setForm(p => ({ ...p, file_url: '' })); if (pdfInputRef.current) pdfInputRef.current.value = ''; }}
+                      className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => pdfInputRef.current?.click()}
+                    disabled={isUploadingFile}
+                    className="w-full h-20 border-2 border-dashed border-slate-200 rounded-xl flex items-center justify-center gap-3 text-slate-400 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50/50 transition-all disabled:opacity-50"
+                  >
+                    {isUploadingFile ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        <FileText className="w-5 h-5" />
+                        <span className="text-sm font-bold">PDF fayl yuklash</span>
+                        <span className="text-xs text-slate-400">· PDF, DOC · max 20 MB</span>
+                      </>
+                    )}
+                  </button>
+                )}
+                <p className="text-[11px] text-slate-400 font-medium ml-1">Foydalanuvchilar tadqiqot sahifasidan yuklab olishi mumkin</p>
               </div>
 
               {/* Source URL */}
