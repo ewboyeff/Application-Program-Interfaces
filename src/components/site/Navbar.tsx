@@ -3,15 +3,17 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { useShop } from "@/store/shop";
 import { SearchOverlay } from "./SearchOverlay";
+import { useI18n } from "@/i18n/i18n";
+import { LangSwitcher } from "./LangSwitcher";
 
-type NavItem = { label: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" };
+type NavItem = { key: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Bosh sahifa", to: "/" },
-  { label: "Kolleksiya", to: "/shop" },
-  { label: "Muzeylar", to: "/museums" },
-  { label: "Blog", to: "/blog" },
-  { label: "Aloqa", to: "/contact" },
+  { key: "nav.home", to: "/" },
+  { key: "nav.shop", to: "/shop" },
+  { key: "nav.museums", to: "/museums" },
+  { key: "nav.blog", to: "/blog" },
+  { key: "nav.contact", to: "/contact" },
 ];
 
 export function Navbar() {
@@ -20,6 +22,7 @@ export function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { cartCount, wishlistCount } = useShop();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { t } = useI18n();
 
   // Force solid bg on inner pages where there is no full-bleed hero behind navbar
   const forceSolid = pathname !== "/";
@@ -69,7 +72,7 @@ export function Navbar() {
               activeProps={{ className: "text-primary" }}
               className="group relative text-sm font-medium text-foreground/75 transition-colors hover:text-primary"
             >
-              {item.label}
+              {t(item.key)}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full" />
             </Link>
           ))}
@@ -77,18 +80,19 @@ export function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-2">
-          <IconBtn label="Qidirish" onClick={() => setSearchOpen(true)}>
+          <LangSwitcher className="mr-1 hidden sm:inline-flex" />
+          <IconBtn label={t("icon.search")} onClick={() => setSearchOpen(true)}>
             <Search className="h-4 w-4" />
           </IconBtn>
-          <IconBtn label="Sevimlilar" to="/wishlist" badge={wishlistCount || undefined}>
+          <IconBtn label={t("icon.wishlist")} to="/wishlist" badge={wishlistCount || undefined}>
             <Heart className="h-4 w-4" />
           </IconBtn>
-          <IconBtn label="Savat" to="/cart" badge={cartCount || undefined}>
+          <IconBtn label={t("icon.cart")} to="/cart" badge={cartCount || undefined}>
             <ShoppingBag className="h-4 w-4" />
           </IconBtn>
           <button
             onClick={() => setOpen((v) => !v)}
-            aria-label="Menyu"
+            aria-label={t("icon.menu")}
             className="ml-1 grid h-10 w-10 place-items-center rounded-full border border-border text-foreground/80 transition-smooth hover:border-primary hover:text-primary lg:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -111,9 +115,12 @@ export function Navbar() {
               activeProps={{ className: "text-primary" }}
               className="border-b border-border/30 py-3 text-sm font-medium text-foreground/80 last:border-0 hover:text-primary"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
+          <div className="pt-4 sm:hidden">
+            <LangSwitcher />
+          </div>
         </nav>
       </div>
     </header>
