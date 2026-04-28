@@ -8,6 +8,10 @@ import { motion } from 'motion/react';
 import { researchApi, ResearchStats, DEFAULT_RESEARCH_STATS } from '@/src/api/research';
 import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
 import { apiClient } from '@/src/api/client';
+import { API_BASE } from '@/src/lib/utils';
+
+const resolveMediaUrl = (url: string) =>
+  url.startsWith('http') ? url : `${API_BASE}${url}`;
 
 type Factor = { name: string; weight: string };
 
@@ -588,7 +592,7 @@ const Tadqiqot = () => {
       setOpenDialog('hisobot');
     } else if (action === 'article') {
       const fileUrl = firstArticle?.source_url;
-      if (fileUrl) window.open(fileUrl, '_blank');
+      if (fileUrl) window.open(resolveMediaUrl(fileUrl), '_blank');
       else window.location.href = '/news';
     } else {
       setOpenDialog(action);
@@ -691,7 +695,7 @@ const Tadqiqot = () => {
                       </span>
                       {article.source_url && (
                         <a
-                          href={article.source_url}
+                          href={resolveMediaUrl(article.source_url)}
                           download
                           target="_blank"
                           rel="noopener noreferrer"
