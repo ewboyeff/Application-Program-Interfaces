@@ -24,23 +24,23 @@ export interface ResearchStats {
 
 export const DEFAULT_RESEARCH_STATS: ResearchStats = {
   report: {
-    statActive: '120+',
-    statBeneficiaries: '850K+',
-    statRaised: '₿ 45B',
-    statTransparency: '68%',
-    areaPcts: [38, 28, 19, 15],
-    findingsValues: ['87 ta', '6 ta', '21 ta', '62.4', '+8.3%'],
+    statActive: '156+',
+    statBeneficiaries: '1.2M+',
+    statRaised: '₿ 78B',
+    statTransparency: '74%',
+    areaPcts: [40, 27, 20, 13],
+    findingsValues: ['124 ta', '11 ta', '38 ta', '68.7', '+10.5%'],
   },
   analysis: {
-    statNewFunds: '+23%',
-    statOnlineReports: '+41%',
-    statUserRatings: '+18%',
-    growingChanges: ['+34%', '+29%', '+22%', '+17%'],
-    avgValues: ['51.2 ball', '57.6 ball (+6.4)', '62.4 ball (+4.8)'],
+    statNewFunds: '+31%',
+    statOnlineReports: '+58%',
+    statUserRatings: '+27%',
+    growingChanges: ['+47%', '+38%', '+31%', '+24%'],
+    avgValues: ['62.4 ball', '65.8 ball (+3.4)', '68.7 ball (+2.9)'],
   },
   comparison: {
-    countryScores: [74, 61, 62, 48, 31],
-    globalValues: ['58.3 ball', '79.1 ball', '55.2 ball', "2-o'rin"],
+    countryScores: [79, 65, 69, 51, 33],
+    globalValues: ['61.2 ball', '82.4 ball', '58.7 ball', "2-o'rin"],
   },
 };
 

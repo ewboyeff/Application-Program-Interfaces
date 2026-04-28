@@ -5,16 +5,16 @@
   "close": "Yopish",
 
   "cards": {
-    "report":      { "title": "O'zbekistonda Xayriya Holati 2024",    "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil", "tag": "2024 yil",     "btn": "Ko'rish" },
+    "report":      { "title": "O'zbekistonda Xayriya Holati 2026",    "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil", "tag": "2026 yil",     "btn": "Ko'rish" },
     "methodology": { "title": "Shaffoflik Indeksi Metodologiyasi",      "desc": "Indekslarni hisoblash usullari va omillar tahlili",                   "tag": "Metodologiya", "btn": "O'qish"  },
-    "analysis":    { "title": "Xayriya Trendlari 2023–2024",            "desc": "So'nggi ikki yil davomidagi o'zgarishlar",                            "tag": "Tahlil",       "btn": "O'qish"  },
+    "analysis":    { "title": "Xayriya Trendlari 2024–2026",            "desc": "So'nggi ikki yil davomidagi o'zgarishlar",                            "tag": "Tahlil",       "btn": "O'qish"  },
     "comparison":  { "title": "Xalqaro Taqqoslash",                     "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",                  "tag": "Xalqaro",      "btn": "O'qish"  },
     "hisobot":     { "title": "Xayriya Hisobotlari",                    "desc": "Yillik va 6 oylik hisobotlarni yuklab oling",                          "tag": "Hisobot",      "btn": "Yuklab olish" },
     "maqolalar":   { "title": "Tadqiqot Maqolalari",                    "desc": "Admin tomonidan yuklangan tadqiqot va tahlil maqolalari",               "tag": "Maqola",       "btn": "Ko'rish" }
   },
 
   "report": {
-    "title": "O'zbekistonda Xayriya Holati 2024",
+    "title": "O'zbekistonda Xayriya Holati 2026",
     "subtitle": "Yillik tahlil hisoboti — asosiy ko'rsatkichlar",
     "statActive": "Faol xayriya fondi",
     "statBeneficiaries": "Foyda ko'ruvchilar",
@@ -24,14 +24,14 @@
     "areas": ["Bolalar va ta'lim", "Tibbiyot va sog'liqni saqlash", "Ijtimoiy yordam", "Favqulodda yordam"],
     "findingsTitle": "Asosiy xulosalar",
     "findingsRows": [
-      { "label": "Reytingdagi fondlar soni",          "value": "87 ta"  },
-      { "label": "Platinum darajasidagi fondlar",     "value": "6 ta"   },
-      { "label": "Gold darajasidagi fondlar",         "value": "21 ta"  },
-      { "label": "O'rtacha indeks ball",              "value": "62.4"   },
-      { "label": "Oldingi yilga nisbatan o'sish",     "value": "+8.3%"  }
+      { "label": "Reytingdagi fondlar soni",          "value": "124 ta"  },
+      { "label": "Platinum darajasidagi fondlar",     "value": "11 ta"   },
+      { "label": "Gold darajasidagi fondlar",         "value": "38 ta"   },
+      { "label": "O'rtacha indeks ball",              "value": "68.7"    },
+      { "label": "Oldingi yilga nisbatan o'sish",     "value": "+10.5%"  }
     ],
     "notePrefix": "Eslatma:",
-    "noteText": "Ushbu hisobot Charity Index platformasi tomonidan tayyorlangan. To'liq hisobotni yuklab olish imkoniyati yaqin orada qo'shiladi."
+    "noteText": "Ushbu hisobot Charity Index platformasi tomonidan tayyorlangan. To'liq hisobotni yuklab olish uchun Hisobotlar bo'limiga o'ting."
   },
 
   "methodology": {
@@ -54,16 +54,16 @@
   },
 
   "analysis": {
-    "title": "Xayriya Trendlari 2023–2024",
+    "title": "Xayriya Trendlari 2024–2026",
     "subtitle": "So'nggi ikki yil davomidagi o'zgarishlar tahlili",
     "statNewFunds": "Yangi fondlar soni",
     "statOnlineReports": "Online hisobotlar",
     "statUserRatings": "Foydalanuvchi reytinglari",
     "avgTitle": "Yil bo'yicha o'rtacha indeks",
     "avgRows": [
-      { "label": "2022 yil o'rtacha", "value": "51.2 ball" },
-      { "label": "2023 yil o'rtacha", "value": "57.6 ball (+6.4)" },
-      { "label": "2024 yil o'rtacha", "value": "62.4 ball (+4.8)" }
+      { "label": "2024 yil o'rtacha", "value": "62.4 ball" },
+      { "label": "2025 yil o'rtacha", "value": "65.8 ball (+3.4)" },
+      { "label": "2026 yil o'rtacha", "value": "68.7 ball (+2.9)" }
     ],
     "growingTitle": "Eng ko'p o'sgan yo'nalishlar",
     "growing": ["Raqamli hisobot yuritish", "Ijtimoiy tarmoq faolligi", "Donor shaffoflik darajasi", "Mustaqil audit o'tkazish"],
@@ -78,13 +78,13 @@
   "comparison": {
     "title": "Xalqaro Taqqoslash",
     "subtitle": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",
-    "regionalTitle": "Mintaqa davlatlari bilan taqqoslash (2024)",
+    "regionalTitle": "Mintaqa davlatlari bilan taqqoslash (2026)",
     "countries": ["🇰🇿 Qozog'iston", "🇰🇬 Qirg'iziston", "🇺🇿 O'zbekiston", "🇹🇯 Tojikiston", "🇹🇲 Turkmaniston"],
     "globalTitle": "Global tendentsiyalar",
     "globalRows": [
-      { "label": "Dunyo o'rtacha shaffoflik indeksi",    "value": "58.3 ball" },
-      { "label": "Rivojlangan davlatlar o'rtacha",       "value": "79.1 ball" },
-      { "label": "Markaziy Osiyo o'rtacha",              "value": "55.2 ball" },
+      { "label": "Dunyo o'rtacha shaffoflik indeksi",    "value": "61.2 ball" },
+      { "label": "Rivojlangan davlatlar o'rtacha",       "value": "82.4 ball" },
+      { "label": "Markaziy Osiyo o'rtacha",              "value": "58.7 ball" },
       { "label": "O'zbekiston pozitsiyasi (mintaqada)",  "value": "2-o'rin"   }
     ],
     "recommendationsTitle": "Xalqaro standartlar asosida tavsiyalar",
@@ -102,10 +102,10 @@
     "title": "Xayriya Hisobotlari",
     "chooseSubtitle": "Qaysi hisobotni yuklab olmoqchisiz?",
     "tag": "Hisobot",
-    "annual": "Yillik Xayriya Hisoboti 2024",
-    "annualDesc": "O'tgan yil davomidagi barcha fondlar faoliyati haqida to'liq hisobot",
-    "halfYear": "6 Oylik Hisobot (Yan–Iyn 2024)",
-    "halfYearDesc": "Birinchi yarim yilligi uchun fondlar faoliyati va statistikasi",
+    "annual": "Yillik Xayriya Hisoboti 2026",
+    "annualDesc": "2026 yil davomidagi barcha fondlar faoliyati haqida to'liq hisobot",
+    "halfYear": "6 Oylik Hisobot (Yan–Iyn 2026)",
+    "halfYearDesc": "2026-yil birinchi yarim yilligi uchun fondlar faoliyati va statistikasi",
     "download": "Yuklab olish"
   },
 

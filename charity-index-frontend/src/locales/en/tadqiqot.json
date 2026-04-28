@@ -5,16 +5,16 @@
   "close": "Close",
 
   "cards": {
-    "report":      { "title": "State of Charity in Uzbekistan 2024", "desc": "Annual analysis covering the activities of charity funds in the country", "tag": "Year 2024",    "btn": "View" },
+    "report":      { "title": "State of Charity in Uzbekistan 2026", "desc": "Annual analysis covering the activities of charity funds in the country", "tag": "Year 2026",    "btn": "View" },
     "methodology": { "title": "Transparency Index Methodology",       "desc": "Index calculation methods and factor analysis",                          "tag": "Methodology",  "btn": "Read" },
-    "analysis":    { "title": "Charity Trends 2023–2024",             "desc": "Changes over the last two years",                                        "tag": "Analysis",     "btn": "Read" },
+    "analysis":    { "title": "Charity Trends 2024–2026",             "desc": "Changes over the last two years",                                        "tag": "Analysis",     "btn": "Read" },
     "comparison":  { "title": "International Comparison",             "desc": "Uzbekistan's charity sector in regional comparison",                     "tag": "International", "btn": "Read" },
     "hisobot":     { "title": "Charity Reports",                      "desc": "Download annual and 6-month reports",                                    "tag": "Report",       "btn": "Download" },
     "maqolalar":   { "title": "Research Articles",                    "desc": "Research and analysis articles uploaded by admin",                       "tag": "Article",      "btn": "View" }
   },
 
   "report": {
-    "title": "State of Charity in Uzbekistan 2024",
+    "title": "State of Charity in Uzbekistan 2026",
     "subtitle": "Annual analysis report — key indicators",
     "statActive": "Active charity funds",
     "statBeneficiaries": "Beneficiaries",
@@ -24,14 +24,14 @@
     "areas": ["Children & Education", "Medicine & Healthcare", "Social Support", "Emergency Aid"],
     "findingsTitle": "Key Findings",
     "findingsRows": [
-      { "label": "Funds in rating",           "value": "87"    },
-      { "label": "Platinum-level funds",      "value": "6"     },
-      { "label": "Gold-level funds",          "value": "21"    },
-      { "label": "Average index score",       "value": "62.4"  },
-      { "label": "Growth vs previous year",   "value": "+8.3%" }
+      { "label": "Funds in rating",           "value": "124"    },
+      { "label": "Platinum-level funds",      "value": "11"     },
+      { "label": "Gold-level funds",          "value": "38"     },
+      { "label": "Average index score",       "value": "68.7"   },
+      { "label": "Growth vs previous year",   "value": "+10.5%" }
     ],
     "notePrefix": "Note:",
-    "noteText": "This report was prepared by the Charity Index platform. The ability to download the full report will be added soon."
+    "noteText": "This report was prepared by the Charity Index platform. Download the full report from the Reports section."
   },
 
   "methodology": {
@@ -54,16 +54,16 @@
   },
 
   "analysis": {
-    "title": "Charity Trends 2023–2024",
+    "title": "Charity Trends 2024–2026",
     "subtitle": "Analysis of changes over the last two years",
     "statNewFunds": "New funds",
     "statOnlineReports": "Online reports",
     "statUserRatings": "User ratings",
     "avgTitle": "Average index by year",
     "avgRows": [
-      { "label": "2022 average", "value": "51.2 pts" },
-      { "label": "2023 average", "value": "57.6 pts (+6.4)" },
-      { "label": "2024 average", "value": "62.4 pts (+4.8)" }
+      { "label": "2024 average", "value": "62.4 pts" },
+      { "label": "2025 average", "value": "65.8 pts (+3.4)" },
+      { "label": "2026 average", "value": "68.7 pts (+2.9)" }
     ],
     "growingTitle": "Fastest growing areas",
     "growing": ["Digital reporting", "Social media activity", "Donor transparency level", "Independent auditing"],
@@ -78,13 +78,13 @@
   "comparison": {
     "title": "International Comparison",
     "subtitle": "Uzbekistan's charity sector in regional comparison",
-    "regionalTitle": "Comparison with regional countries (2024)",
+    "regionalTitle": "Comparison with regional countries (2026)",
     "countries": ["🇰🇿 Kazakhstan", "🇰🇬 Kyrgyzstan", "🇺🇿 Uzbekistan", "🇹🇯 Tajikistan", "🇹🇲 Turkmenistan"],
     "globalTitle": "Global trends",
     "globalRows": [
-      { "label": "World average transparency index",       "value": "58.3 pts"   },
-      { "label": "Developed countries average",            "value": "79.1 pts"   },
-      { "label": "Central Asia average",                   "value": "55.2 pts"   },
+      { "label": "World average transparency index",       "value": "61.2 pts"   },
+      { "label": "Developed countries average",            "value": "82.4 pts"   },
+      { "label": "Central Asia average",                   "value": "58.7 pts"   },
       { "label": "Uzbekistan's position (in region)",      "value": "2nd place"  }
     ],
     "recommendationsTitle": "Recommendations based on international standards",
@@ -102,10 +102,10 @@
     "title": "Charity Reports",
     "chooseSubtitle": "Which report would you like to download?",
     "tag": "Report",
-    "annual": "Annual Charity Report 2024",
-    "annualDesc": "Full report on all fund activities over the past year",
-    "halfYear": "6-Month Report (Jan–Jun 2024)",
-    "halfYearDesc": "Fund activity and statistics for the first half of the year",
+    "annual": "Annual Charity Report 2026",
+    "annualDesc": "Full report on all fund activities throughout 2026",
+    "halfYear": "6-Month Report (Jan–Jun 2026)",
+    "halfYearDesc": "Fund activity and statistics for the first half of 2026",
     "download": "Download"
   },
 
