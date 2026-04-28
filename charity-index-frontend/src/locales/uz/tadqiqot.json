@@ -8,9 +8,9 @@
   "close": "Yopish",
   "cards": {
     "report": {
-      "title": "O'zbekistonda Xayriya Holati 2024",
+      "title": "O'zbekistonda Xayriya Holati 2026",
       "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil",
-      "tag": "2024 yil",
+      "tag": "2026 yil",
       "btn": "Ko'rish"
     },
     "methodology": {
@@ -19,8 +19,20 @@
       "tag": "Metodologiya",
       "btn": "O'qish"
     },
+    "hisobot": {
+      "title": "Xayriya Hisoboti 2026",
+      "desc": "Yillik va 6 oylik to'liq statistik hisobotlarni yuklab olish",
+      "tag": "Hisobot",
+      "btn": "Yuklab olish"
+    },
+    "article": {
+      "title": "Tadqiqot Maqolalari",
+      "desc": "Xayriya sohasidagi so'nggi tahlil, maqolalar va tadqiqotlar",
+      "tag": "Maqola",
+      "btn": "Ko'rish"
+    },
     "analysis": {
-      "title": "Xayriya Trendlari 2023–2024",
+      "title": "Xayriya Trendlari 2024–2026",
       "desc": "So'nggi ikki yil davomidagi o'zgarishlar",
       "tag": "Tahlil",
       "btn": "O'qish"
@@ -33,7 +45,7 @@
     }
   },
   "report": {
-    "title": "O'zbekistonda Xayriya Holati 2024",
+    "title": "O'zbekistonda Xayriya Holati 2026",
     "subtitle": "Yillik tahlil hisoboti — asosiy ko'rsatkichlar",
     "statActive": "Faol xayriya fondi",
     "statBeneficiaries": "Foyda ko'ruvchilar",
@@ -202,11 +214,12 @@
     "medium": "O'rta"
   },
   "reportSection": {
-    "title": "Xayriya Hisoboti",
+    "title": "Xayriya Hisoboti 2026",
     "tag": "Hisobot",
+    "chooseSubtitle": "Qaysi hisobotni yuklab olmoqchisiz?",
     "generating": "Tayyorlanmoqda...",
     "annual": {
-      "title": "Yillik Hisobot 2024",
+      "title": "Yillik Hisobot 2026",
       "subtitle": "O'zbekiston xayriya sektori to'liq statistikasi",
       "funds": "Jami fondlar",
       "beneficiaries": "Foyda ko'ruvchilar",
@@ -216,7 +229,7 @@
     },
     "semi": {
       "title": "6 Oylik Hisobot",
-      "subtitle": "2024-yil birinchi yarmi statistikasi",
+      "subtitle": "2026-yil birinchi yarmi statistikasi",
       "includes": [
         "Barcha fondlar reytingi va ballari",
         "Kategoriya bo'yicha tahlil",
@@ -230,7 +243,8 @@
   "articlesSection": {
     "title": "So'nggi Maqolalar",
     "viewAll": "Barcha yangiliklar",
-    "tag": "Tadqiqot",
-    "download": "Yuklab olish"
+    "tag": "Maqola",
+    "download": "Yuklab olish",
+    "readMore": "Ko'rish"
   }
 }

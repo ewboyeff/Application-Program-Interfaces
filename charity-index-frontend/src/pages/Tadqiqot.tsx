@@ -337,10 +337,84 @@ const ComparisonDialog = ({
   );
 };
 
+// ── Dialog 5: Hisobot tanlov ──────────────────────────────────────────────────
+const HisobotChoiceDialog = ({
+  open, onOpenChange, onDownload, isGenerating,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  onDownload: () => void;
+  isGenerating: boolean;
+}) => {
+  const { t } = useTranslation('tadqiqot');
+  return (
+    <BaseDialog
+      open={open} onOpenChange={onOpenChange}
+      title={t('reportSection.title')}
+      subtitle={t('reportSection.chooseSubtitle')}
+      headerBg="bg-rose-50" headerBorder="border-rose-100"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Yillik */}
+        <div className="rounded-2xl border-2 border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 flex flex-col gap-4">
+          <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center">
+            <Download className="w-6 h-6 text-blue-600" />
+          </div>
+          <div>
+            <p className="font-black text-slate-900 text-[15px]">{t('reportSection.annual.title')}</p>
+            <p className="text-xs text-slate-500 mt-1">{t('reportSection.annual.subtitle')}</p>
+          </div>
+          <ul className="space-y-1.5 text-xs text-slate-600 flex-1">
+            {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0" />{item}
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() => { onDownload(); onOpenChange(false); }}
+            disabled={isGenerating}
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white font-bold rounded-xl py-3 hover:bg-blue-700 transition-colors text-sm disabled:opacity-70"
+          >
+            <Download className="w-4 h-4" />
+            {isGenerating ? t('reportSection.generating') : t('reportSection.annual.download')}
+          </button>
+        </div>
+
+        {/* 6 Oylik */}
+        <div className="rounded-2xl border-2 border-emerald-100 bg-gradient-to-br from-emerald-50 to-teal-50 p-5 flex flex-col gap-4">
+          <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
+            <Download className="w-6 h-6 text-emerald-600" />
+          </div>
+          <div>
+            <p className="font-black text-slate-900 text-[15px]">{t('reportSection.semi.title')}</p>
+            <p className="text-xs text-slate-500 mt-1">{t('reportSection.semi.subtitle')}</p>
+          </div>
+          <ul className="space-y-1.5 text-xs text-slate-600 flex-1">
+            {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />{item}
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() => { onDownload(); onOpenChange(false); }}
+            disabled={isGenerating}
+            className="flex items-center justify-center gap-2 bg-emerald-600 text-white font-bold rounded-xl py-3 hover:bg-emerald-700 transition-colors text-sm disabled:opacity-70"
+          >
+            <Download className="w-4 h-4" />
+            {isGenerating ? t('reportSection.generating') : t('reportSection.semi.download')}
+          </button>
+        </div>
+      </div>
+    </BaseDialog>
+  );
+};
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
-  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | null>(null);
+  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
   const [factors, setFactors] = useState<FactorsGrouped>({ transparency: [], openness: [], trust: [] });
   const [articles, setArticles] = useState<any[]>([]);
@@ -485,23 +559,35 @@ const Tadqiqot = () => {
     }
   };
 
-  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'download-annual' | 'download-semi';
+  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'article';
+
+  const firstArticle = articles[0] ?? null;
 
   const researchCards: { icon: React.ReactNode; title: string; desc: string; tag: string; buttonText: string; action: CardAction }[] = [
-    { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),             desc: t('cards.report.desc'),             tag: t('cards.report.tag'),             buttonText: t('cards.report.btn'),             action: 'report'          },
-    { icon: <BarChart3 className="w-8 h-8" />,  title: t('cards.methodology.title'),        desc: t('cards.methodology.desc'),        tag: t('cards.methodology.tag'),        buttonText: t('cards.methodology.btn'),        action: 'methodology'     },
-    { icon: <TrendingUp className="w-8 h-8" />, title: t('cards.analysis.title'),           desc: t('cards.analysis.desc'),           tag: t('cards.analysis.tag'),           buttonText: t('cards.analysis.btn'),           action: 'analysis'        },
-    { icon: <Globe className="w-8 h-8" />,      title: t('cards.comparison.title'),         desc: t('cards.comparison.desc'),         tag: t('cards.comparison.tag'),         buttonText: t('cards.comparison.btn'),         action: 'comparison'      },
-    { icon: <Download className="w-8 h-8" />,   title: t('reportSection.annual.title'),     desc: t('reportSection.annual.subtitle'), tag: t('reportSection.tag'),            buttonText: t('reportSection.annual.download'),action: 'download-annual' },
-    { icon: <Download className="w-8 h-8" />,   title: t('reportSection.semi.title'),       desc: t('reportSection.semi.subtitle'),   tag: t('reportSection.tag'),            buttonText: t('reportSection.semi.download'),  action: 'download-semi'   },
+    { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),      desc: t('cards.report.desc'),      tag: t('cards.report.tag'),      buttonText: t('cards.report.btn'),      action: 'report'      },
+    { icon: <BarChart3 className="w-8 h-8" />,  title: t('cards.methodology.title'), desc: t('cards.methodology.desc'), tag: t('cards.methodology.tag'), buttonText: t('cards.methodology.btn'), action: 'methodology' },
+    { icon: <TrendingUp className="w-8 h-8" />, title: t('cards.analysis.title'),    desc: t('cards.analysis.desc'),    tag: t('cards.analysis.tag'),    buttonText: t('cards.analysis.btn'),    action: 'analysis'    },
+    { icon: <Globe className="w-8 h-8" />,      title: t('cards.comparison.title'),  desc: t('cards.comparison.desc'),  tag: t('cards.comparison.tag'),  buttonText: t('cards.comparison.btn'),  action: 'comparison'  },
+    { icon: <Download className="w-8 h-8" />,   title: t('cards.hisobot.title'),     desc: t('cards.hisobot.desc'),     tag: t('cards.hisobot.tag'),     buttonText: t('cards.hisobot.btn'),     action: 'hisobot'     },
+    {
+      icon: <Newspaper className="w-8 h-8" />,
+      title: firstArticle ? (firstArticle.title_uz ?? firstArticle.title ?? t('cards.article.title')) : t('cards.article.title'),
+      desc:  firstArticle ? (firstArticle.excerpt ?? t('cards.article.desc')) : t('cards.article.desc'),
+      tag:   t('cards.article.tag'),
+      buttonText: firstArticle?.file_url ? t('articlesSection.download') : t('articlesSection.readMore'),
+      action: 'article',
+    },
   ];
 
-  const accents = ['border-blue-500', 'border-violet-500', 'border-emerald-500', 'border-amber-500', 'border-rose-500', 'border-cyan-500'];
-  const iconBgs = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-600', 'bg-rose-50 text-rose-600', 'bg-cyan-50 text-cyan-600'];
+  const accents = ['border-blue-500', 'border-violet-500', 'border-emerald-500', 'border-amber-500', 'border-rose-500', 'border-violet-400'];
+  const iconBgs = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-600', 'bg-rose-50 text-rose-600', 'bg-violet-50 text-violet-500'];
 
   const handleCardClick = (action: CardAction) => {
-    if (action === 'download-annual' || action === 'download-semi') {
-      handleDownloadReport();
+    if (action === 'hisobot') {
+      setOpenDialog('hisobot');
+    } else if (action === 'article') {
+      if (firstArticle?.file_url) window.open(firstArticle.file_url, '_blank');
+      else window.location.href = '/news';
     } else {
       setOpenDialog(action);
     }
@@ -622,10 +708,11 @@ const Tadqiqot = () => {
         </div>
       </div>
 
-      <ReportDialog      open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <MethodologyDialog open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
-      <AnalysisDialog    open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <ComparisonDialog  open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <ReportDialog        open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <MethodologyDialog   open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
+      <AnalysisDialog      open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <ComparisonDialog    open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <HisobotChoiceDialog open={openDialog === 'hisobot'}    onOpenChange={(v) => !v && setOpenDialog(null)} onDownload={handleDownloadReport} isGenerating={isGenerating} />
     </Layout>
   );
 };

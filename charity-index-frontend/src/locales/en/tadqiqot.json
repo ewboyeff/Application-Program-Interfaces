@@ -8,9 +8,21 @@
   "close": "Close",
   "cards": {
     "report": {
-      "title": "State of Charity in Uzbekistan 2024",
+      "title": "State of Charity in Uzbekistan 2026",
       "desc": "Annual analysis covering the activities of charity funds in the country",
-      "tag": "Year 2024",
+      "tag": "Year 2026",
+      "btn": "View"
+    },
+    "hisobot": {
+      "title": "Charity Report 2026",
+      "desc": "Download the annual and 6-month full statistical reports",
+      "tag": "Report",
+      "btn": "Download"
+    },
+    "article": {
+      "title": "Research Articles",
+      "desc": "Latest analysis, articles and research in the charity sector",
+      "tag": "Article",
       "btn": "View"
     },
     "methodology": {
@@ -20,7 +32,7 @@
       "btn": "Read"
     },
     "analysis": {
-      "title": "Charity Trends 2023–2024",
+      "title": "Charity Trends 2024–2026",
       "desc": "Changes over the last two years",
       "tag": "Analysis",
       "btn": "Read"
@@ -33,7 +45,7 @@
     }
   },
   "report": {
-    "title": "State of Charity in Uzbekistan 2024",
+    "title": "State of Charity in Uzbekistan 2026",
     "subtitle": "Annual analysis report — key indicators",
     "statActive": "Active charity funds",
     "statBeneficiaries": "Beneficiaries",
@@ -202,11 +214,12 @@
     "medium": "Medium"
   },
   "reportSection": {
-    "title": "Charity Reports",
+    "title": "Charity Report 2026",
     "tag": "Report",
+    "chooseSubtitle": "Which report would you like to download?",
     "generating": "Generating...",
     "annual": {
-      "title": "Annual Report 2024",
+      "title": "Annual Report 2026",
       "subtitle": "Full statistics of the Uzbekistan charity sector",
       "funds": "Total funds",
       "beneficiaries": "Beneficiaries",
@@ -216,7 +229,7 @@
     },
     "semi": {
       "title": "6-Month Report",
-      "subtitle": "First half of 2024 statistics",
+      "subtitle": "First half of 2026 statistics",
       "includes": [
         "All funds ranking and scores",
         "Category breakdown analysis",
@@ -230,7 +243,8 @@
   "articlesSection": {
     "title": "Recent Articles",
     "viewAll": "All news",
-    "tag": "Research",
-    "download": "Download"
+    "tag": "Article",
+    "download": "Download",
+    "readMore": "View"
   }
 }
