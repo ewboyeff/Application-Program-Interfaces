@@ -134,9 +134,9 @@ export function Hero() {
           {/* Stats */}
           <div className="mt-14 flex items-center gap-10 border-t border-border/50 pt-6">
             {[
-              { v: "120+", l: "Eksponat" },
-              { v: "14", l: "Muzey" },
-              { v: "1989", l: "Tashkil" },
+              { v: "120+", l: t("hero.stat.exhibits") },
+              { v: "14", l: t("hero.stat.museums") },
+              { v: "1989", l: t("hero.stat.founded") },
             ].map((s) => (
               <div key={s.l}>
                 <div className="font-serif text-2xl text-primary">{s.v}</div>

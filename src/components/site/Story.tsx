@@ -29,12 +29,12 @@ export function Story() {
           {/* Floating quote card */}
           <div className="absolute -bottom-8 -right-4 hidden max-w-xs rounded-2xl border border-primary/30 bg-card/90 p-6 shadow-glow backdrop-blur-xl sm:block lg:-right-8">
             <p className="font-serif text-base italic leading-relaxed text-foreground">
-              "Tarix — bu zamon ichidagi nafas. Biz uni qo'lga olamiz."
+              {t("story.quote")}
             </p>
             <div className="mt-4 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" />
               <span className="text-[10px] uppercase tracking-[0.25em] text-primary">
-                Kuratorlar jamoasi
+                {t("story.curators")}
               </span>
             </div>
           </div>
@@ -44,27 +44,22 @@ export function Story() {
         <div className="reveal">
           <p className="eyebrow">{t("sec.storyEyebrow")}</p>
           <h2 className="mt-4 font-serif text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-            Har bir buyum — <br />
-            <span className="italic text-primary">tarix</span>.
+            {t("story.title1")} <br />
+            <span className="italic text-primary">{t("story.titleHighlight")}</span>.
           </h2>
           <div className="my-8 divider-gold" />
           <p className="text-base leading-relaxed text-foreground/75">
-            Bu suvenirlar O'zbekiston muzeylaridagi haqiqiy eksponatlardan
-            ilhomlangan. Toshkent, Samarqand, Buxoro va Xivaning eng nodir
-            ashyolari — kuratorlar nazoratida zamonaviy ustalar tomonidan
-            qayta tug'iladi.
+            {t("story.p1")}
           </p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            Har bir buyum o'z sertifikati, kelib chiqish hikoyasi va muzey
-            arxividagi raqami bilan birga keladi. Siz uyga oddiy suvenir emas
-            — asrlar nafasini olib kelasiz.
+            {t("story.p2")}
           </p>
 
           <div className="mt-10 grid grid-cols-3 gap-6 border-t border-border/50 pt-8">
             {[
-              { v: "100%", l: "Qo'lda yasalgan" },
-              { v: "14", l: "Muzey hamkor" },
-              { v: "Asl", l: "Sertifikatlangan" },
+              { v: "100%", l: t("story.stat1") },
+              { v: "14", l: t("story.stat2") },
+              { v: "Asl", l: t("story.stat3") },
             ].map((s) => (
               <div key={s.l}>
                 <div className="font-serif text-2xl text-primary">{s.v}</div>
