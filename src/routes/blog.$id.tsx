@@ -3,6 +3,7 @@ import { ArrowLeft, Clock } from "lucide-react";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { BLOG_POSTS, getPost } from "@/data/blog";
+import { useI18n, useBlogT } from "@/i18n/i18n";
 
 export const Route = createFileRoute("/blog/$id")({
   loader: ({ params }) => {
@@ -43,6 +44,8 @@ export const Route = createFileRoute("/blog/$id")({
 function BlogPostPage() {
   const { post } = Route.useLoaderData();
   const others = BLOG_POSTS.filter((p) => p.id !== post.id).slice(0, 3);
+  const { t } = useI18n();
+  const tr = useBlogT(post);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -56,23 +59,23 @@ function BlogPostPage() {
             className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-primary"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-            Blogga qaytish
+            {t("blog.backToBlog")}
           </Link>
 
           <div className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-primary">
-            <span>{post.category}</span>
+            <span>{tr.category}</span>
             <span>·</span>
-            <span className="text-muted-foreground">{post.date}</span>
+            <span className="text-muted-foreground">{tr.date}</span>
             <span>·</span>
             <span className="inline-flex items-center gap-1 text-muted-foreground">
-              <Clock className="h-3 w-3" /> {post.readTime}
+              <Clock className="h-3 w-3" /> {tr.readTime}
             </span>
           </div>
           <h1 className="mt-5 font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-            {post.title}
+            {tr.title}
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            {post.excerpt}
+            {tr.excerpt}
           </p>
         </div>
 
@@ -80,7 +83,7 @@ function BlogPostPage() {
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
             <img
               src={post.image}
-              alt={post.title}
+              alt={tr.title}
               className="aspect-[16/9] w-full object-cover"
             />
           </div>
@@ -91,7 +94,7 @@ function BlogPostPage() {
       <section className="py-20">
         <div className="mx-auto max-w-3xl px-6 lg:px-10">
           <article className="space-y-6 text-base leading-[1.85] text-foreground/85 sm:text-lg">
-            {post.body.map((para, i) => (
+            {tr.body.map((para, i) => (
               <p key={i}>{para}</p>
             ))}
           </article>
@@ -99,7 +102,7 @@ function BlogPostPage() {
           <div className="my-16 divider-gold" />
 
           <p className="font-serif text-2xl italic text-primary">
-            "Tarix — bu zamon ichidagi nafas. Biz uni qo'lga olamiz."
+            {t("blog.quote")}
           </p>
         </div>
       </section>
@@ -107,36 +110,14 @@ function BlogPostPage() {
       {/* More posts */}
       <section className="border-t border-border/50 bg-background py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="eyebrow">— Yana o'qing</p>
+          <p className="eyebrow">{t("blog.moreEyebrow")}</p>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
-            Boshqa <span className="italic text-primary">hikoyalar</span>
+            {t("blog.moreTitle1")} <span className="italic text-primary">{t("blog.moreTitle2")}</span>
           </h2>
 
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
             {others.map((p) => (
-              <Link
-                key={p.id}
-                to="/blog/$id"
-                params={{ id: p.id }}
-                className="group overflow-hidden rounded-2xl border border-border/60 bg-card transition-smooth hover:border-primary/50 hover:-translate-y-1"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="text-[10px] uppercase tracking-[0.22em] text-primary">
-                    {p.category}
-                  </div>
-                  <h3 className="mt-2 line-clamp-2 font-serif text-lg text-foreground transition-colors group-hover:text-primary">
-                    {p.title}
-                  </h3>
-                </div>
-              </Link>
+              <OtherPostCard key={p.id} post={p} />
             ))}
           </div>
         </div>
@@ -144,5 +125,20 @@ function BlogPostPage() {
 
       <Footer />
     </main>
+  );
+}
+
+function OtherPostCard({ post }: { post: typeof BLOG_POSTS[number] }) {
+  const tr = useBlogT(post);
+  return (
+    <Link to="/blog/$id" params={{ id: post.id }} className="group overflow-hidden rounded-2xl border border-border/60 bg-card transition-smooth hover:border-primary/50 hover:-translate-y-1">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <img src={post.image} alt={tr.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110" />
+      </div>
+      <div className="p-6">
+        <div className="text-[10px] uppercase tracking-[0.22em] text-primary">{tr.category}</div>
+        <h3 className="mt-2 line-clamp-2 font-serif text-lg text-foreground transition-colors group-hover:text-primary">{tr.title}</h3>
+      </div>
+    </Link>
   );
 }

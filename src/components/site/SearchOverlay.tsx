@@ -109,7 +109,7 @@ export function SearchOverlay({
                     </div>
                     <div className="font-serif text-primary">
                       {formatPrice(p.price)}{" "}
-                      <span className="text-xs text-muted-foreground">so'm</span>
+                      <span className="text-xs text-muted-foreground">{t("common.currency")}</span>
                     </div>
                   </Link>
                 </li>

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { PageHeader } from "@/components/site/PageHeader";
 import { toast } from "@/components/site/Toaster";
+import { useI18n } from "@/i18n/i18n";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -23,13 +24,14 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
+  const { t } = useI18n();
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast("Xabaringiz yuborildi (demo)");
+    toast(t("toast.messageSent"));
     setForm({ name: "", phone: "", email: "", message: "" });
   };
 
@@ -37,10 +39,10 @@ function ContactPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
       <PageHeader
-        eyebrow="Aloqa"
-        title="Biz bilan"
-        highlight="bog'laning"
-        subtitle="Savollar, ulgurji buyurtmalar yoki muzeylar bilan hamkorlik bo'yicha — biz har doim ochiqmiz."
+        eyebrow={t("contact.headerEyebrow")}
+        title={t("contact.headerTitle")}
+        highlight={t("contact.headerHighlight")}
+        subtitle={t("contact.headerSub")}
       />
 
       <section className="bg-background py-20">
@@ -51,22 +53,22 @@ function ContactPage() {
               onSubmit={submit}
               className="rounded-2xl border border-border/60 bg-card/60 p-7 shadow-card lg:p-10"
             >
-              <p className="eyebrow">— Xabar yozing</p>
+              <p className="eyebrow">{t("contact.formEyebrow")}</p>
               <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
-                Sizdan eshitish <span className="italic text-primary">qiziq</span>
+                {t("contact.formTitle1")} <span className="italic text-primary">{t("contact.formTitle2")}</span>
               </h2>
 
               <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <Field label="Ismingiz" required>
+                <Field label={t("contact.name")} required>
                   <input
                     required
                     value={form.name}
                     onChange={update("name")}
-                    placeholder="Aliyev Vali"
+                    placeholder={t("contact.namePh")}
                     className="input"
                   />
                 </Field>
-                <Field label="Telefon" required>
+                <Field label={t("contact.phone")} required>
                   <input
                     required
                     type="tel"
@@ -76,22 +78,22 @@ function ContactPage() {
                     className="input"
                   />
                 </Field>
-                <Field label="Email" className="sm:col-span-2">
+                <Field label={t("contact.email")} className="sm:col-span-2">
                   <input
                     type="email"
                     value={form.email}
                     onChange={update("email")}
-                    placeholder="siz@example.com"
+                    placeholder={t("contact.emailPh")}
                     className="input"
                   />
                 </Field>
-                <Field label="Xabar" className="sm:col-span-2" required>
+                <Field label={t("contact.message")} className="sm:col-span-2" required>
                   <textarea
                     required
                     value={form.message}
                     onChange={update("message")}
                     rows={5}
-                    placeholder="Sizning xabaringiz..."
+                    placeholder={t("contact.messagePh")}
                     className="input resize-none"
                   />
                 </Field>
@@ -101,7 +103,7 @@ function ContactPage() {
                 type="submit"
                 className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-7 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02]"
               >
-                Yuborish
+                {t("contact.send")}
                 <Send className="h-4 w-4" />
               </button>
             </form>
@@ -146,9 +148,9 @@ function ContactPage() {
                 <span className="grid h-14 w-14 mx-auto place-items-center rounded-full bg-gradient-gold shadow-glow">
                   <MapPin className="h-6 w-6 text-primary-foreground" />
                 </span>
-                <p className="mt-4 font-serif text-2xl">Toshkent, O'zbekiston</p>
+                <p className="mt-4 font-serif text-2xl">{t("contact.city")}</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                  Amir Temur shoh ko'chasi, 12
+                  {t("contact.address")}
                 </p>
               </div>
             </div>
@@ -158,23 +160,23 @@ function ContactPage() {
           <aside className="space-y-4">
             <InfoCard
               icon={<MapPin className="h-4 w-4" />}
-              title="Manzil"
-              lines={["Toshkent shahri", "Amir Temur shoh ko'chasi, 12"]}
+              title={t("contact.info.address")}
+              lines={[t("contact.addrLine1"), t("contact.addrLine2")]}
             />
             <InfoCard
               icon={<Phone className="h-4 w-4" />}
-              title="Telefon"
+              title={t("contact.info.phone")}
               lines={["+998 71 123 45 67", "+998 90 123 45 67"]}
             />
             <InfoCard
               icon={<Mail className="h-4 w-4" />}
-              title="Email"
+              title={t("contact.info.email")}
               lines={["hello@museumshop.uz", "press@museumshop.uz"]}
             />
             <InfoCard
               icon={<Clock className="h-4 w-4" />}
-              title="Ish vaqti"
-              lines={["Du-Ju: 10:00 — 20:00", "Yak: 11:00 — 18:00"]}
+              title={t("contact.info.hours")}
+              lines={[t("contact.hours1"), t("contact.hours2")]}
             />
           </aside>
         </div>

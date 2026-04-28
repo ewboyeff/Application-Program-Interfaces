@@ -93,7 +93,7 @@ export function Featured() {
 
                 <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-background/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary backdrop-blur-md">
                   <span className="h-1 w-1 rounded-full bg-primary animate-shimmer" />
-                  Inspired by museum artifact
+                  {t("common.inspiredArtifact")}
                 </span>
 
                 <button
@@ -123,10 +123,10 @@ export function Featured() {
                 <div className="flex items-baseline justify-between pt-2">
                   <span className="font-serif text-xl text-primary">
                     {p.price}
-                    <span className="ml-1 text-xs text-muted-foreground">so'm</span>
+                    <span className="ml-1 text-xs text-muted-foreground">{t("common.currency")}</span>
                   </span>
                   <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                    Cheklangan
+                    {t("common.limited")}
                   </span>
                 </div>
               </div>
