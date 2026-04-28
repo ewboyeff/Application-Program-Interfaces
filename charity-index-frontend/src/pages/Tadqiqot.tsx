@@ -519,8 +519,9 @@ const Tadqiqot = () => {
           table { width: 100%; border-collapse: collapse; margin-top: 12px; }
           th { background: #1A56DB; color: white; padding: 10px; text-align: left; }
           td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; }
+          .print-btn { display: block; margin: 24px auto 0; padding: 12px 32px; background: #1A56DB; color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
           .footer { margin-top: 48px; text-align: center; color: #94a3b8; font-size: 0.8rem; }
-          @media print { button { display: none; } }
+          @media print { .print-btn { display: none; } }
         </style>
       </head><body>
         <h1>🇺🇿 O'zbekiston Xayriya Indeksi — Hisobot</h1>
@@ -550,8 +551,8 @@ const Tadqiqot = () => {
           <tr><td>🥉 Bronze</td><td>45–59</td></tr>
           <tr><td>⚠️ Unrated</td><td>0–44</td></tr>
         </table>
+        <button class="print-btn" onclick="window.print()">🖨️ Chop etish / Print</button>
         <div class="footer">© ${new Date().getFullYear()} Charity Index Uzbekistan — xayriya.info</div>
-        <script>window.onload = () => window.print();</script>
       </body></html>`);
       reportWindow.document.close();
     } finally {
