@@ -656,60 +656,6 @@ const Tadqiqot = () => {
           </div>
 
 
-          {/* Maqolalar */}
-          {articles.length > 0 && (
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-1 h-7 bg-violet-500 rounded-full" />
-                  <h2 className="text-2xl font-black text-[#1E293B]">{t('articlesSection.title')}</h2>
-                </div>
-                <Link to="/news" className="text-sm font-bold text-[#1A56DB] flex items-center gap-1 hover:gap-2 transition-all">
-                  {t('articlesSection.viewAll')} <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {articles.map((article: any, i: number) => (
-                  <motion.div
-                    key={article.id}
-                    initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                    className="bg-white border border-[#E2E8F0] rounded-[20px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-violet-50 rounded-xl flex items-center justify-center shrink-0">
-                        <Newspaper className="w-4 h-4 text-violet-600" />
-                      </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-violet-500 bg-violet-50 px-2 py-0.5 rounded-full">
-                        {article.category ?? t('articlesSection.tag')}
-                      </span>
-                    </div>
-                    <h3 className="font-black text-[#1E293B] text-base leading-snug line-clamp-2">
-                      {article.title_uz ?? article.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 line-clamp-2 flex-1">
-                      {article.excerpt_uz ?? article.excerpt ?? ''}
-                    </p>
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
-                      <span className="text-xs text-slate-400 font-medium">
-                        {article.date ? new Date(article.date).toLocaleDateString('uz-UZ') : ''}
-                      </span>
-                      {article.source_url && (
-                        <a
-                          href={resolveMediaUrl(article.source_url)}
-                          download
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors"
-                        >
-                          <Download className="w-3 h-3" /> {t('articlesSection.download')}
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </section>
-          )}
 
         </div>
       </div>
