@@ -46,6 +46,7 @@ export const AdminFundEdit: React.FC = () => {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     indexesApi.getFactors().then(setFactors).catch(() => {});
@@ -99,7 +100,8 @@ export const AdminFundEdit: React.FC = () => {
   });
 
   useEffect(() => {
-    if (isEdit && fund) {
+    if (isEdit && fund && !initializedRef.current) {
+      initializedRef.current = true;
       setFormData(fund);
       if (fund.logo_url) {
         setLogoPreview(assetUrl(fund.logo_url) ?? null);
