@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { PageHeader } from "@/components/site/PageHeader";
 import { ProductCard } from "@/components/site/ProductCard";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
+import { useI18n, useCategoryT } from "@/i18n/i18n";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -32,6 +33,8 @@ function ShopPage() {
   const [active, setActive] = useState<(typeof CATEGORIES)[number]>("Barchasi");
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("default");
+  const { t } = useI18n();
+  const tCat = useCategoryT();
 
   const items = useMemo(() => {
     let list = PRODUCTS.slice();
@@ -54,10 +57,10 @@ function ShopPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
       <PageHeader
-        eyebrow="Kolleksiya"
-        title="Tarixning"
-        highlight="zamonaviy talqini"
-        subtitle="Har bir buyum O'zbekiston muzeylaridagi haqiqiy eksponat asosida ustalar tomonidan qo'lda yaratilgan."
+        eyebrow={t("shop.headerEyebrow")}
+        title={t("shop.headerTitle")}
+        highlight={t("shop.headerHighlight")}
+        subtitle={t("shop.headerSub")}
       />
 
       <section className="bg-background py-16">
@@ -70,23 +73,23 @@ function ShopPage() {
                 <input
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder="Qidirish: nom, muzey, tasnif..."
+                  placeholder={t("shop.searchPh")}
                   className="w-full rounded-full border border-border/70 bg-card/60 py-3 pl-11 pr-4 text-sm text-foreground outline-none transition-colors focus:border-primary"
                 />
               </div>
               <div className="flex items-center gap-3">
                 <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
                 <label className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                  Saralash
+                  {t("shop.sort")}
                 </label>
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as Sort)}
                   className="rounded-full border border-border/70 bg-card/60 px-4 py-2 text-sm text-foreground outline-none transition-colors focus:border-primary"
                 >
-                  <option value="default">Standart</option>
-                  <option value="price-asc">Narx: arzonidan</option>
-                  <option value="price-desc">Narx: qimmatidan</option>
+                  <option value="default">{t("shop.sortDefault")}</option>
+                  <option value="price-asc">{t("shop.sortAsc")}</option>
+                  <option value="price-desc">{t("shop.sortDesc")}</option>
                 </select>
               </div>
             </div>
@@ -102,7 +105,7 @@ function ShopPage() {
                       isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    {c}
+                    {tCat(c)}
                     <span
                       className={`absolute inset-x-3 bottom-0 h-px transition-all duration-500 ${
                         isActive ? "bg-primary opacity-100" : "bg-primary opacity-0"
@@ -114,15 +117,15 @@ function ShopPage() {
             </div>
 
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-              {items.length} ta mahsulot
+              {items.length} {t("shop.count")}
             </p>
           </div>
 
           {items.length === 0 ? (
             <div className="rounded-2xl border border-border/60 bg-card/40 p-16 text-center">
-              <p className="font-serif text-2xl text-foreground">Hech narsa topilmadi</p>
+              <p className="font-serif text-2xl text-foreground">{t("shop.emptyTitle")}</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Qidiruv yoki tasnifni o'zgartirib ko'ring.
+                {t("shop.emptyHint")}
               </p>
             </div>
           ) : (
