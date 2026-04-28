@@ -59,7 +59,7 @@ export default function Ranking() {
     });
 
     return result;
-  }, [search, activeCategory, sortConfig]);
+  }, [funds, search, activeCategory, sortConfig]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -160,8 +160,8 @@ export default function Ranking() {
 
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-20">
         {/* Filter Bar */}
-        <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 p-3 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto p-1">
+        <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 p-3 mb-8 flex flex-col gap-3">
+          <div className="flex flex-wrap items-center gap-2 p-1">
             <button
               onClick={() => setActiveCategory('Barchasi')}
               className={cn(
@@ -189,10 +189,10 @@ export default function Ranking() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto pr-2">
-            <div className="relative flex-1 md:w-64">
+          <div className="flex items-center gap-3 px-1">
+            <div className="relative w-full md:w-72">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input 
+              <input
                 type="text"
                 placeholder={t('searchPlaceholder')}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-100/50 border border-transparent rounded-2xl text-sm text-slate-900 focus:bg-white focus:border-blue-500 transition-all outline-none placeholder:text-slate-400"

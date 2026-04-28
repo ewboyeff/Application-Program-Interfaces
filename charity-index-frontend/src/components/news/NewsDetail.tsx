@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, Clock, Send, Link as LinkIcon, ChevronRight, ExternalLink, Download } from 'lucide-react';
+import { X, Calendar, Clock, Send, Link as LinkIcon, ChevronRight, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { News } from '@/src/types';
@@ -8,10 +8,7 @@ import { MOCK_FUNDS } from '@/src/data/mockData';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { useToast } from '@/src/context/ToastContext';
-import { cn, formatDate, assetUrl, API_BASE } from '@/src/lib/utils';
-
-const resolveMediaUrl = (url: string) =>
-  url.startsWith('http') ? url : `${API_BASE}${url}`;
+import { cn, formatDate, assetUrl } from '@/src/lib/utils';
 
 interface NewsDetailProps {
   news: News | null;
@@ -124,30 +121,17 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
                   {news.content}
                 </div>
 
-                {/* Source link / File download */}
+                {/* Source link */}
                 {news.source_url && (
-                  news.source_url.startsWith('http') ? (
-                    <a
-                      href={news.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-5 flex items-center gap-2 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm text-slate-600 font-medium hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition-all w-fit"
-                    >
-                      <ExternalLink className="w-4 h-4 shrink-0" />
-                      <span>{t('detail.source')}: <span className="font-bold">{(() => { try { return new URL(news.source_url!).hostname.replace('www.', ''); } catch { return news.source_url; } })()}</span></span>
-                    </a>
-                  ) : (
-                    <a
-                      href={resolveMediaUrl(news.source_url)}
-                      download
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-5 flex items-center gap-2 px-4 py-3 bg-blue-50 border border-blue-200 rounded-2xl text-sm text-blue-700 font-bold hover:bg-blue-100 transition-all w-fit"
-                    >
-                      <Download className="w-4 h-4 shrink-0" />
-                      <span>{t('detail.fileDownload')}</span>
-                    </a>
-                  )
+                  <a
+                    href={news.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 flex items-center gap-2 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm text-slate-600 font-medium hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition-all w-fit"
+                  >
+                    <ExternalLink className="w-4 h-4 shrink-0" />
+                    <span>{t('detail.source')}: <span className="font-bold">{new URL(news.source_url).hostname.replace('www.', '')}</span></span>
+                  </a>
                 )}
 
                 {/* Fund Card */}

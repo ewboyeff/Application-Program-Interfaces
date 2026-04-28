@@ -3,15 +3,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/src/components/layout/Layout';
-import { FileText, BarChart3, TrendingUp, Globe, ChevronRight, X, Download, Newspaper } from 'lucide-react';
+import {
+  FileText, BarChart3, TrendingUp, Globe, ChevronRight, X, Download, Newspaper, ExternalLink,
+} from 'lucide-react';
 import { motion } from 'motion/react';
 import { researchApi, ResearchStats, DEFAULT_RESEARCH_STATS } from '@/src/api/research';
 import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
-import { apiClient } from '@/src/api/client';
-import { API_BASE } from '@/src/lib/utils';
-
-const resolveMediaUrl = (url: string) =>
-  url.startsWith('http') ? url : `${API_BASE}${url}`;
+import { newsApi } from '@/src/api/news';
+import { News } from '@/src/types';
+import { assetUrl } from '@/src/lib/utils';
 
 type Factor = { name: string; weight: string };
 
@@ -22,6 +22,8 @@ const SCORE_LEVEL_STYLES = [
   { label: '🥉 Bronze',   bg: '#FFF7ED', color: '#92400E' },
   { label: '⚠️ Unrated',  bg: '#F8FAFC', color: '#94A3B8' },
 ];
+
+const weightPct = (w: number) => w <= 1 ? `${Math.round(w * 100)}%` : `${Math.round(w)}%`;
 
 const FactorSection = ({ title, color, factors }: { title: string; color: string; factors: Factor[] }) => (
   <section>
@@ -112,9 +114,9 @@ const ReportDialog = ({
   stats: ResearchStats;
 }) => {
   const { t } = useTranslation('tadqiqot');
-  const areas       = t('report.areas',       { returnObjects: true }) as string[];
+  const areas        = t('report.areas',       { returnObjects: true }) as string[];
   const findingsRows = t('report.findingsRows', { returnObjects: true }) as Array<{ label: string; value: string }>;
-  const areaColors  = ['#1A56DB', '#059669', '#7C3AED', '#F59E0B'];
+  const areaColors   = ['#1A56DB', '#059669', '#7C3AED', '#F59E0B'];
 
   return (
     <BaseDialog
@@ -164,16 +166,31 @@ const ReportDialog = ({
 };
 
 // ── Dialog 2: Methodology ────────────────────────────────────────────────────
-const MethodologyDialog = ({ open, onOpenChange, factors }: { open: boolean; onOpenChange: (v: boolean) => void; factors: FactorsGrouped }) => {
+const MethodologyDialog = ({
+  open, onOpenChange, factors,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  factors: FactorsGrouped | null;
+}) => {
   const { t } = useTranslation('tadqiqot');
   const scoreRanges = t('methodology.scoreRanges', { returnObjects: true }) as string[];
 
-  const toFactors = (list: typeof factors.transparency): Factor[] =>
-    list.map(f => ({ name: f.name_uz, weight: `${Number(f.weight)}%` }));
+  const tFallback = t('methodology.factors.transparency', { returnObjects: true }) as string[];
+  const oFallback = t('methodology.factors.openness',     { returnObjects: true }) as string[];
+  const trFallback = t('methodology.factors.trust',       { returnObjects: true }) as string[];
 
-  const transparencyFactors = toFactors(factors.transparency);
-  const opennessFactors     = toFactors(factors.openness);
-  const trustFactors        = toFactors(factors.trust);
+  const transparencyFactors: Factor[] = factors
+    ? factors.transparency.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    : tFallback.map((name, i) => ({ name, weight: ['25%', '20%', '20%', '20%', '15%'][i] ?? '20%' }));
+
+  const opennessFactors: Factor[] = factors
+    ? factors.openness.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    : oFallback.map((name, i) => ({ name, weight: ['20%', '20%', '15%', '20%', '25%'][i] ?? '20%' }));
+
+  const trustFactors: Factor[] = factors
+    ? factors.trust.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    : trFallback.map((name, i) => ({ name, weight: ['25%', '20%', '20%', '20%', '15%'][i] ?? '20%' }));
 
   return (
     <BaseDialog
@@ -235,9 +252,9 @@ const AnalysisDialog = ({
       headerBg="bg-emerald-50" headerBorder="border-emerald-100"
     >
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <StatCard value={stats.analysis.statNewFunds}      label={t('analysis.statNewFunds')}     color="#059669" />
+        <StatCard value={stats.analysis.statNewFunds}      label={t('analysis.statNewFunds')}      color="#059669" />
         <StatCard value={stats.analysis.statOnlineReports} label={t('analysis.statOnlineReports')} color="#1A56DB" />
-        <StatCard value={stats.analysis.statUserRatings}   label={t('analysis.statUserRatings')}  color="#7C3AED" />
+        <StatCard value={stats.analysis.statUserRatings}   label={t('analysis.statUserRatings')}   color="#7C3AED" />
       </div>
 
       <div>
@@ -285,9 +302,9 @@ const ComparisonDialog = ({
   stats: ResearchStats;
 }) => {
   const { t } = useTranslation('tadqiqot');
-  const countries       = t('comparison.countries',        { returnObjects: true }) as string[];
-  const globalRows      = t('comparison.globalRows',       { returnObjects: true }) as Array<{ label: string; value: string }>;
-  const recommendations = t('comparison.recommendations',  { returnObjects: true }) as Array<{ text: string; priority: string }>;
+  const countries       = t('comparison.countries',       { returnObjects: true }) as string[];
+  const globalRows      = t('comparison.globalRows',      { returnObjects: true }) as Array<{ label: string; value: string }>;
+  const recommendations = t('comparison.recommendations', { returnObjects: true }) as Array<{ text: string; priority: string }>;
   const highLabel       = t('comparison.high');
   const countryColors   = ['#F59E0B', '#059669', '#1A56DB', '#94A3B8', '#94A3B8'];
 
@@ -341,259 +358,121 @@ const ComparisonDialog = ({
   );
 };
 
-// ── Dialog 5: Hisobot tanlov ──────────────────────────────────────────────────
-const HisobotChoiceDialog = ({
-  open, onOpenChange, onDownload, isGenerating,
-}: {
-  open: boolean;
-  onOpenChange: (v: boolean) => void;
-  onDownload: () => void;
-  isGenerating: boolean;
-}) => {
-  const { t } = useTranslation('tadqiqot');
-  return (
-    <BaseDialog
-      open={open} onOpenChange={onOpenChange}
-      title={t('reportSection.title')}
-      subtitle={t('reportSection.chooseSubtitle')}
-      headerBg="bg-rose-50" headerBorder="border-rose-100"
-    >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Yillik */}
-        <div className="rounded-2xl border-2 border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 flex flex-col gap-4">
-          <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center">
-            <Download className="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <p className="font-black text-slate-900 text-[15px]">{t('reportSection.annual.title')}</p>
-            <p className="text-xs text-slate-500 mt-1">{t('reportSection.annual.subtitle')}</p>
-          </div>
-          <ul className="space-y-1.5 text-xs text-slate-600 flex-1">
-            {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0" />{item}
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={() => { onDownload(); onOpenChange(false); }}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white font-bold rounded-xl py-3 hover:bg-blue-700 transition-colors text-sm disabled:opacity-70"
-          >
-            <Download className="w-4 h-4" />
-            {isGenerating ? t('reportSection.generating') : t('reportSection.annual.download')}
-          </button>
-        </div>
-
-        {/* 6 Oylik */}
-        <div className="rounded-2xl border-2 border-emerald-100 bg-gradient-to-br from-emerald-50 to-teal-50 p-5 flex flex-col gap-4">
-          <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
-            <Download className="w-6 h-6 text-emerald-600" />
-          </div>
-          <div>
-            <p className="font-black text-slate-900 text-[15px]">{t('reportSection.semi.title')}</p>
-            <p className="text-xs text-slate-500 mt-1">{t('reportSection.semi.subtitle')}</p>
-          </div>
-          <ul className="space-y-1.5 text-xs text-slate-600 flex-1">
-            {(t('reportSection.semi.includes', { returnObjects: true }) as string[]).map((item: string) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />{item}
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={() => { onDownload(); onOpenChange(false); }}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-emerald-600 text-white font-bold rounded-xl py-3 hover:bg-emerald-700 transition-colors text-sm disabled:opacity-70"
-          >
-            <Download className="w-4 h-4" />
-            {isGenerating ? t('reportSection.generating') : t('reportSection.semi.download')}
-          </button>
-        </div>
-      </div>
-    </BaseDialog>
-  );
-};
-
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
-  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | null>(null);
+  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
-  const [factors, setFactors] = useState<FactorsGrouped>({ transparency: [], openness: [], trust: [] });
-  const [articles, setArticles] = useState<any[]>([]);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [factors, setFactors] = useState<FactorsGrouped | null>(null);
+  const [articles, setArticles] = useState<News[]>([]);
 
   useEffect(() => {
-    // Load real factors from API
+    researchApi.get().then(setResearchStats).catch(() => {});
     indexesApi.getFactors().then(setFactors).catch(() => {});
-
-    // Load real stats from public API
-    Promise.all([
-      apiClient.get<any>('/api/v1/stats/public').catch(() => null),
-      apiClient.get<any>('/api/v1/indexes/ranking?per_page=100').catch(() => null),
-      apiClient.get<any>('/api/v1/funds?per_page=100').catch(() => null),
-    ]).then(([stats, ranking, fundsRes]) => {
-      const funds: any[] = ranking?.data ?? [];
-      const allFunds: any[] = fundsRes?.data ?? [];
-
-      if (funds.length === 0) return;
-
-      const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length * 10) / 10 : 0;
-
-      const overalls = funds.map((f: any) => Number(f.indexes?.overall_score ?? 0));
-      const transparencies = funds.map((f: any) => Number(f.indexes?.transparency_score ?? 0));
-      const opennesses = funds.map((f: any) => Number(f.indexes?.openness_score ?? 0));
-      const trusts = funds.map((f: any) => Number(f.indexes?.trust_score ?? 0));
-
-      // Count by grade
-      const gradeCount = (grade: string) => funds.filter((f: any) => f.indexes?.grade === grade).length;
-
-      // Category distribution
-      const catMap: Record<string, number> = {};
-      allFunds.forEach((f: any) => {
-        const cat = f.category?.name_uz ?? 'Boshqa';
-        catMap[cat] = (catMap[cat] ?? 0) + 1;
-      });
-      const total = allFunds.length || 1;
-      const topCats = Object.entries(catMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
-      const areaPcts = topCats.map(([, n]) => Math.round(n / total * 100));
-
-      const totalFunds = stats?.total_funds ?? funds.length;
-      const verifiedFunds = stats?.verified_funds ?? funds.filter((f: any) => f.is_verified).length;
-
-      setResearchStats({
-        report: {
-          statActive: `${totalFunds}`,
-          statBeneficiaries: `${stats?.total_beneficiaries ?? 0}+`,
-          statRaised: `${stats?.total_projects ?? 0}`,
-          statTransparency: `${avg(transparencies)}%`,
-          areaPcts: areaPcts.length ? areaPcts : [38, 28, 19, 15],
-          findingsValues: [
-            `${totalFunds} ta`,
-            `${verifiedFunds} ta`,
-            `${gradeCount('gold') + gradeCount('platinum')} ta`,
-            `${avg(overalls)} ball`,
-            `${avg(transparencies)} ball`,
-          ],
-        },
-        analysis: {
-          statNewFunds: `${totalFunds}`,
-          statOnlineReports: `${verifiedFunds}`,
-          statUserRatings: `${gradeCount('gold') + gradeCount('platinum')}`,
-          growingChanges: [
-            `${avg(transparencies)} ball`,
-            `${avg(opennesses)} ball`,
-            `${avg(trusts)} ball`,
-            `${avg(overalls)} ball`,
-          ],
-          avgValues: [
-            `${avg(transparencies)} ball`,
-            `${avg(opennesses)} ball`,
-            `${avg(trusts)} ball`,
-          ],
-        },
-        comparison: DEFAULT_RESEARCH_STATS.comparison,
-      });
-    });
-
-    // Load recent news/articles
-    apiClient.get<any>('/api/v1/news?per_page=4').catch(() => null).then((res) => {
-      if (res?.data?.length) setArticles(res.data);
-    });
+    newsApi.getList({ per_page: 6 }).then(({ news }) => setArticles(news)).catch(() => {});
   }, []);
 
-  const handleDownloadReport = async () => {
-    setIsGenerating(true);
-    try {
-      const stats = researchStats;
-      const reportWindow = window.open('', '_blank');
-      if (!reportWindow) return;
-      const now = new Date().toLocaleDateString('uz-UZ');
-      reportWindow.document.write(`<!DOCTYPE html><html><head>
-        <meta charset="UTF-8"><title>Xayriya Hisoboti ${now}</title>
-        <style>
-          body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; color: #1e293b; }
-          h1 { color: #1A56DB; border-bottom: 3px solid #1A56DB; padding-bottom: 12px; }
-          h2 { color: #334155; margin-top: 32px; }
-          .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-          .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
-          .card .num { font-size: 2rem; font-weight: 900; color: #1A56DB; }
-          .card .lbl { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
-          table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-          th { background: #1A56DB; color: white; padding: 10px; text-align: left; }
-          td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; }
-          .print-btn { display: block; margin: 24px auto 0; padding: 12px 32px; background: #1A56DB; color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
-          .footer { margin-top: 48px; text-align: center; color: #94a3b8; font-size: 0.8rem; }
-          @media print { .print-btn { display: none; } }
-        </style>
-      </head><body>
-        <h1>🇺🇿 O'zbekiston Xayriya Indeksi — Hisobot</h1>
-        <p>Sana: ${now} | Manba: xayriya.info</p>
-        <h2>📊 Asosiy Ko'rsatkichlar</h2>
-        <div class="grid">
-          <div class="card"><div class="num">${stats.report.statActive}</div><div class="lbl">Jami fondlar</div></div>
-          <div class="card"><div class="num">${stats.report.statTransparency}</div><div class="lbl">O'rtacha shaffoflik</div></div>
-          <div class="card"><div class="num">${stats.report.statBeneficiaries}</div><div class="lbl">Benefitsiarlar</div></div>
-          <div class="card"><div class="num">${stats.report.statRaised}</div><div class="lbl">Loyihalar soni</div></div>
-        </div>
-        <h2>📈 Indeks Natijalari</h2>
-        <table>
-          <tr><th>Ko'rsatkich</th><th>Qiymat</th></tr>
-          ${stats.report.findingsValues.map((v, i) => {
-            const labels = ['Jami fondlar', 'Tasdiqlangan fondlar', 'Yuqori daraja (Gold/Platinum)', "O'rtacha umumiy ball", "O'rtacha shaffoflik bali"];
-            return `<tr><td>${labels[i] ?? ''}</td><td><strong>${v}</strong></td></tr>`;
-          }).join('')}
-        </table>
-        <h2>🏆 Metodologiya</h2>
-        <p>Umumiy = (Shaffoflik × 40%) + (Ochiqlik × 30%) + (Ishonchlilik × 30%)</p>
-        <table>
-          <tr><th>Daraja</th><th>Ball oralig'i</th></tr>
-          <tr><td>👑 Platinum</td><td>90–100</td></tr>
-          <tr><td>🥇 Gold</td><td>75–89</td></tr>
-          <tr><td>🥈 Silver</td><td>60–74</td></tr>
-          <tr><td>🥉 Bronze</td><td>45–59</td></tr>
-          <tr><td>⚠️ Unrated</td><td>0–44</td></tr>
-        </table>
-        <button class="print-btn" onclick="window.print()">🖨️ Chop etish / Print</button>
-        <div class="footer">© ${new Date().getFullYear()} Charity Index Uzbekistan — xayriya.info</div>
-      </body></html>`);
-      reportWindow.document.close();
-    } finally {
-      setIsGenerating(false);
-    }
+  const handleDownloadReport = () => {
+    const w = window.open('', '_blank');
+    if (!w) return;
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Xayriya Hisoboti 2024</title>
+      <style>body{font-family:sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{color:#1A56DB}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{border:1px solid #ddd;padding:10px;text-align:left}th{background:#f1f5f9}@media print{button{display:none}}</style>
+    </head><body>
+      <h1>Xayriya Hisoboti 2024</h1>
+      <p>Charity Index platformasi tomonidan tayyorlangan yillik hisobot.</p>
+      <table><thead><tr><th>Ko'rsatkich</th><th>Qiymat</th></tr></thead><tbody>
+        <tr><td>Faol fondlar soni</td><td>${researchStats.report.statActive}</td></tr>
+        <tr><td>Foyda ko'ruvchilar</td><td>${researchStats.report.statBeneficiaries}</td></tr>
+        <tr><td>Jami yig'ilgan mablag'</td><td>${researchStats.report.statRaised}</td></tr>
+        <tr><td>O'rtacha shaffoflik</td><td>${researchStats.report.statTransparency}</td></tr>
+      </tbody></table>
+      <p style="margin-top:32px;color:#64748b;font-size:13px">© ${new Date().getFullYear()} xayriya.info</p>
+    </body></html>`);
+    w.document.close();
+    w.focus();
+    setTimeout(() => w.print(), 300);
   };
 
-  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'article';
+  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'download-annual' | 'download-half';
 
-  const firstArticle = articles[0] ?? null;
-
-  const researchCards: { icon: React.ReactNode; title: string; desc: string; tag: string; buttonText: string; action: CardAction }[] = [
-    { icon: <FileText className="w-8 h-8" />,   title: t('cards.report.title'),      desc: t('cards.report.desc'),      tag: t('cards.report.tag'),      buttonText: t('cards.report.btn'),      action: 'report'      },
-    { icon: <BarChart3 className="w-8 h-8" />,  title: t('cards.methodology.title'), desc: t('cards.methodology.desc'), tag: t('cards.methodology.tag'), buttonText: t('cards.methodology.btn'), action: 'methodology' },
-    { icon: <TrendingUp className="w-8 h-8" />, title: t('cards.analysis.title'),    desc: t('cards.analysis.desc'),    tag: t('cards.analysis.tag'),    buttonText: t('cards.analysis.btn'),    action: 'analysis'    },
-    { icon: <Globe className="w-8 h-8" />,      title: t('cards.comparison.title'),  desc: t('cards.comparison.desc'),  tag: t('cards.comparison.tag'),  buttonText: t('cards.comparison.btn'),  action: 'comparison'  },
-    { icon: <Download className="w-8 h-8" />,   title: t('cards.hisobot.title'),     desc: t('cards.hisobot.desc'),     tag: t('cards.hisobot.tag'),     buttonText: t('cards.hisobot.btn'),     action: 'hisobot'     },
+  const researchCards: Array<{
+    icon: React.ReactNode;
+    title: string;
+    desc: string;
+    tag: string;
+    buttonText: string;
+    action: CardAction;
+  }> = [
     {
-      icon: <Newspaper className="w-8 h-8" />,
-      title: firstArticle ? (firstArticle.title_uz ?? firstArticle.title ?? t('cards.article.title')) : t('cards.article.title'),
-      desc:  firstArticle ? (firstArticle.excerpt ?? t('cards.article.desc')) : t('cards.article.desc'),
-      tag:   t('cards.article.tag'),
-      buttonText: firstArticle?.source_url ? t('articlesSection.download') : t('articlesSection.readMore'),
-      action: 'article',
+      icon: <FileText className="w-8 h-8" />,
+      title: t('cards.report.title'),
+      desc: t('cards.report.desc'),
+      tag: t('cards.report.tag'),
+      buttonText: t('cards.report.btn'),
+      action: 'report',
+    },
+    {
+      icon: <BarChart3 className="w-8 h-8" />,
+      title: t('cards.methodology.title'),
+      desc: t('cards.methodology.desc'),
+      tag: t('cards.methodology.tag'),
+      buttonText: t('cards.methodology.btn'),
+      action: 'methodology',
+    },
+    {
+      icon: <TrendingUp className="w-8 h-8" />,
+      title: t('cards.analysis.title'),
+      desc: t('cards.analysis.desc'),
+      tag: t('cards.analysis.tag'),
+      buttonText: t('cards.analysis.btn'),
+      action: 'analysis',
+    },
+    {
+      icon: <Globe className="w-8 h-8" />,
+      title: t('cards.comparison.title'),
+      desc: t('cards.comparison.desc'),
+      tag: t('cards.comparison.tag'),
+      buttonText: t('cards.comparison.btn'),
+      action: 'comparison',
+    },
+    {
+      icon: <Download className="w-8 h-8" />,
+      title: t('reportSection.annual'),
+      desc: t('reportSection.annualDesc'),
+      tag: t('reportSection.tag'),
+      buttonText: t('reportSection.download'),
+      action: 'download-annual',
+    },
+    {
+      icon: <Download className="w-8 h-8" />,
+      title: t('reportSection.halfYear'),
+      desc: t('reportSection.halfYearDesc'),
+      tag: t('reportSection.tag'),
+      buttonText: t('reportSection.download'),
+      action: 'download-half',
     },
   ];
 
-  const accents = ['border-blue-500', 'border-violet-500', 'border-emerald-500', 'border-amber-500', 'border-rose-500', 'border-violet-400'];
-  const iconBgs = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-600', 'bg-rose-50 text-rose-600', 'bg-violet-50 text-violet-500'];
+  const accents  = [
+    'border-blue-500',
+    'border-violet-500',
+    'border-emerald-500',
+    'border-amber-500',
+    'border-rose-500',
+    'border-cyan-500',
+  ];
+  const iconBgs  = [
+    'bg-blue-50 text-blue-600',
+    'bg-violet-50 text-violet-600',
+    'bg-emerald-50 text-emerald-600',
+    'bg-amber-50 text-amber-600',
+    'bg-rose-50 text-rose-600',
+    'bg-cyan-50 text-cyan-600',
+  ];
 
   const handleCardClick = (action: CardAction) => {
-    if (action === 'hisobot') {
-      setOpenDialog('hisobot');
-    } else if (action === 'article') {
-      const fileUrl = firstArticle?.source_url;
-      if (fileUrl) window.open(resolveMediaUrl(fileUrl), '_blank');
-      else window.location.href = '/news';
+    if (action === 'download-annual' || action === 'download-half') {
+      handleDownloadReport();
     } else {
       setOpenDialog(action);
     }
@@ -602,6 +481,7 @@ const Tadqiqot = () => {
   return (
     <Layout>
       <div className="bg-[#F8FAFC] min-h-screen">
+        {/* Header */}
         <div className="bg-[#EFF6FF] py-12 border-b border-blue-100">
           <div className="max-w-5xl mx-auto px-4">
             <nav className="flex text-sm text-[#64748B] mb-4">
@@ -615,16 +495,15 @@ const Tadqiqot = () => {
         </div>
 
         <div className="max-w-5xl mx-auto px-4 py-16 space-y-16">
-
-          {/* Research cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* 6-card grid — 3 × 2 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {researchCards.map((card, index) => (
               <motion.div
                 key={card.action}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
+                transition={{ delay: index * 0.07 }}
                 className={`group flex flex-col overflow-hidden rounded-[28px] border-t-4 ${accents[index]} border border-[#E2E8F0] bg-white shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-500`}
               >
                 <div className="flex flex-col flex-1 p-8">
@@ -655,16 +534,79 @@ const Tadqiqot = () => {
             ))}
           </div>
 
-
-
+          {/* Maqolalar section */}
+          {articles.length > 0 && (
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <Newspaper className="w-6 h-6 text-blue-600" />
+                <h2 className="text-2xl font-black text-slate-900">{t('articlesSection.title')}</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {articles.map((article, index) => (
+                  <motion.article
+                    key={article.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex flex-col bg-white rounded-[20px] border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                  >
+                    {article.image_url ? (
+                      <img
+                        src={assetUrl(article.image_url) ?? article.image_url}
+                        alt={article.title_uz ?? article.title}
+                        className="w-full h-40 object-cover"
+                      />
+                    ) : (
+                      <div className={`w-full h-40 bg-gradient-to-br ${article.gradient || 'from-blue-500 to-indigo-600'} flex items-center justify-center`}>
+                        <Newspaper className="w-12 h-12 text-white/40" />
+                      </div>
+                    )}
+                    <div className="flex flex-col flex-1 p-5">
+                      <h3 className="font-black text-slate-900 text-[15px] leading-snug mb-2 line-clamp-2">
+                        {article.title_uz ?? article.title}
+                      </h3>
+                      <p className="text-[13px] text-slate-500 font-medium leading-relaxed line-clamp-3 flex-1">
+                        {article.excerpt}
+                      </p>
+                      <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+                        {article.file_url && (
+                          <a
+                            href={assetUrl(article.file_url) ?? article.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            download
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-colors"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            {t('articlesSection.download')}
+                          </a>
+                        )}
+                        {article.source_url && (
+                          <a
+                            href={article.source_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-bold hover:bg-slate-100 transition-colors ml-auto"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                            {t('articlesSection.readMore')}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </div>
 
-      <ReportDialog        open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <MethodologyDialog   open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
-      <AnalysisDialog      open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <ComparisonDialog    open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <HisobotChoiceDialog open={openDialog === 'hisobot'}    onOpenChange={(v) => !v && setOpenDialog(null)} onDownload={handleDownloadReport} isGenerating={isGenerating} />
+      <ReportDialog      open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <MethodologyDialog open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
+      <AnalysisDialog    open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <ComparisonDialog  open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
     </Layout>
   );
 };
