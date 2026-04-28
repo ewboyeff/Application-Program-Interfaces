@@ -8,7 +8,9 @@
     "report":      { "title": "State of Charity in Uzbekistan 2024", "desc": "Annual analysis covering the activities of charity funds in the country", "tag": "Year 2024",    "btn": "View" },
     "methodology": { "title": "Transparency Index Methodology",       "desc": "Index calculation methods and factor analysis",                          "tag": "Methodology",  "btn": "Read" },
     "analysis":    { "title": "Charity Trends 2023–2024",             "desc": "Changes over the last two years",                                        "tag": "Analysis",     "btn": "Read" },
-    "comparison":  { "title": "International Comparison",             "desc": "Uzbekistan's charity sector in regional comparison",                     "tag": "International", "btn": "Read" }
+    "comparison":  { "title": "International Comparison",             "desc": "Uzbekistan's charity sector in regional comparison",                     "tag": "International", "btn": "Read" },
+    "hisobot":     { "title": "Charity Reports",                      "desc": "Download annual and 6-month reports",                                    "tag": "Report",       "btn": "Download" },
+    "maqolalar":   { "title": "Research Articles",                    "desc": "Research and analysis articles uploaded by admin",                       "tag": "Article",      "btn": "View" }
   },
 
   "report": {
@@ -97,7 +99,8 @@
   },
 
   "reportSection": {
-    "title": "Charity Report",
+    "title": "Charity Reports",
+    "chooseSubtitle": "Which report would you like to download?",
     "tag": "Report",
     "annual": "Annual Charity Report 2024",
     "annualDesc": "Full report on all fund activities over the past year",
@@ -107,7 +110,9 @@
   },
 
   "articlesSection": {
-    "title": "Articles",
+    "title": "Research Articles",
+    "subtitle": "Articles uploaded by admin",
+    "empty": "No articles available yet",
     "download": "Download",
     "readMore": "Read more"
   }

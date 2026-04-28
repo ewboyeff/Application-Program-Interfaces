@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/src/components/layout/Layout';
 import {
-  FileText, BarChart3, TrendingUp, Globe, ChevronRight, X, Download, Newspaper, ExternalLink,
+  FileText, BarChart3, TrendingUp, Globe, ChevronRight, X, Download, Newspaper,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { researchApi, ResearchStats, DEFAULT_RESEARCH_STATS } from '@/src/api/research';
 import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
 import { newsApi } from '@/src/api/news';
 import { News } from '@/src/types';
-import { assetUrl } from '@/src/lib/utils';
+import { assetUrl, API_BASE } from '@/src/lib/utils';
+
+const resolveMediaUrl = (url: string) =>
+  url.startsWith('http') ? url : `${API_BASE}${url}`;
 
 type Factor = { name: string; weight: string };
 
@@ -358,10 +361,122 @@ const ComparisonDialog = ({
   );
 };
 
+// ── Dialog 5: Hisobot Choice ─────────────────────────────────────────────────
+const HisobotChoiceDialog = ({
+  open, onOpenChange, onDownload,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  onDownload: () => void;
+}) => {
+  const { t } = useTranslation('tadqiqot');
+  return (
+    <BaseDialog
+      open={open} onOpenChange={onOpenChange}
+      title={t('reportSection.title')}
+      subtitle={t('reportSection.chooseSubtitle')}
+      headerBg="bg-rose-50" headerBorder="border-rose-100"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <button
+          onClick={() => { onDownload(); onOpenChange(false); }}
+          className="flex flex-col items-start gap-3 p-5 rounded-2xl border-2 border-rose-200 bg-rose-50 hover:bg-rose-100 hover:border-rose-400 transition-all text-left"
+        >
+          <div className="p-3 bg-white rounded-xl shadow-sm">
+            <Download className="w-6 h-6 text-rose-600" />
+          </div>
+          <div className="flex-1">
+            <div className="font-black text-slate-800 text-[15px]">{t('reportSection.annual')}</div>
+            <div className="text-xs text-slate-500 mt-1 leading-relaxed">{t('reportSection.annualDesc')}</div>
+          </div>
+          <span className="text-xs font-bold text-rose-600 flex items-center gap-1">
+            <Download className="w-3.5 h-3.5" /> {t('reportSection.download')}
+          </span>
+        </button>
+
+        <button
+          onClick={() => { onDownload(); onOpenChange(false); }}
+          className="flex flex-col items-start gap-3 p-5 rounded-2xl border-2 border-cyan-200 bg-cyan-50 hover:bg-cyan-100 hover:border-cyan-400 transition-all text-left"
+        >
+          <div className="p-3 bg-white rounded-xl shadow-sm">
+            <Download className="w-6 h-6 text-cyan-600" />
+          </div>
+          <div className="flex-1">
+            <div className="font-black text-slate-800 text-[15px]">{t('reportSection.halfYear')}</div>
+            <div className="text-xs text-slate-500 mt-1 leading-relaxed">{t('reportSection.halfYearDesc')}</div>
+          </div>
+          <span className="text-xs font-bold text-cyan-600 flex items-center gap-1">
+            <Download className="w-3.5 h-3.5" /> {t('reportSection.download')}
+          </span>
+        </button>
+      </div>
+    </BaseDialog>
+  );
+};
+
+// ── Dialog 6: Maqolalar ───────────────────────────────────────────────────────
+const MaqolalarDialog = ({
+  open, onOpenChange, articles,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  articles: News[];
+}) => {
+  const { t } = useTranslation('tadqiqot');
+  return (
+    <BaseDialog
+      open={open} onOpenChange={onOpenChange}
+      title={t('articlesSection.title')}
+      subtitle={t('articlesSection.subtitle')}
+      headerBg="bg-amber-50" headerBorder="border-amber-100"
+    >
+      {articles.length === 0 ? (
+        <div className="py-12 text-center">
+          <Newspaper className="w-12 h-12 text-slate-200 mx-auto mb-3" />
+          <p className="text-slate-400 font-medium">{t('articlesSection.empty')}</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {articles.map(article => {
+            const fileUrl = article.source_url || article.file_url;
+            return (
+              <div key={article.id} className="flex items-start justify-between gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-white hover:border-slate-200 transition-all">
+                <div className="flex-1 min-w-0">
+                  {article.category && (
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{article.category}</div>
+                  )}
+                  <h4 className="font-bold text-slate-800 text-sm leading-snug">
+                    {article.title_uz ?? article.title}
+                  </h4>
+                  {article.excerpt && (
+                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{article.excerpt}</p>
+                  )}
+                </div>
+                {fileUrl && (
+                  <a
+                    href={resolveMediaUrl(fileUrl)}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    {t('articlesSection.download')}
+                  </a>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </BaseDialog>
+  );
+};
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
-  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | null>(null);
+  const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
   const [factors, setFactors] = useState<FactorsGrouped | null>(null);
   const [articles, setArticles] = useState<News[]>([]);
@@ -393,7 +508,7 @@ const Tadqiqot = () => {
     setTimeout(() => w.print(), 300);
   };
 
-  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'download-annual' | 'download-half';
+  type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar';
 
   const researchCards: Array<{
     icon: React.ReactNode;
@@ -437,19 +552,19 @@ const Tadqiqot = () => {
     },
     {
       icon: <Download className="w-8 h-8" />,
-      title: t('reportSection.annual'),
-      desc: t('reportSection.annualDesc'),
-      tag: t('reportSection.tag'),
-      buttonText: t('reportSection.download'),
-      action: 'download-annual',
+      title: t('cards.hisobot.title'),
+      desc: t('cards.hisobot.desc'),
+      tag: t('cards.hisobot.tag'),
+      buttonText: t('cards.hisobot.btn'),
+      action: 'hisobot' as CardAction,
     },
     {
-      icon: <Download className="w-8 h-8" />,
-      title: t('reportSection.halfYear'),
-      desc: t('reportSection.halfYearDesc'),
-      tag: t('reportSection.tag'),
-      buttonText: t('reportSection.download'),
-      action: 'download-half',
+      icon: <Newspaper className="w-8 h-8" />,
+      title: t('cards.maqolalar.title'),
+      desc: t('cards.maqolalar.desc'),
+      tag: t('cards.maqolalar.tag'),
+      buttonText: t('cards.maqolalar.btn'),
+      action: 'maqolalar' as CardAction,
     },
   ];
 
@@ -471,11 +586,7 @@ const Tadqiqot = () => {
   ];
 
   const handleCardClick = (action: CardAction) => {
-    if (action === 'download-annual' || action === 'download-half') {
-      handleDownloadReport();
-    } else {
-      setOpenDialog(action);
-    }
+    setOpenDialog(action);
   };
 
   return (
@@ -534,79 +645,15 @@ const Tadqiqot = () => {
             ))}
           </div>
 
-          {/* Maqolalar section */}
-          {articles.length > 0 && (
-            <section>
-              <div className="flex items-center gap-3 mb-6">
-                <Newspaper className="w-6 h-6 text-blue-600" />
-                <h2 className="text-2xl font-black text-slate-900">{t('articlesSection.title')}</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {articles.map((article, index) => (
-                  <motion.article
-                    key={article.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex flex-col bg-white rounded-[20px] border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-                  >
-                    {article.image_url ? (
-                      <img
-                        src={assetUrl(article.image_url) ?? article.image_url}
-                        alt={article.title_uz ?? article.title}
-                        className="w-full h-40 object-cover"
-                      />
-                    ) : (
-                      <div className={`w-full h-40 bg-gradient-to-br ${article.gradient || 'from-blue-500 to-indigo-600'} flex items-center justify-center`}>
-                        <Newspaper className="w-12 h-12 text-white/40" />
-                      </div>
-                    )}
-                    <div className="flex flex-col flex-1 p-5">
-                      <h3 className="font-black text-slate-900 text-[15px] leading-snug mb-2 line-clamp-2">
-                        {article.title_uz ?? article.title}
-                      </h3>
-                      <p className="text-[13px] text-slate-500 font-medium leading-relaxed line-clamp-3 flex-1">
-                        {article.excerpt}
-                      </p>
-                      <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
-                        {article.file_url && (
-                          <a
-                            href={assetUrl(article.file_url) ?? article.file_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            download
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-colors"
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                            {t('articlesSection.download')}
-                          </a>
-                        )}
-                        {article.source_url && (
-                          <a
-                            href={article.source_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-bold hover:bg-slate-100 transition-colors ml-auto"
-                          >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                            {t('articlesSection.readMore')}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.article>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
       </div>
 
-      <ReportDialog      open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <MethodologyDialog open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
-      <AnalysisDialog    open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <ComparisonDialog  open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <ReportDialog        open={openDialog === 'report'}      onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <MethodologyDialog   open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
+      <AnalysisDialog      open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <ComparisonDialog    open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
+      <HisobotChoiceDialog open={openDialog === 'hisobot'}     onOpenChange={(v) => !v && setOpenDialog(null)} onDownload={handleDownloadReport} />
+      <MaqolalarDialog     open={openDialog === 'maqolalar'}   onOpenChange={(v) => !v && setOpenDialog(null)} articles={articles} />
     </Layout>
   );
 };

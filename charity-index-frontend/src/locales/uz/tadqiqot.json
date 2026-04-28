@@ -8,7 +8,9 @@
     "report":      { "title": "O'zbekistonda Xayriya Holati 2024",    "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil", "tag": "2024 yil",     "btn": "Ko'rish" },
     "methodology": { "title": "Shaffoflik Indeksi Metodologiyasi",      "desc": "Indekslarni hisoblash usullari va omillar tahlili",                   "tag": "Metodologiya", "btn": "O'qish"  },
     "analysis":    { "title": "Xayriya Trendlari 2023–2024",            "desc": "So'nggi ikki yil davomidagi o'zgarishlar",                            "tag": "Tahlil",       "btn": "O'qish"  },
-    "comparison":  { "title": "Xalqaro Taqqoslash",                     "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",                  "tag": "Xalqaro",      "btn": "O'qish"  }
+    "comparison":  { "title": "Xalqaro Taqqoslash",                     "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",                  "tag": "Xalqaro",      "btn": "O'qish"  },
+    "hisobot":     { "title": "Xayriya Hisobotlari",                    "desc": "Yillik va 6 oylik hisobotlarni yuklab oling",                          "tag": "Hisobot",      "btn": "Yuklab olish" },
+    "maqolalar":   { "title": "Tadqiqot Maqolalari",                    "desc": "Admin tomonidan yuklangan tadqiqot va tahlil maqolalari",               "tag": "Maqola",       "btn": "Ko'rish" }
   },
 
   "report": {
@@ -97,7 +99,8 @@
   },
 
   "reportSection": {
-    "title": "Xayriya Hisoboti",
+    "title": "Xayriya Hisobotlari",
+    "chooseSubtitle": "Qaysi hisobotni yuklab olmoqchisiz?",
     "tag": "Hisobot",
     "annual": "Yillik Xayriya Hisoboti 2024",
     "annualDesc": "O'tgan yil davomidagi barcha fondlar faoliyati haqida to'liq hisobot",
@@ -107,7 +110,9 @@
   },
 
   "articlesSection": {
-    "title": "Maqolalar",
+    "title": "Tadqiqot Maqolalari",
+    "subtitle": "Admin tomonidan yuklangan maqolalar",
+    "empty": "Hozircha maqolalar mavjud emas",
     "download": "Yuklab olish",
     "readMore": "Batafsil"
   }
