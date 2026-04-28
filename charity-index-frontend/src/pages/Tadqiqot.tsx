@@ -574,7 +574,7 @@ const Tadqiqot = () => {
       title: firstArticle ? (firstArticle.title_uz ?? firstArticle.title ?? t('cards.article.title')) : t('cards.article.title'),
       desc:  firstArticle ? (firstArticle.excerpt ?? t('cards.article.desc')) : t('cards.article.desc'),
       tag:   t('cards.article.tag'),
-      buttonText: firstArticle?.file_url ? t('articlesSection.download') : t('articlesSection.readMore'),
+      buttonText: firstArticle?.source_url ? t('articlesSection.download') : t('articlesSection.readMore'),
       action: 'article',
     },
   ];
@@ -586,7 +586,8 @@ const Tadqiqot = () => {
     if (action === 'hisobot') {
       setOpenDialog('hisobot');
     } else if (action === 'article') {
-      if (firstArticle?.file_url) window.open(firstArticle.file_url, '_blank');
+      const fileUrl = firstArticle?.source_url;
+      if (fileUrl) window.open(fileUrl, '_blank');
       else window.location.href = '/news';
     } else {
       setOpenDialog(action);
@@ -687,9 +688,9 @@ const Tadqiqot = () => {
                       <span className="text-xs text-slate-400 font-medium">
                         {article.date ? new Date(article.date).toLocaleDateString('uz-UZ') : ''}
                       </span>
-                      {article.file_url && (
+                      {article.source_url && (
                         <a
-                          href={article.file_url}
+                          href={article.source_url}
                           download
                           target="_blank"
                           rel="noopener noreferrer"

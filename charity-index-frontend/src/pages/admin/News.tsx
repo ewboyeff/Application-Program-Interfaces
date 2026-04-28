@@ -142,7 +142,8 @@ export const AdminNews: React.FC = () => {
     setIsUploadingFile(true);
     try {
       const url = await reportsApi.uploadDocument(file);
-      setForm(p => ({ ...p, file_url: url }));
+      // source_url ga saqlaymiz — backend file_url ni qo'llamaydi
+      setForm(p => ({ ...p, file_url: url, source_url: url }));
       showToast('Fayl yuklandi', 'success');
     } catch {
       showToast('Fayl yuklashda xatolik', 'error');
@@ -425,7 +426,7 @@ export const AdminNews: React.FC = () => {
                     </a>
                     <button
                       type="button"
-                      onClick={() => { setForm(p => ({ ...p, file_url: '' })); if (pdfInputRef.current) pdfInputRef.current.value = ''; }}
+                      onClick={() => { setForm(p => ({ ...p, file_url: '', source_url: '' })); if (pdfInputRef.current) pdfInputRef.current.value = ''; }}
                       className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
                     >
                       <X className="w-4 h-4" />
@@ -452,20 +453,22 @@ export const AdminNews: React.FC = () => {
                 <p className="text-[11px] text-slate-400 font-medium ml-1">Foydalanuvchilar tadqiqot sahifasidan yuklab olishi mumkin</p>
               </div>
 
-              {/* Source URL */}
-              <div className="space-y-1.5">
-                <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                  <LinkIcon className="w-4 h-4 text-slate-400" /> Manba havolasi (ixtiyoriy)
-                </label>
-                <input
-                  type="text"
-                  value={form.source_url}
-                  onChange={e => setForm(p => ({ ...p, source_url: e.target.value }))}
-                  placeholder="https://kun.uz/..."
-                  className="w-full bg-slate-50 border-2 border-slate-50 rounded-xl py-2.5 px-4 text-sm text-slate-900 font-medium focus:bg-white focus:border-blue-600 outline-none transition-all"
-                />
-                <p className="text-[11px] text-slate-400 font-medium ml-1">Yangilik ko'rinishida "Manba" tugmasi sifatida chiqadi</p>
-              </div>
+              {/* Source URL — disabled when file is uploaded */}
+              {!form.file_url && (
+                <div className="space-y-1.5">
+                  <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                    <LinkIcon className="w-4 h-4 text-slate-400" /> Manba havolasi (ixtiyoriy)
+                  </label>
+                  <input
+                    type="text"
+                    value={form.source_url}
+                    onChange={e => setForm(p => ({ ...p, source_url: e.target.value }))}
+                    placeholder="https://kun.uz/..."
+                    className="w-full bg-slate-50 border-2 border-slate-50 rounded-xl py-2.5 px-4 text-sm text-slate-900 font-medium focus:bg-white focus:border-blue-600 outline-none transition-all"
+                  />
+                  <p className="text-[11px] text-slate-400 font-medium ml-1">Foydalanuvchilar maqolani "Ko'rish" tugmasi orqali yuklab oladi</p>
+                </div>
+              )}
 
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-slate-700">O'qish vaqti (daqiqa)</label>
