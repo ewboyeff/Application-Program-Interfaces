@@ -160,12 +160,12 @@ export default function Ranking() {
 
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-20">
         {/* Filter Bar */}
-        <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 p-3 mb-8 flex flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-2 p-1">
+        <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 p-3 mb-8 flex flex-col md:flex-row items-center gap-3">
+          <div className="flex items-center gap-2 overflow-x-auto w-full md:flex-1 p-1 pb-2 md:pb-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#CBD5E1 transparent' }}>
             <button
               onClick={() => setActiveCategory('Barchasi')}
               className={cn(
-                'px-5 py-2.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap',
+                'px-5 py-2.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap shrink-0',
                 activeCategory === 'Barchasi'
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
                   : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
@@ -178,7 +178,7 @@ export default function Ranking() {
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.name_uz)}
                 className={cn(
-                  'px-5 py-2.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap',
+                  'px-5 py-2.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap shrink-0',
                   activeCategory === cat.name_uz
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
                     : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
@@ -189,8 +189,8 @@ export default function Ranking() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 px-1">
-            <div className="relative w-full md:w-72">
+          <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+            <div className="relative w-full md:w-64">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
