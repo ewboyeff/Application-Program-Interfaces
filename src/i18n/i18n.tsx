@@ -625,3 +625,55 @@ export const LANGS: { code: Lang; label: string }[] = [
   { code: "ru", label: "RU" },
   { code: "en", label: "EN" },
 ];
+
+// ----- Translated content helpers -----
+import { PRODUCT_T, MUSEUM_T, BLOG_T, CATEGORY_KEY } from "./content";
+import type { Product } from "@/data/products";
+import type { Museum } from "@/data/museums";
+import type { BlogPost } from "@/data/blog";
+
+export function useProductT(product: Product) {
+  const { lang, t } = useI18n();
+  const tr = PRODUCT_T[lang]?.[product.id] ?? PRODUCT_T.uz[product.id];
+  const catKey = CATEGORY_KEY[product.category];
+  return {
+    name: tr?.name ?? product.name,
+    short: tr?.short ?? product.short,
+    description: tr?.description ?? product.description,
+    category: catKey ? t(catKey) : product.category,
+    museum: product.museum,
+  };
+}
+
+export function useMuseumT(m: Museum) {
+  const { lang } = useI18n();
+  const tr = MUSEUM_T[lang]?.[m.id] ?? MUSEUM_T.uz[m.id];
+  return {
+    name: tr?.name ?? m.name,
+    city: tr?.city ?? m.city,
+    short: tr?.short ?? m.short,
+    description: tr?.description ?? m.description,
+    founded: tr?.founded ?? m.founded,
+  };
+}
+
+export function useBlogT(p: BlogPost) {
+  const { lang } = useI18n();
+  const tr = BLOG_T[lang]?.[p.id] ?? BLOG_T.uz[p.id];
+  return {
+    title: tr?.title ?? p.title,
+    excerpt: tr?.excerpt ?? p.excerpt,
+    category: tr?.category ?? p.category,
+    date: tr?.date ?? p.date,
+    readTime: tr?.readTime ?? p.readTime,
+    body: tr?.body ?? p.body,
+  };
+}
+
+export function useCategoryT() {
+  const { t } = useI18n();
+  return (cat: string) => {
+    const key = CATEGORY_KEY[cat];
+    return key ? t(key) : cat;
+  };
+}
