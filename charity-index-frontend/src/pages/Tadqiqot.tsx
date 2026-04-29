@@ -363,13 +363,29 @@ const ComparisonDialog = ({
 
 // ── Dialog 5: Hisobot Choice ─────────────────────────────────────────────────
 const HisobotChoiceDialog = ({
-  open, onOpenChange, onDownload,
+  open, onOpenChange, annualUrl, halfYearUrl, onFallback,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  onDownload: () => void;
+  annualUrl?: string;
+  halfYearUrl?: string;
+  onFallback: () => void;
 }) => {
   const { t } = useTranslation('tadqiqot');
+
+  const handleDownload = (url?: string) => {
+    if (url) {
+      const a = document.createElement('a');
+      a.href = url.startsWith('http') ? url : `${API_BASE}${url}`;
+      a.download = '';
+      a.target = '_blank';
+      a.click();
+    } else {
+      onFallback();
+    }
+    onOpenChange(false);
+  };
+
   return (
     <BaseDialog
       open={open} onOpenChange={onOpenChange}
@@ -379,7 +395,7 @@ const HisobotChoiceDialog = ({
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
-          onClick={() => { onDownload(); onOpenChange(false); }}
+          onClick={() => handleDownload(annualUrl)}
           className="flex flex-col items-start gap-3 p-5 rounded-2xl border-2 border-rose-200 bg-rose-50 hover:bg-rose-100 hover:border-rose-400 transition-all text-left"
         >
           <div className="p-3 bg-white rounded-xl shadow-sm">
@@ -395,7 +411,7 @@ const HisobotChoiceDialog = ({
         </button>
 
         <button
-          onClick={() => { onDownload(); onOpenChange(false); }}
+          onClick={() => handleDownload(halfYearUrl)}
           className="flex flex-col items-start gap-3 p-5 rounded-2xl border-2 border-cyan-200 bg-cyan-50 hover:bg-cyan-100 hover:border-cyan-400 transition-all text-left"
         >
           <div className="p-3 bg-white rounded-xl shadow-sm">
@@ -652,7 +668,7 @@ const Tadqiqot = () => {
       <MethodologyDialog   open={openDialog === 'methodology'} onOpenChange={(v) => !v && setOpenDialog(null)} factors={factors} />
       <AnalysisDialog      open={openDialog === 'analysis'}    onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
       <ComparisonDialog    open={openDialog === 'comparison'}  onOpenChange={(v) => !v && setOpenDialog(null)} stats={researchStats} />
-      <HisobotChoiceDialog open={openDialog === 'hisobot'}     onOpenChange={(v) => !v && setOpenDialog(null)} onDownload={handleDownloadReport} />
+      <HisobotChoiceDialog open={openDialog === 'hisobot'}     onOpenChange={(v) => !v && setOpenDialog(null)} annualUrl={researchStats.report.annual_report_url} halfYearUrl={researchStats.report.half_year_report_url} onFallback={handleDownloadReport} />
       <MaqolalarDialog     open={openDialog === 'maqolalar'}   onOpenChange={(v) => !v && setOpenDialog(null)} articles={articles} />
     </Layout>
   );

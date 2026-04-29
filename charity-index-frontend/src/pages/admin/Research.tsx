@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FileText, TrendingUp, Globe, Save, Loader2, RotateCcw } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { FileText, TrendingUp, Globe, Save, Loader2, RotateCcw, Upload, X, Download } from 'lucide-react';
 import { useToast } from '@/src/context/ToastContext';
 import { researchApi, ResearchStats, DEFAULT_RESEARCH_STATS } from '@/src/api/research';
+import { reportsApi } from '@/src/api/reports';
+import { API_BASE } from '@/src/lib/utils';
 
 const inputCls =
   'w-full bg-slate-50 border-2 border-slate-100 rounded-xl py-2.5 px-3 text-slate-900 font-medium focus:bg-white focus:border-blue-500 transition-all outline-none text-sm';
@@ -46,6 +48,31 @@ export const AdminResearch: React.FC = () => {
   const [stats, setStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploadingAnnual, setUploadingAnnual] = useState(false);
+  const [uploadingHalf, setUploadingHalf] = useState(false);
+  const annualInputRef = useRef<HTMLInputElement>(null);
+  const halfInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadReport = async (type: 'annual' | 'half', file: File) => {
+    const setUploading = type === 'annual' ? setUploadingAnnual : setUploadingHalf;
+    const field = type === 'annual' ? 'annual_report_url' : 'half_year_report_url';
+    setUploading(true);
+    try {
+      const url = await reportsApi.uploadDocument(file);
+      setStats(prev => ({
+        ...prev,
+        report: { ...prev.report, [field]: url },
+      }));
+      showToast('Fayl yuklandi — Saqlash tugmasini bosing', 'success');
+    } catch {
+      showToast('Fayl yuklashda xatolik', 'error');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const resolveUrl = (url?: string) =>
+    url ? (url.startsWith('http') ? url : `${API_BASE}${url}`) : '';
 
   useEffect(() => {
     researchApi
@@ -103,7 +130,7 @@ export const AdminResearch: React.FC = () => {
 
   const reportAreaLabels = ['Bolalar va ta\'lim', 'Tibbiyot va sog\'liqni saqlash', 'Ijtimoiy yordam', 'Favqulodda yordam'];
   const findingsLabels = ['Reytingdagi fondlar soni', 'Platinum darajasidagi fondlar', 'Gold darajasidagi fondlar', 'O\'rtacha indeks ball', 'Oldingi yilga nisbatan o\'sish'];
-  const avgLabels = ['2022 yil o\'rtacha', '2023 yil o\'rtacha', '2024 yil o\'rtacha'];
+  const avgLabels = ['2024 yil o\'rtacha', '2025 yil o\'rtacha', '2026 yil o\'rtacha'];
   const growingLabels = ['Raqamli hisobot yuritish', 'Ijtimoiy tarmoq faolligi', 'Donor shaffoflik darajasi', 'Mustaqil audit o\'tkazish'];
   const countryLabels = ['🇰🇿 Qozog\'iston', '🇰🇬 Qirg\'iziston', '🇺🇿 O\'zbekiston', '🇹🇯 Tojikiston', '🇹🇲 Turkmaniston'];
   const globalLabels = ['Dunyo o\'rtacha shaffoflik indeksi', 'Rivojlangan davlatlar o\'rtacha', 'Markaziy Osiyo o\'rtacha', 'O\'zbekiston pozitsiyasi (mintaqada)'];
@@ -133,6 +160,88 @@ export const AdminResearch: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* REPORT FILES */}
+      <SectionCard icon={<Download className="w-5 h-5 text-rose-600" />} title="Hisobot fayllari (PDF)" color="bg-rose-50/50">
+        <p className="text-xs text-slate-400 font-medium -mt-2">Foydalanuvchilar yuklab oladigan haqiqiy PDF fayllarni yuklang. Har hafta yangilanishi mumkin.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Annual */}
+          <div className="space-y-3 p-4 rounded-2xl border-2 border-rose-100 bg-rose-50/40">
+            <p className="text-sm font-bold text-slate-700">Yillik Hisobot 2026</p>
+            {stats.report.annual_report_url ? (
+              <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-rose-200">
+                <FileText className="w-4 h-4 text-rose-500 shrink-0" />
+                <a
+                  href={resolveUrl(stats.report.annual_report_url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-600 font-medium truncate flex-1 hover:underline"
+                >
+                  {stats.report.annual_report_url.split('/').pop()}
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setStats(p => ({ ...p, report: { ...p.report, annual_report_url: '' } }))}
+                  className="text-slate-400 hover:text-rose-500 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <p className="text-xs text-slate-400 italic">Fayl yuklanmagan</p>
+            )}
+            <input ref={annualInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden"
+              onChange={e => { const f = e.target.files?.[0]; if (f) handleUploadReport('annual', f); }} />
+            <button
+              type="button"
+              disabled={uploadingAnnual}
+              onClick={() => annualInputRef.current?.click()}
+              className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white rounded-xl text-sm font-bold hover:bg-rose-700 transition-all disabled:opacity-60"
+            >
+              {uploadingAnnual ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+              {uploadingAnnual ? 'Yuklanmoqda...' : 'PDF yuklash'}
+            </button>
+          </div>
+
+          {/* Half-year */}
+          <div className="space-y-3 p-4 rounded-2xl border-2 border-cyan-100 bg-cyan-50/40">
+            <p className="text-sm font-bold text-slate-700">6 Oylik Hisobot (Yan–Iyn 2026)</p>
+            {stats.report.half_year_report_url ? (
+              <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-cyan-200">
+                <FileText className="w-4 h-4 text-cyan-500 shrink-0" />
+                <a
+                  href={resolveUrl(stats.report.half_year_report_url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-600 font-medium truncate flex-1 hover:underline"
+                >
+                  {stats.report.half_year_report_url.split('/').pop()}
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setStats(p => ({ ...p, report: { ...p.report, half_year_report_url: '' } }))}
+                  className="text-slate-400 hover:text-rose-500 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <p className="text-xs text-slate-400 italic">Fayl yuklanmagan</p>
+            )}
+            <input ref={halfInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden"
+              onChange={e => { const f = e.target.files?.[0]; if (f) handleUploadReport('half', f); }} />
+            <button
+              type="button"
+              disabled={uploadingHalf}
+              onClick={() => halfInputRef.current?.click()}
+              className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-xl text-sm font-bold hover:bg-cyan-700 transition-all disabled:opacity-60"
+            >
+              {uploadingHalf ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+              {uploadingHalf ? 'Yuklanmoqda...' : 'PDF yuklash'}
+            </button>
+          </div>
+        </div>
+      </SectionCard>
 
       {/* REPORT */}
       <SectionCard icon={<FileText className="w-5 h-5 text-blue-600" />} title="Yillik hisobot statistikasi" color="bg-blue-50/50">

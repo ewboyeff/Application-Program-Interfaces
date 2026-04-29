@@ -8,6 +8,8 @@ export interface ResearchStats {
     statTransparency: string;
     areaPcts: number[];
     findingsValues: string[];
+    annual_report_url?: string;
+    half_year_report_url?: string;
   };
   analysis: {
     statNewFunds: string;
@@ -30,6 +32,8 @@ export const DEFAULT_RESEARCH_STATS: ResearchStats = {
     statTransparency: '74%',
     areaPcts: [40, 27, 20, 13],
     findingsValues: ['124 ta', '11 ta', '38 ta', '68.7', '+10.5%'],
+    annual_report_url: '',
+    half_year_report_url: '',
   },
   analysis: {
     statNewFunds: '+31%',
