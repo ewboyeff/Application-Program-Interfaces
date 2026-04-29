@@ -12,6 +12,7 @@ import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
 import { newsApi } from '@/src/api/news';
 import { News } from '@/src/types';
 import { assetUrl, API_BASE } from '@/src/lib/utils';
+import { useDataStore } from '@/src/store/useDataStore';
 
 const resolveMediaUrl = (url: string) =>
   url.startsWith('http') ? url : `${API_BASE}${url}`;
@@ -492,6 +493,7 @@ const MaqolalarDialog = ({
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
+  const { funds } = useDataStore();
   const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
   const [factors, setFactors] = useState<FactorsGrouped | null>(null);
@@ -506,22 +508,77 @@ const Tadqiqot = () => {
   const handleDownloadReport = () => {
     const w = window.open('', '_blank');
     if (!w) return;
-    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Xayriya Hisoboti 2024</title>
-      <style>body{font-family:sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{color:#1A56DB}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{border:1px solid #ddd;padding:10px;text-align:left}th{background:#f1f5f9}@media print{button{display:none}}</style>
-    </head><body>
-      <h1>Xayriya Hisoboti 2024</h1>
-      <p>Charity Index platformasi tomonidan tayyorlangan yillik hisobot.</p>
-      <table><thead><tr><th>Ko'rsatkich</th><th>Qiymat</th></tr></thead><tbody>
-        <tr><td>Faol fondlar soni</td><td>${researchStats.report.statActive}</td></tr>
-        <tr><td>Foyda ko'ruvchilar</td><td>${researchStats.report.statBeneficiaries}</td></tr>
-        <tr><td>Jami yig'ilgan mablag'</td><td>${researchStats.report.statRaised}</td></tr>
-        <tr><td>O'rtacha shaffoflik</td><td>${researchStats.report.statTransparency}</td></tr>
-      </tbody></table>
-      <p style="margin-top:32px;color:#64748b;font-size:13px">© ${new Date().getFullYear()} xayriya.info</p>
-    </body></html>`);
+
+    const sorted = [...funds].sort((a, b) => b.indexes.overall - a.indexes.overall);
+    const top20 = sorted.slice(0, 20);
+    const gradeLabel: Record<string, string> = {
+      platinum: '👑 Platinum', gold: '🥇 Gold', silver: '🥈 Silver', bronze: '🥉 Bronze', unrated: '—',
+    };
+    const fundRows = top20.map((f, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${f.name_uz}</td>
+        <td>${f.category ?? '—'}</td>
+        <td>${f.indexes.overall}</td>
+        <td>${gradeLabel[f.indexes.grade] ?? '—'}</td>
+        <td>${f.indexes.transparency}</td>
+        <td>${f.indexes.openness}</td>
+        <td>${f.indexes.trust}</td>
+      </tr>`).join('');
+
+    w.document.write(`<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>Xayriya Hisoboti 2026 — Charity Index</title>
+<style>
+  body{font-family:'Segoe UI',sans-serif;padding:40px;max-width:960px;margin:0 auto;color:#1e293b}
+  h1{color:#1A56DB;font-size:28px;margin-bottom:4px}
+  h2{color:#334155;font-size:18px;margin-top:36px;margin-bottom:12px;border-bottom:2px solid #e2e8f0;padding-bottom:8px}
+  .meta{color:#64748b;font-size:14px;margin-bottom:32px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+  .stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center}
+  .stat-value{font-size:24px;font-weight:900;color:#1A56DB}
+  .stat-label{font-size:12px;color:#64748b;margin-top:4px}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  th{background:#1A56DB;color:white;padding:10px 12px;text-align:left}
+  td{border-bottom:1px solid #f1f5f9;padding:9px 12px}
+  tr:hover td{background:#f8fafc}
+  .footer{margin-top:40px;color:#94a3b8;font-size:12px;border-top:1px solid #e2e8f0;padding-top:16px}
+  @media print{button{display:none}}
+</style>
+</head><body>
+<h1>O'zbekistonda Xayriya Holati 2026</h1>
+<p class="meta">Charity Index platformasi — Mustaqil baholash hisoboti &nbsp;|&nbsp; Sana: ${new Date().toLocaleDateString('uz-UZ')}</p>
+
+<div class="stats">
+  <div class="stat"><div class="stat-value">${researchStats.report.statActive}</div><div class="stat-label">Faol xayriya fondlari</div></div>
+  <div class="stat"><div class="stat-value">${researchStats.report.statBeneficiaries}</div><div class="stat-label">Foyda ko'ruvchilar</div></div>
+  <div class="stat"><div class="stat-value">${researchStats.report.statRaised}</div><div class="stat-label">Jami yig'ilgan mablag'</div></div>
+  <div class="stat"><div class="stat-value">${researchStats.report.statTransparency}</div><div class="stat-label">O'rtacha shaffoflik</div></div>
+</div>
+
+<h2>Asosiy xulosalar</h2>
+<table><thead><tr><th>Ko'rsatkich</th><th>Qiymat</th></tr></thead><tbody>
+  <tr><td>Reytingdagi fondlar soni</td><td>${researchStats.report.findingsValues[0] ?? funds.length + ' ta'}</td></tr>
+  <tr><td>Platinum darajasidagi fondlar</td><td>${researchStats.report.findingsValues[1] ?? funds.filter(f=>f.indexes.grade==='platinum').length + ' ta'}</td></tr>
+  <tr><td>Gold darajasidagi fondlar</td><td>${researchStats.report.findingsValues[2] ?? funds.filter(f=>f.indexes.grade==='gold').length + ' ta'}</td></tr>
+  <tr><td>O'rtacha indeks ball</td><td>${researchStats.report.findingsValues[3] ?? '—'}</td></tr>
+  <tr><td>Oldingi yilga nisbatan o'sish</td><td>${researchStats.report.findingsValues[4] ?? '—'}</td></tr>
+</tbody></table>
+
+<h2>Top ${top20.length} ta fond reytingi</h2>
+<table>
+  <thead><tr><th>#</th><th>Fond nomi</th><th>Kategoriya</th><th>Umumiy ball</th><th>Daraja</th><th>Shaffoflik</th><th>Ochiqlik</th><th>Ishonchlilik</th></tr></thead>
+  <tbody>${fundRows || '<tr><td colspan="8" style="text-align:center;color:#94a3b8">Ma\'lumot yuklanmadi</td></tr>'}</tbody>
+</table>
+
+<div class="footer">
+  © ${new Date().getFullYear()} xayriya.info &nbsp;|&nbsp; Charity Index — O'zbekiston xayriya fondlarini mustaqil baholash platformasi
+</div>
+</body></html>`);
+
     w.document.close();
     w.focus();
-    setTimeout(() => w.print(), 300);
+    setTimeout(() => w.print(), 400);
   };
 
   type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar';
