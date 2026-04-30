@@ -250,7 +250,6 @@ export const AdminFundEdit: React.FC = () => {
         addFund(created);
         showToast('Yangi fond muvaffaqiyatli qo\'shildi', 'success');
       }
-      fetchFunds();
       navigate(ap('/funds'));
     } catch (err: any) {
       showToast(err?.error?.message || 'Xatolik yuz berdi', 'error');
