@@ -82,7 +82,11 @@ function MuseumCard({ m }: { m: Museum }) {
           <div className="text-xs text-muted-foreground">
             <span className="font-serif text-primary">{m.exhibits}</span> {t("mus.exhibits")}
           </div>
-          <Link to="/shop" className="group/link inline-flex items-center gap-2 text-sm font-medium text-primary">
+        <Link
+          to="/museums/$id"
+          params={{ id: m.id }}
+          className="group/link inline-flex items-center gap-2 text-sm font-medium text-primary"
+        >
             <span className="border-b border-primary/40 pb-0.5 transition-all group-hover/link:border-primary">
               {t("mus.viewSouvenirs")}
             </span>
