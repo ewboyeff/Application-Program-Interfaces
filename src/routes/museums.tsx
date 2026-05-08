@@ -55,7 +55,7 @@ function MuseumCard({ m }: { m: Museum }) {
   const tr = useMuseumT(m);
   return (
     <article className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 hover:-translate-y-1">
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <Link to="/museums/$id" params={{ id: m.id }} className="relative block aspect-[16/10] overflow-hidden">
         <img
           src={m.image}
           alt={tr.name}
@@ -66,15 +66,17 @@ function MuseumCard({ m }: { m: Museum }) {
         <span className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full border border-primary/40 bg-background/40 text-primary opacity-0 backdrop-blur-md transition-all duration-500 group-hover:opacity-100">
           <ArrowUpRight className="h-4 w-4" />
         </span>
-      </div>
+      </Link>
       <div className="p-7">
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
           <MapPin className="h-3 w-3" />
           {tr.city} · {t("mus.founded")}: {tr.founded}
         </div>
-        <h3 className="mt-3 font-serif text-2xl text-foreground transition-colors group-hover:text-primary sm:text-3xl">
-          {tr.name}
-        </h3>
+        <Link to="/museums/$id" params={{ id: m.id }}>
+          <h3 className="mt-3 font-serif text-2xl text-foreground transition-colors group-hover:text-primary sm:text-3xl">
+            {tr.name}
+          </h3>
+        </Link>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           {tr.description}
         </p>
