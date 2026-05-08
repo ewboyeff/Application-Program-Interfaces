@@ -17,6 +17,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
+import { Route as MuseumsIdRouteImport } from './routes/museums.$id'
 import { Route as BlogIdRouteImport } from './routes/blog.$id'
 
 const WishlistRoute = WishlistRouteImport.update({
@@ -59,6 +60,11 @@ const ProductIdRoute = ProductIdRouteImport.update({
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MuseumsIdRoute = MuseumsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MuseumsRoute,
+} as any)
 const BlogIdRoute = BlogIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -70,10 +76,11 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/museums': typeof MuseumsRoute
+  '/museums': typeof MuseumsRouteWithChildren
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$id': typeof BlogIdRoute
+  '/museums/$id': typeof MuseumsIdRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +88,11 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/museums': typeof MuseumsRoute
+  '/museums': typeof MuseumsRouteWithChildren
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$id': typeof BlogIdRoute
+  '/museums/$id': typeof MuseumsIdRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
@@ -93,10 +101,11 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/museums': typeof MuseumsRoute
+  '/museums': typeof MuseumsRouteWithChildren
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$id': typeof BlogIdRoute
+  '/museums/$id': typeof MuseumsIdRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/wishlist'
     | '/blog/$id'
+    | '/museums/$id'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/wishlist'
     | '/blog/$id'
+    | '/museums/$id'
     | '/product/$id'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/wishlist'
     | '/blog/$id'
+    | '/museums/$id'
     | '/product/$id'
   fileRoutesById: FileRoutesById
 }
@@ -140,7 +152,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
-  MuseumsRoute: typeof MuseumsRoute
+  MuseumsRoute: typeof MuseumsRouteWithChildren
   ShopRoute: typeof ShopRoute
   WishlistRoute: typeof WishlistRoute
   ProductIdRoute: typeof ProductIdRoute
@@ -204,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/museums/$id': {
+      id: '/museums/$id'
+      path: '/$id'
+      fullPath: '/museums/$id'
+      preLoaderRoute: typeof MuseumsIdRouteImport
+      parentRoute: typeof MuseumsRoute
+    }
     '/blog/$id': {
       id: '/blog/$id'
       path: '/$id'
@@ -224,12 +243,23 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface MuseumsRouteChildren {
+  MuseumsIdRoute: typeof MuseumsIdRoute
+}
+
+const MuseumsRouteChildren: MuseumsRouteChildren = {
+  MuseumsIdRoute: MuseumsIdRoute,
+}
+
+const MuseumsRouteWithChildren =
+  MuseumsRoute._addFileChildren(MuseumsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRouteWithChildren,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
-  MuseumsRoute: MuseumsRoute,
+  MuseumsRoute: MuseumsRouteWithChildren,
   ShopRoute: ShopRoute,
   WishlistRoute: WishlistRoute,
   ProductIdRoute: ProductIdRoute,
@@ -237,3 +267,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
