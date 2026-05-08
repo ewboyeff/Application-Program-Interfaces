@@ -4,7 +4,7 @@ import { Heart, Minus, Plus, ShoppingBag, ArrowLeft, ShieldCheck, Truck, Award }
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { ProductCard } from "@/components/site/ProductCard";
-import { getProduct, getRelated, formatPrice } from "@/data/products";
+import { getProduct, getRelated, formatPrice, type Product } from "@/data/products";
 import { useShop } from "@/store/shop";
 import { toast } from "@/components/site/Toaster";
 import { useI18n, useProductT } from "@/i18n/i18n";
@@ -183,7 +183,7 @@ function ProductPage() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {related.map((p) => (
+            {related.map((p: Product) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
