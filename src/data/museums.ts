@@ -12,6 +12,7 @@ export type Museum = {
   description: string;
   founded: string;
   exhibits: string;
+  productIds: string[];
 };
 
 export const MUSEUMS: Museum[] = [
@@ -25,6 +26,7 @@ export const MUSEUMS: Museum[] = [
       "1996-yilda tashkil etilgan muzey Amir Temur va temuriylar davriga oid 3000 dan ortiq nodir eksponatni o'z ichiga oladi.",
     founded: "1996",
     exhibits: "3 000+",
+    productIds: ["bronza-chavandoz", "loy-haykal", "registon-mini", "samarkand-kosa"],
   },
   {
     id: "history-uz",
@@ -36,6 +38,7 @@ export const MUSEUMS: Museum[] = [
       "Markaziy Osiyoning eng yirik tarix muzeyi. Sak va Sogdlar davridan to bugungi kungacha bo'lgan davr eksponatlari.",
     founded: "1876",
     exhibits: "300 000+",
+    productIds: ["yog-chiroq", "lauh", "loy-haykal", "kok-choynak"],
   },
   {
     id: "savitsky",
@@ -47,6 +50,7 @@ export const MUSEUMS: Museum[] = [
       "Igor Savitsky tomonidan yig'ilgan dunyodagi eng katta sovet avangardi va Karakalpakiston san'ati kolleksiyasi.",
     founded: "1966",
     exhibits: "90 000+",
+    productIds: ["suzani", "ipak-ikat", "lauh", "rishton-lagan"],
   },
   {
     id: "bukhara-ark",
@@ -58,6 +62,7 @@ export const MUSEUMS: Museum[] = [
       "Buxoroning eng qadimiy yodgorligi. Amirlar saroyi, taxt zali, miniatyurа kollektsiyasi va qo'lyozmalar saqlanadi.",
     founded: "VIII asr",
     exhibits: "12 000+",
+    productIds: ["bukhara-marjon", "kumush-uzuk", "suzani", "samarkand-kosa"],
   },
 ];
 
