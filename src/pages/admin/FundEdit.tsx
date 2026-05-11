@@ -96,14 +96,24 @@ export const AdminFundEdit: React.FC = () => {
     total_spent: 0
   });
 
+  // Load full FundDetail from API (list data lacks website/telegram/inn etc.)
   useEffect(() => {
-    if (isEdit && fund) {
-      setFormData(fund);
-      if (fund.logo_url) {
-        setLogoPreview(assetUrl(fund.logo_url) ?? null);
-      }
-    }
-  }, [isEdit, fund]);
+    if (!isEdit || !id) return;
+    const slug = funds.find(f => f.id === id)?.slug;
+    if (!slug) return;
+    fundsApi.getDetailAdmin(slug)
+      .then(detail => {
+        setFormData(detail);
+        if (detail.logo_url) setLogoPreview(assetUrl(detail.logo_url) ?? null);
+      })
+      .catch(() => {
+        const fallback = funds.find(f => f.id === id);
+        if (fallback) {
+          setFormData(fallback);
+          if (fallback.logo_url) setLogoPreview(assetUrl(fallback.logo_url) ?? null);
+        }
+      });
+  }, [isEdit, id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -258,6 +268,8 @@ export const AdminFundEdit: React.FC = () => {
       telegram_url: formData.telegram || undefined,
       instagram_url: formData.instagram || undefined,
       donation_url: (formData as any).donation_url || undefined,
+      inn: formData.inn || undefined,
+      registration_number: formData.registration || undefined,
       category_id,
       region_id,
     };
@@ -424,6 +436,28 @@ export const AdminFundEdit: React.FC = () => {
                         className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-blue-600 transition-all outline-none"
                       />
                     </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-slate-700 ml-1">INN</label>
+                      <input
+                        type="text"
+                        name="inn"
+                        value={formData.inn}
+                        onChange={handleChange}
+                        placeholder="123456789"
+                        className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-blue-600 transition-all outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 ml-1">Ro'yxatdan o'tish raqami</label>
+                    <input
+                      type="text"
+                      name="registration"
+                      value={formData.registration}
+                      onChange={handleChange}
+                      placeholder="RO'YXAT-2024-001"
+                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-blue-600 transition-all outline-none"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700 ml-1">Viloyat</label>

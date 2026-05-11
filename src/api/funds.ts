@@ -145,6 +145,11 @@ export const fundsApi = {
     return mapFund(res.data);
   },
 
+  async getDetailAdmin(slug: string): Promise<Fund> {
+    const res = await adminApiClient.get<DataResponse<any>>(`/api/v1/funds/${slug}`);
+    return mapFund(res.data);
+  },
+
   async getProjects(fundId: string): Promise<Project[]> {
     const res = await apiClient.get<DataResponse<any[]>>(`/api/v1/funds/${fundId}/projects`);
     return (res.data ?? []).map(mapProject);
