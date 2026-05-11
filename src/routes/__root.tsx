@@ -47,6 +47,12 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Museum Shop — San'at va Tarix Nafasi" },
+      { name: "description", content: "A premium dark-themed museum e-commerce landing page showcasing Uzbek cultural souvenirs." },
+      { property: "og:description", content: "A premium dark-themed museum e-commerce landing page showcasing Uzbek cultural souvenirs." },
+      { name: "twitter:description", content: "A premium dark-themed museum e-commerce landing page showcasing Uzbek cultural souvenirs." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c97f0dd8-8b3a-4691-b187-c44b107fdd27/id-preview-2a80cf59--1bd322de-ba68-4384-a8db-8ba982d2728d.lovable.app-1778251655652.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c97f0dd8-8b3a-4691-b187-c44b107fdd27/id-preview-2a80cf59--1bd322de-ba68-4384-a8db-8ba982d2728d.lovable.app-1778251655652.png" },
     ],
     links: [
       {
