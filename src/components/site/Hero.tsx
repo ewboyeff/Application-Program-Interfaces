@@ -57,14 +57,14 @@ export function Hero() {
         {SLIDES.map((s, i) => (
           <div
             key={s.image}
-            className={`absolute inset-0 transition-opacity duration-[1400ms] ${
+            className={`absolute inset-0 transition-opacity duration-[1400ms] bg-[radial-gradient(ellipse_at_70%_50%,#0a1a2e_0%,#070d18_45%,#0f0f0f_75%)] ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           >
             <img
               src={s.image}
               alt={s.title}
-              className={`h-full w-full object-contain object-right p-6 sm:p-10 lg:p-14 ${
+              className={`h-full w-full object-contain object-right p-6 mix-blend-screen sm:p-10 lg:p-14 ${
                 i === active ? "animate-ken-burns" : ""
               }`}
               loading={i === 0 ? "eager" : "lazy"}
