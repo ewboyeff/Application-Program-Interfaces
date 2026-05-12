@@ -21,7 +21,7 @@ export function Story() {
               src={museum}
               alt="O'zbekiston muzeyi interyeri"
               loading="lazy"
-              className="aspect-[4/5] w-full object-cover transition-transform duration-[2000ms] ease-out hover:scale-105"
+              className="aspect-[4/5] w-full object-cover object-center transition-transform duration-[2000ms] ease-out hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-tr from-background/40 via-transparent to-transparent" />
           </div>

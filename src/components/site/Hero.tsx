@@ -64,7 +64,7 @@ export function Hero() {
             <img
               src={s.image}
               alt={s.title}
-              className={`h-full w-full object-cover object-center ${
+              className={`h-full w-full object-contain object-right p-6 sm:p-10 lg:p-14 ${
                 i === active ? "animate-ken-burns" : ""
               }`}
               loading={i === 0 ? "eager" : "lazy"}

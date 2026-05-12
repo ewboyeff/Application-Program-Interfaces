@@ -70,12 +70,12 @@ export function Collections() {
               params={{ id: item.id }}
               className="reveal group relative block overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 hover:-translate-y-1"
             >
-              <div className="relative aspect-[4/5] overflow-hidden">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#0a1424]">
                 <img
                   src={item.image}
                   alt={item.title}
                   loading="lazy"
-                  className="h-full w-full scale-105 object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-125"
+                  className="h-full w-full scale-95 object-contain p-6 transition-transform duration-[1400ms] ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-100" />
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-deep/0 to-accent-deep/0 transition-all duration-700 group-hover:from-accent-deep/20" />
