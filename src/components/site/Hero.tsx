@@ -13,24 +13,28 @@ const SLIDES = [
     eyebrow: "Buxoro · Po-i-Kalon",
     title: "Shahar — Tarix Nafasi",
     sub: "O'zbekiston qadimiy shaharlari va muzeylaridan ilhomlangan kolleksiya",
+    blend: false,
   },
   {
     image: hero2,
     eyebrow: "Rishton keramikasi · XIX asr",
     title: "Ko'k naqsh — Abadiy hikoya",
     sub: "Qo'lda chizilgan an'anaviy laganlar — Rishton ustalari merosidan",
+    blend: true,
   },
   {
     image: hero3,
     eyebrow: "Samarqand keramikasi · XV asr",
     title: "Naqshlar tilidagi rivoyat",
     sub: "Qizil, ko'k va sariq ranglarning saroyona uyg'unligi",
+    blend: true,
   },
   {
     image: hero4,
     eyebrow: "Buxoro zargarligi · XIX asr",
     title: "Oltinda muhrlangan afsona",
     sub: "Filigran oltin va marjon — amir saroyi xazinasidan ilhom",
+    blend: true,
   },
 ];
 
@@ -57,16 +61,22 @@ export function Hero() {
         {SLIDES.map((s, i) => (
           <div
             key={s.image}
-            className={`absolute inset-0 transition-opacity duration-[1400ms] bg-[radial-gradient(ellipse_at_70%_50%,#0a1a2e_0%,#070d18_45%,#0f0f0f_75%)] ${
+            className={`absolute inset-0 transition-opacity duration-[1400ms] ${
+              s.blend
+                ? "bg-[radial-gradient(ellipse_at_70%_50%,#0a1a2e_0%,#070d18_45%,#0f0f0f_75%)]"
+                : ""
+            } ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           >
             <img
               src={s.image}
               alt={s.title}
-              className={`h-full w-full object-contain object-right p-6 mix-blend-screen sm:p-10 lg:p-14 ${
-                i === active ? "animate-ken-burns" : ""
-              }`}
+              className={`h-full w-full ${
+                s.blend
+                  ? "object-contain object-right p-6 mix-blend-screen sm:p-10 lg:p-14"
+                  : "object-cover object-center"
+              } ${i === active ? "animate-ken-burns" : ""}`}
               loading={i === 0 ? "eager" : "lazy"}
               fetchPriority={i === 0 ? "high" : "auto"}
             />

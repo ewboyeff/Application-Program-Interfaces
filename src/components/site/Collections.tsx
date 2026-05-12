@@ -14,6 +14,7 @@ const ITEMS = [
     title: "Rishton keramika",
     desc: "Feruza va ko'k naqshlardagi an'anaviy laganlar — qo'lda chizilgan.",
     tag: "01",
+    blend: true,
   },
   {
     id: "samarkand-kosa",
@@ -21,6 +22,7 @@ const ITEMS = [
     title: "Samarqand naqshli idishlar",
     desc: "Oltin va lojuvardning XV asr saroylaridan ilhomlangan uyg'unligi.",
     tag: "02",
+    blend: true,
   },
   {
     id: "bukhara-marjon",
@@ -28,6 +30,7 @@ const ITEMS = [
     title: "Buxoro zargarlik buyumlari",
     desc: "Filigran kumush, qizil agat va feruza — amir saroyi xazinasidan.",
     tag: "03",
+    blend: true,
   },
   {
     id: "buxoro-shahri",
@@ -35,6 +38,7 @@ const ITEMS = [
     title: "Buxoro tarixiy shahri",
     desc: "Po-i-Kalon majmuasi va minoralar — qadimgi shahar siymosidan suvenirlar.",
     tag: "04",
+    blend: false,
   },
 ];
 
@@ -70,12 +74,22 @@ export function Collections() {
               params={{ id: item.id }}
               className="reveal group relative block overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 hover:-translate-y-1"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-[radial-gradient(ellipse_at_center,#0a1a2e_0%,#070d18_55%,#0f0f0f_100%)]">
+              <div
+                className={`relative aspect-[4/5] overflow-hidden ${
+                  item.blend
+                    ? "bg-[radial-gradient(ellipse_at_center,#0a1a2e_0%,#070d18_55%,#0f0f0f_100%)]"
+                    : "bg-card"
+                }`}
+              >
                 <img
                   src={item.image}
                   alt={item.title}
                   loading="lazy"
-                  className="h-full w-full scale-95 object-contain p-6 mix-blend-screen transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                  className={`h-full w-full transition-transform duration-[1400ms] ease-out ${
+                    item.blend
+                      ? "scale-95 object-contain p-6 mix-blend-screen group-hover:scale-105"
+                      : "scale-105 object-cover group-hover:scale-110"
+                  }`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-95" />
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-deep/0 to-accent-deep/0 transition-all duration-700 group-hover:from-accent-deep/20" />
