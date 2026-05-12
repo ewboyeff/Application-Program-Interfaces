@@ -30,10 +30,10 @@ const ITEMS = [
     tag: "03",
   },
   {
-    id: "bronza-chavandoz",
+    id: "buxoro-shahri",
     image: figurines,
-    title: "Miniature haykalchalar",
-    desc: "Buyuk Ipak yo'li jangchilarining bronza siymolari.",
+    title: "Buxoro tarixiy shahri",
+    desc: "Po-i-Kalon majmuasi va minoralar — qadimgi shahar siymosidan suvenirlar.",
     tag: "04",
   },
 ];

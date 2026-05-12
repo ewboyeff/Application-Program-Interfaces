@@ -10,27 +10,27 @@ import hero4 from "@/assets/hero-4.jpg";
 const SLIDES = [
   {
     image: hero1,
-    eyebrow: "Sogd Davri · VIII asr",
-    title: "San'at — Tarix Nafasi",
-    sub: "O'zbekiston muzeylaridan ilhomlangan noyob suvenirlar kolleksiyasi",
+    eyebrow: "Buxoro · Po-i-Kalon",
+    title: "Shahar — Tarix Nafasi",
+    sub: "O'zbekiston qadimiy shaharlari va muzeylaridan ilhomlangan kolleksiya",
   },
   {
     image: hero2,
-    eyebrow: "Xorazm bronzasi · X asr",
-    title: "Bronza ichidagi qahramon",
-    sub: "Qadimgi jangchilar siymosi — zamonaviy uy interyeri uchun",
+    eyebrow: "Rishton keramikasi · XIX asr",
+    title: "Ko'k naqsh — Abadiy hikoya",
+    sub: "Qo'lda chizilgan an'anaviy laganlar — Rishton ustalari merosidan",
   },
   {
     image: hero3,
     eyebrow: "Samarqand keramikasi · XV asr",
     title: "Naqshlar tilidagi rivoyat",
-    sub: "Ko'k va feruza ranglarning abadiy uyg'unligi",
+    sub: "Qizil, ko'k va sariq ranglarning saroyona uyg'unligi",
   },
   {
     image: hero4,
-    eyebrow: "Tosh o'ymakorligi · IX asr",
-    title: "Toshda muhrlangan afsona",
-    sub: "Buyuk Ipak yo'lining bezovta ruhi",
+    eyebrow: "Buxoro zargarligi · XIX asr",
+    title: "Oltinda muhrlangan afsona",
+    sub: "Filigran oltin va marjon — amir saroyi xazinasidan ilhom",
   },
 ];
 
