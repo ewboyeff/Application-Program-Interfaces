@@ -239,7 +239,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Toshkent",
       short: "Buyuk Sohibqiron va temuriylar saltanati merosi.",
       description:
-        "1996-yilda tashkil etilgan muzey Amir Temur va temuriylar davriga oid 3000 dan ortiq nodir eksponatni o'z ichiga oladi.",
+        "1996-yilda tashkil etilgan muzey O'zbekiston mustaqilligining ramziy inshootlaridan biri bo'lib, oltin gumbazli va sakkizburchak me'moriy shaklga ega binosi bilan Toshkentning markazini bezab turadi. Muzey Amir Temur va temuriylar davriga oid 3 000 dan ortiq nodir eksponatni o'z ichiga oladi: Sohibqironning shaxsiy buyumlari, qurollar, qo'lyozmalar, xaritalar, zargarlik san'ati namunalari va saroy liboslari. Alohida zalda XIV–XV asrlarga oid Buyuk ipak yo'li xaritalari va diplomatik yozishmalar saqlanadi. Muzey O'zbekiston tarixiy merosini tadqiq etish markazi sifatida UNESCO tomonidan ham tan olingan.",
       founded: "1996",
     },
     "history-uz": {
@@ -247,7 +247,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Toshkent",
       short: "O'zbekiston tarixining 1.5 million yillik xronikasi.",
       description:
-        "Markaziy Osiyoning eng yirik tarix muzeyi. Sak va Sogdlar davridan to bugungi kungacha bo'lgan davr eksponatlari.",
+        "Markaziy Osiyoning eng yirik tarix muzeyi bo'lgan bu muassasa 1876-yilda rus mustamlakachilik davri kutubxonasi sifatida asos solingan va keyinchalik ulkan milliy muzeyga aylangan. 300 000 dan ortiq eksponat insoniyat tarixi bosqichlarini — tosh davridan to XX asrgacha — hikoya qiladi. Saklar va Sogdlar davriga oid oltin buyumlar, Afrosiyob devor rasmlari nusxalari, arab va fors qo'lyozmalari, Temuriylar me'morchilik maketi va sovet davrining noyob hujjatlari muzeyning eng ko'zga ko'ringan ashyolaridir. Muzey yiliga 200 000 dan ortiq tashrif buyuruvchini qabul qiladi va maktab, oliy ta'lim dasturlari bilan hamkorlik qiladi.",
       founded: "1876",
     },
     savitsky: {
@@ -255,7 +255,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Nukus",
       short: "\"Sahrodagi Luvr\" — sovet avangardi noyob kolleksiyasi.",
       description:
-        "Igor Savitskiy tomonidan yig'ilgan dunyodagi eng katta sovet avangardi va Qoraqalpog'iston san'ati kolleksiyasi.",
+        "\"Sahrodagi Luvr\" nomi bilan dunyo bo'ylab mashhur bo'lgan bu muzey rassom va arxeolog Igor Savitskiy tomonidan asos solingan. U sovet senzurasi va ta'qibidan qutqarish maqsadida taqiqlangan san'at asarlarini maxfiy ravishda to'plagan va Qoraqalpog'iston cho'llarida saqlagan. Bugun muzey 90 000 dan ortiq eksponatga ega: sovet avangard rasmlari, Qoraqalpog'iston an'anaviy zargarlik buyumlari, milliy kiyimlar, kashtachilik namunalari va arxeologik topilmalar. The Guardian, BBC va New York Times kabi nashrlar tomonidan \"dunyoning eng muhim muzeylaridan biri\" deb tan olingan. Hozirda muzeyga yiliga 50 000 dan ortiq xorijiy sayyoh tashrif buyuradi.",
       founded: "1966",
     },
     "bukhara-ark": {
@@ -263,7 +263,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Buxoro",
       short: "Buxoro amirlari saroyi — VIII asrdan beri saqlangan qal'a.",
       description:
-        "Buxoroning eng qadimiy yodgorligi. Amirlar saroyi, taxt zali, miniatyura kolleksiyasi va qo'lyozmalar saqlanadi.",
+        "Buxoroning qoq markazida joylashgan Ark qal'asi 2 000 yildan ortiq tarixga ega bo'lib, shaharning eng qadimiy va muhtasham yodgorligidir. Qal'a ichida saqlangan muzey Buxoro amirligining butun hayotini aks ettiradi: taxt zali, qabulxona, xazina, zargarlik ustaxonasi, zindon va amirning shaxsiy ibodatxonasi. 12 000 dan ortiq eksponat orasida IX–XIX asrlarga oid arab, fors va o'zbek qo'lyozmalari, zarhal bilan bezatilgan saroy liboslari, qimmatbaho toshlar qadалган тоб тахтасанамлар va noyob miniatyura rasmlari mavjud. Ark 1993-yilda UNESCO Jahon merosi ro'yxatiga kiritilgan va hozirgi kunda dunyo bo'ylab tarixchilar hamda sayyohlar uchun muqaddas manzil hisoblanadi.",
       founded: "VIII asr",
     },
   },
@@ -273,7 +273,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Ташкент",
       short: "Наследие Великого Сахибкирана и империи Темуридов.",
       description:
-        "Основанный в 1996 году музей содержит более 3000 редчайших экспонатов эпохи Амира Темура и Темуридов.",
+        "Основанный в 1996 году музей является одним из символов независимости Узбекистана. Здание с золотым куполом и восьмиугольной архитектурой украшает центр Ташкента. Музей хранит более 3 000 редчайших экспонатов эпохи Амира Темура и Темуридов: личные вещи Сахибкирана, оружие, рукописи, карты, ювелирные украшения и придворные одежды. В отдельном зале представлены карты Великого шёлкового пути XIV–XV веков и дипломатическая переписка. Музей признан ЮНЕСКО как научный центр изучения исторического наследия Узбекистана.",
       founded: "1996",
     },
     "history-uz": {
@@ -281,7 +281,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Ташкент",
       short: "Хроника 1,5 миллиона лет истории Узбекистана.",
       description:
-        "Крупнейший исторический музей Центральной Азии. Экспонаты от эпохи саков и согдийцев до наших дней.",
+        "Крупнейший исторический музей Центральной Азии был основан в 1876 году как библиотека эпохи русского колониализма и со временем превратился в грандиозный национальный музей. Более 300 000 экспонатов рассказывают историю человечества — от каменного века до XX столетия. Золотые украшения саков и согдийцев, копии росписей Афрасиаба, арабские и персидские рукописи, архитектурные макеты эпохи Темуридов и редкие документы советского времени — главные сокровища музея. Ежегодно его посещают более 200 000 человек; музей тесно сотрудничает со школами и вузами страны.",
       founded: "1876",
     },
     savitsky: {
@@ -289,7 +289,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Нукус",
       short: "«Лувр в пустыне» — уникальная коллекция советского авангарда.",
       description:
-        "Крупнейшая в мире коллекция советского авангарда и каракалпакского искусства, собранная Игорем Савицким.",
+        "Всемирно известный под именем «Лувр в пустыне», этот музей основан художником и археологом Игорем Савицким. Рискуя собственной жизнью, он тайно собирал запрещённые советской цензурой произведения искусства и хранил их в пустынях Каракалпакстана. Сегодня музей насчитывает более 90 000 экспонатов: картины советского авангарда, традиционные ювелирные украшения Каракалпакстана, народные костюмы, вышивки и археологические находки. The Guardian, BBC и New York Times называют его «одним из самых важных музеев мира». Ежегодно сюда приезжают более 50 000 иностранных туристов.",
       founded: "1966",
     },
     "bukhara-ark": {
@@ -297,7 +297,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Бухара",
       short: "Дворец бухарских эмиров — крепость, сохранившаяся с VIII века.",
       description:
-        "Древнейший памятник Бухары. Здесь сохранены дворец эмиров, тронный зал, коллекция миниатюр и рукописи.",
+        "Цитадель Арк, расположенная в самом сердце Бухары, имеет более чем 2 000-летнюю историю и является древнейшим и величественнейшим памятником города. Музей внутри крепости отражает всю жизнь Бухарского эмирата: тронный зал, приёмные покои, казна, ювелирная мастерская, темница и личная мечеть эмира. Среди более чем 12 000 экспонатов — арабские, персидские и узбекские рукописи IX–XIX веков, придворные одежды с золотым шитьём, инкрустированные троны и редчайшие миниатюрные картины. В 1993 году Арк включён в Список всемирного наследия ЮНЕСКО.",
       founded: "VIII век",
     },
   },
@@ -307,7 +307,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Tashkent",
       short: "Heritage of the Great Sahibkiran and the Timurid empire.",
       description:
-        "Founded in 1996, the museum holds over 3,000 rare exhibits from the era of Amir Temur and the Timurids.",
+        "Founded in 1996, the museum stands as one of the most iconic landmarks of Uzbekistan's independence, its golden dome and octagonal architecture gracing the very heart of Tashkent. The museum holds over 3,000 rare exhibits from the era of Amir Temur and the Timurids: the conqueror's personal belongings, weapons, manuscripts, maps, jewellery and royal garments. A dedicated hall displays Silk Road maps dating to the 14th–15th centuries alongside original diplomatic correspondence. The museum has been recognised by UNESCO as a leading centre for the study of Uzbekistan's historical heritage.",
       founded: "1996",
     },
     "history-uz": {
@@ -315,7 +315,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Tashkent",
       short: "A 1.5-million-year chronicle of Uzbekistan's history.",
       description:
-        "The largest history museum in Central Asia. Exhibits from the Saka and Sogdian eras to the present day.",
+        "The largest history museum in Central Asia was founded in 1876 as a library during the Russian colonial period and has since grown into a vast national institution. More than 300,000 exhibits trace human history from the Stone Age to the 20th century. The museum's greatest treasures include Saka and Sogdian gold artefacts, reproductions of the Afrasiab frescoes, Arabic and Persian manuscripts, architectural models from the Timurid era and rare documents from the Soviet period. Over 200,000 visitors pass through its doors each year, and the museum maintains close ties with schools and universities across the country.",
       founded: "1876",
     },
     savitsky: {
@@ -323,7 +323,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Nukus",
       short: "\"The Louvre in the desert\" — a unique Soviet avant-garde collection.",
       description:
-        "The world's largest collection of Soviet avant-garde and Karakalpak art, gathered by Igor Savitsky.",
+        "Known the world over as \"The Louvre in the Desert\", this remarkable museum was founded by artist and archaeologist Igor Savitsky, who risked his own safety to secretly collect works censored by the Soviet regime and preserve them in the deserts of Karakalpakstan. Today the museum houses more than 90,000 exhibits: Soviet avant-garde paintings, traditional Karakalpak jewellery, folk costumes, embroideries and archaeological finds. The Guardian, BBC and New York Times have all named it \"one of the most important museums in the world.\" More than 50,000 international visitors make the journey each year.",
       founded: "1966",
     },
     "bukhara-ark": {
@@ -331,7 +331,7 @@ export const MUSEUM_T: Record<Lang, Record<string, MuseumT>> = {
       city: "Bukhara",
       short: "The palace of the Bukhara emirs — a fortress preserved since the 8th century.",
       description:
-        "Bukhara's oldest landmark. The emirs' palace, the throne hall, miniature collection and manuscripts are preserved here.",
+        "Rising from the very heart of Bukhara, the Ark citadel spans more than 2,000 years of history and stands as the city's oldest and most majestic monument. The museum within its walls brings to life the full breadth of the Bukhara Emirate: the throne room, reception halls, the treasury, a jewellery workshop, the dungeon and the emir's private mosque. Among its 12,000+ exhibits are Arabic, Persian and Uzbek manuscripts from the 9th to 19th centuries, gold-embroidered court robes, jewelled thrones and extraordinarily rare miniature paintings. In 1993 the Ark was inscribed on the UNESCO World Heritage List.",
       founded: "8th century",
     },
   },
@@ -502,11 +502,32 @@ export const BLOG_T: Record<Lang, Record<string, BlogT>> = {
   },
 };
 
-// Category translation: map canonical Uzbek category -> per-lang label
+// Category translation: map canonical subcategory -> i18n key
 export const CATEGORY_KEY: Record<string, string> = {
-  Keramika: "cat.ceramics",
-  Zargarlik: "cat.jewelry",
-  Haykallar: "cat.statues",
-  "Milliy naqshlar": "cat.patterns",
-  Barchasi: "cat.all",
+  // Mohir Qo'llar subcategories
+  "Zargarlik buyumlari": "subcat.zargarlik",
+  "Sopol buyumlar": "subcat.sopol",
+  "Bosma printli idishlar": "subcat.bosma_idish",
+  "Kiyimlar": "subcat.kiyimlar",
+  "Shopperlar": "subcat.shopperlar",
+  "Yog'och o'ymakorligi": "subcat.yogoch",
+  "Gilamalar": "subcat.gilamalar",
+  "Matolar": "subcat.matolar",
+  "Kashtachilik": "subcat.kashtachilik",
+  "Miniatyuralar": "subcat.miniatyuralar",
+  // Muzey Suvenirlari subcategories
+  "Kitoblar va kataloglar": "subcat.kitoblar",
+  "Bolalar uchun": "subcat.bolalar",
+  "Bosma printli idishlar (muzey)": "subcat.bosma_idish_muz",
+  "Bosma printli kiyimlar": "subcat.bosma_kiyim",
+  "Shopperlar (muzey)": "subcat.shopperlar_muz",
+  "Otkritkalar": "subcat.otkritkalar",
+  "Breloklar va magnitlar": "subcat.breloklar",
+  "Muzey ashyolari replikalari": "subcat.replikalar",
+};
+
+// Main type translation keys
+export const TYPE_KEY: Record<string, string> = {
+  MOHIR_QOLLAR: "type.mohir",
+  MUZEY_SUVENIRLARI: "type.muzey",
 };

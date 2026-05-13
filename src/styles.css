@@ -155,6 +155,19 @@
     overflow-x: hidden;
   }
 
+  /* Admin panel — dark theme override */
+  [data-admin] {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+    font-family: ui-sans-serif, system-ui, sans-serif !important;
+    color-scheme: light;
+  }
+  [data-admin] h1, [data-admin] h2, [data-admin] h3,
+  [data-admin] h4, [data-admin] h5 {
+    font-family: ui-sans-serif, system-ui, sans-serif !important;
+    letter-spacing: normal;
+  }
+
   h1, h2, h3, h4, h5 {
     font-family: var(--font-serif);
     letter-spacing: -0.01em;

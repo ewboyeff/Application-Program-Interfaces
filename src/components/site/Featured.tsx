@@ -4,27 +4,79 @@ import { useReveal } from "./useReveal";
 import { Link } from "@tanstack/react-router";
 import { useShop } from "@/store/shop";
 import { toast } from "./Toaster";
-import { useI18n } from "@/i18n/i18n";
-import p1 from "@/assets/p1.jpg";
-import p2 from "@/assets/p2.jpg";
-import p3 from "@/assets/p3.jpg";
-import p4 from "@/assets/p4.jpg";
-import p5 from "@/assets/p5.jpg";
-import p6 from "@/assets/p6.jpg";
+import { useI18n, useProductT } from "@/i18n/i18n";
+import { PRODUCTS as ALL_PRODUCTS, formatPrice } from "@/data/products";
 
-const PRODUCTS = [
-  { id: "kok-choynak", image: p1, name: "Ko'k naqshli choynak", price: "320 000", museum: "Rishton State Museum" },
-  { id: "ipak-ikat", image: p2, name: "Ipak ikat ro'mol", price: "540 000", museum: "Margilon Atlas Museum" },
-  { id: "lauh", image: p3, name: "Yog'och lauh kitobligi", price: "780 000", museum: "Khiva Heritage Center" },
-  { id: "suzani", image: p4, name: "Suzani gilam (mini)", price: "1 200 000", museum: "Bukhara Suzani Hall" },
-  { id: "yog-chiroq", image: p5, name: "Bronza yog' chiroq", price: "740 000", museum: "Tashkent Applied Arts" },
-  { id: "registon-mini", image: p6, name: "Registon miniaturasi", price: "650 000", museum: "Samarkand Afrosiyob" },
-];
+const FEATURED_IDS = ["kok-choynak", "ipak-ikat", "lauh", "suzani", "yog-chiroq", "registon-mini"];
+const PRODUCTS = ALL_PRODUCTS.filter((p) => FEATURED_IDS.includes(p.id))
+  .sort((a, b) => FEATURED_IDS.indexOf(a.id) - FEATURED_IDS.indexOf(b.id));
+
+function FeaturedCard({ product }: { product: (typeof PRODUCTS)[number] }) {
+  const { addToCart } = useShop();
+  const { t } = useI18n();
+  const tr = useProductT(product);
+
+  return (
+    <article className="group relative w-[280px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 sm:w-[320px]">
+      <Link
+        to="/product/$id"
+        params={{ id: product.id }}
+        className="relative block aspect-[4/5] overflow-hidden bg-muted"
+      >
+        <img
+          src={product.image}
+          alt={tr.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+
+        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-background/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary backdrop-blur-md">
+          <span className="h-1 w-1 rounded-full bg-primary animate-shimmer" />
+          {tr.type}
+        </span>
+
+        <button
+          aria-label={t("cta.addToCart")}
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(product.id);
+            toast(t("toast.addedCart"));
+          }}
+          className="absolute bottom-4 right-4 grid h-12 w-12 translate-y-3 place-items-center rounded-full bg-gradient-gold text-primary-foreground opacity-0 shadow-glow transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          <Plus className="h-5 w-5" />
+        </button>
+      </Link>
+
+      <div className="space-y-2 p-5">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          {tr.category} · {product.museum}
+        </p>
+        <Link
+          to="/product/$id"
+          params={{ id: product.id }}
+          className="block font-serif text-lg leading-snug text-foreground transition-colors hover:text-primary"
+        >
+          {tr.name}
+        </Link>
+        <div className="flex items-baseline justify-between pt-2">
+          <span className="font-serif text-xl text-primary">
+            {formatPrice(product.price)}
+            <span className="ml-1 text-xs text-muted-foreground">{t("common.currency")}</span>
+          </span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            {t("common.limited")}
+          </span>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function Featured() {
   const ref = useReveal<HTMLElement>();
   const scroller = useRef<HTMLDivElement | null>(null);
-  const { addToCart } = useShop();
   const { t } = useI18n();
 
   const scroll = (dir: number) => {
@@ -74,63 +126,7 @@ export function Featured() {
           className="no-scrollbar reveal -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-6 lg:-mx-10 lg:px-10"
         >
           {PRODUCTS.map((p) => (
-            <article
-              key={p.name}
-              className="group relative w-[280px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 sm:w-[320px]"
-            >
-              <Link
-                to="/product/$id"
-                params={{ id: p.id }}
-                className="relative block aspect-[4/5] overflow-hidden bg-muted"
-              >
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-
-                <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-background/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary backdrop-blur-md">
-                  <span className="h-1 w-1 rounded-full bg-primary animate-shimmer" />
-                  {t("common.inspiredArtifact")}
-                </span>
-
-                <button
-                  aria-label={t("cta.addToCart")}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addToCart(p.id);
-                    toast(t("cta.addToCart"));
-                  }}
-                  className="absolute bottom-4 right-4 grid h-12 w-12 translate-y-3 place-items-center rounded-full bg-gradient-gold text-primary-foreground opacity-0 shadow-glow transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
-                >
-                  <Plus className="h-5 w-5" />
-                </button>
-              </Link>
-
-              <div className="space-y-2 p-5">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                  {p.museum}
-                </p>
-                <Link
-                  to="/product/$id"
-                  params={{ id: p.id }}
-                  className="block font-serif text-lg leading-snug text-foreground transition-colors hover:text-primary"
-                >
-                  {p.name}
-                </Link>
-                <div className="flex items-baseline justify-between pt-2">
-                  <span className="font-serif text-xl text-primary">
-                    {p.price}
-                    <span className="ml-1 text-xs text-muted-foreground">{t("common.currency")}</span>
-                  </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                    {t("common.limited")}
-                  </span>
-                </div>
-              </div>
-            </article>
+            <FeaturedCard key={p.id} product={p} />
           ))}
         </div>
       </div>

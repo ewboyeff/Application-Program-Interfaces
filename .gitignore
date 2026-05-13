@@ -20,6 +20,14 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Environment
+.env
+.env.*
+!.env.example
+
+# Claude memory
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -25,10 +25,6 @@ export function ProductCard({ product }: { product: Product }) {
           className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent" />
-        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-background/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary backdrop-blur-md">
-          <span className="h-1 w-1 rounded-full bg-primary animate-shimmer" />
-          {t("common.inspiredArtifact")}
-        </span>
       </Link>
 
       <button
@@ -49,7 +45,8 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="space-y-2 p-5">
         <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-          {tr.category} · {tr.museum}
+          <span className="text-primary/80">{tr.type}</span>
+          {" · "}{tr.category}
         </p>
         <Link
           to="/product/$id"

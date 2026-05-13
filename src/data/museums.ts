@@ -7,6 +7,7 @@ export type Museum = {
   id: string;
   name: string;
   city: string;
+  region: string;
   image: string;
   short: string;
   description: string;
@@ -15,11 +16,28 @@ export type Museum = {
   productIds: string[];
 };
 
+export const ALL_REGIONS = [
+  "Toshkent",
+  "Andijon",
+  "Farg'ona",
+  "Namangan",
+  "Samarqand",
+  "Jizzax",
+  "Sirdaryo",
+  "Navoiy",
+  "Buxoro",
+  "Qashqadaryo",
+  "Surxondaryo",
+  "Xorazm",
+  "Qoraqalpog'iston",
+] as const;
+
 export const MUSEUMS: Museum[] = [
   {
     id: "amir-temur",
     name: "Amir Temur Museum",
     city: "Toshkent",
+    region: "Toshkent",
     image: temur,
     short: "Buyuk Sohibqiron va temuriylar saltanati merosi.",
     description:
@@ -32,6 +50,7 @@ export const MUSEUMS: Museum[] = [
     id: "history-uz",
     name: "State Museum of History",
     city: "Toshkent",
+    region: "Toshkent",
     image: history,
     short: "O'zbekiston tarixining 1.5 million yillik xronikasi.",
     description:
@@ -44,6 +63,7 @@ export const MUSEUMS: Museum[] = [
     id: "savitsky",
     name: "Savitsky Museum",
     city: "Nukus",
+    region: "Qoraqalpog'iston",
     image: savitsky,
     short: "\"Sahrodagi Luvr\" — sovet avangardi noyob kolleksiyasi.",
     description:
@@ -56,6 +76,7 @@ export const MUSEUMS: Museum[] = [
     id: "bukhara-ark",
     name: "Bukhara Ark Museum",
     city: "Buxoro",
+    region: "Buxoro",
     image: bukhara,
     short: "Buxoro amirlari saroyi — VIII asrdan beri saqlangan qal'a.",
     description:

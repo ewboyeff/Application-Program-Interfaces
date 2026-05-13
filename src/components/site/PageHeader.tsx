@@ -10,12 +10,12 @@ export function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-border/50 bg-background pt-32 pb-16 lg:pt-40 lg:pb-20">
+    <section className="relative overflow-hidden border-b border-border/50 bg-background pt-28 pb-10 lg:pt-32 lg:pb-12">
       <div className="pointer-events-none absolute inset-0 bg-gradient-ember opacity-40" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <p className="eyebrow animate-float-up">— {eyebrow}</p>
         <h1
-          className="mt-5 max-w-4xl font-serif text-5xl leading-[1.05] tracking-tight animate-float-up sm:text-6xl lg:text-7xl"
+          className="mt-3 max-w-3xl font-serif text-3xl leading-tight tracking-tight animate-float-up sm:text-4xl lg:text-5xl"
           style={{ animationDelay: "80ms" }}
         >
           {title}{" "}
@@ -23,7 +23,7 @@ export function PageHeader({
         </h1>
         {subtitle ? (
           <p
-            className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground animate-float-up sm:text-lg"
+            className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground animate-float-up sm:text-base"
             style={{ animationDelay: "160ms" }}
           >
             {subtitle}

@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
+import { Search, Heart, ShoppingBag, Menu, X, LogIn, UserCircle } from "lucide-react";
 import { useShop } from "@/store/shop";
 import { SearchOverlay } from "./SearchOverlay";
 import { useI18n } from "@/i18n/i18n";
 import { LangSwitcher } from "./LangSwitcher";
+import { getSession } from "@/lib/auth";
 
-type NavItem = { key: string; to: "/" | "/shop" | "/museums" | "/blog" | "/contact" };
+type NavItem = { key: string; to: "/" | "/shop" | "/museums" | "/blog" | "/about" };
 
 const NAV_ITEMS: NavItem[] = [
   { key: "nav.home", to: "/" },
   { key: "nav.shop", to: "/shop" },
   { key: "nav.museums", to: "/museums" },
   { key: "nav.blog", to: "/blog" },
-  { key: "nav.contact", to: "/contact" },
+  { key: "nav.about", to: "/about" },
 ];
 
 export function Navbar() {
@@ -22,6 +23,7 @@ export function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { cartCount, wishlistCount } = useShop();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const session = getSession();
   const { t } = useI18n();
 
   // Force solid bg on inner pages where there is no full-bleed hero behind navbar
@@ -80,7 +82,7 @@ export function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-2">
-          <LangSwitcher className="mr-1 hidden sm:inline-flex" />
+          <LangSwitcher className="hidden sm:inline-flex" />
           <IconBtn label={t("icon.search")} onClick={() => setSearchOpen(true)}>
             <Search className="h-4 w-4" />
           </IconBtn>
@@ -90,6 +92,23 @@ export function Navbar() {
           <IconBtn label={t("icon.cart")} to="/cart" badge={cartCount || undefined}>
             <ShoppingBag className="h-4 w-4" />
           </IconBtn>
+          {session ? (
+            <Link
+              to="/profile"
+              className="hidden items-center gap-1.5 rounded-full border border-primary/40 bg-primary/5 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-primary transition-colors hover:bg-primary/10 sm:inline-flex"
+            >
+              <UserCircle className="h-3 w-3" />
+              {session.fullName?.split(" ")[0] || "Profil"}
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:border-primary/60 hover:text-primary sm:inline-flex"
+            >
+              <LogIn className="h-3 w-3" />
+              Kirish
+            </Link>
+          )}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={t("icon.menu")}
@@ -118,7 +137,18 @@ export function Navbar() {
               {t(item.key)}
             </Link>
           ))}
-          <div className="pt-4 sm:hidden">
+          <div className="flex items-center justify-between pt-4 sm:hidden">
+            {session ? (
+              <Link to="/profile" className="flex items-center gap-1.5 text-sm font-medium text-primary">
+                <UserCircle className="h-4 w-4" />
+                {session.fullName?.split(" ")[0] || "Profil"}
+              </Link>
+            ) : (
+              <Link to="/login" className="flex items-center gap-1.5 text-sm font-medium text-foreground/70 hover:text-primary">
+                <LogIn className="h-4 w-4" />
+                Kirish
+              </Link>
+            )}
             <LangSwitcher />
           </div>
         </nav>

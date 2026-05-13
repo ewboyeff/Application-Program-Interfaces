@@ -1,47 +1,38 @@
 import { useState } from "react";
 import { useReveal } from "./useReveal";
 import { Link } from "@tanstack/react-router";
-import { useI18n } from "@/i18n/i18n";
-import rishton from "@/assets/col-rishton.jpg";
-import samarkand from "@/assets/col-samarkand.jpg";
-import bukhara from "@/assets/col-bukhara.jpg";
-import figurines from "@/assets/col-figurines.jpg";
-import p2 from "@/assets/p2.jpg";
-import p3 from "@/assets/p3.jpg";
-import p4 from "@/assets/p4.jpg";
-import p5 from "@/assets/p5.jpg";
+import { useI18n, useCategoryT, useTypeT } from "@/i18n/i18n";
+import { PRODUCTS, MOHIR_SUBCATS, MUZEY_SUBCATS, type MainType, type Category } from "@/data/products";
+import { formatPrice } from "@/data/products";
 
-type Item = { id: string; image: string; name: string; price: string; cat: string };
-
-const ITEMS: Item[] = [
-  { id: "rishton-lagan", image: rishton, name: "Rishton lagan", price: "420 000", cat: "Keramika" },
-  { id: "samarkand-kosa", image: samarkand, name: "Samarqand kosa", price: "560 000", cat: "Keramika" },
-  { id: "bukhara-marjon", image: bukhara, name: "Buxoro marjon", price: "1 800 000", cat: "Zargarlik" },
-  { id: "kumush-uzuk", image: bukhara, name: "Kumush uzuk", price: "480 000", cat: "Zargarlik" },
-  { id: "bronza-chavandoz", image: figurines, name: "Bronza chavandoz", price: "920 000", cat: "Haykallar" },
-  { id: "yog-chiroq", image: p5, name: "Yog' chiroq", price: "740 000", cat: "Haykallar" },
-  { id: "ipak-ikat", image: p2, name: "Ipak ikat", price: "540 000", cat: "Milliy naqshlar" },
-  { id: "suzani", image: p4, name: "Suzani panel", price: "1 200 000", cat: "Milliy naqshlar" },
-  { id: "lauh", image: p3, name: "Yog'och lauh", price: "780 000", cat: "Milliy naqshlar" },
-];
-
-const TAB_KEYS = ["cat.all", "cat.ceramics", "cat.jewelry", "cat.statues", "cat.patterns"] as const;
-// Internal canonical category values (kept in Uzbek to match item.cat)
-const TAB_VALUES = ["Barchasi", "Keramika", "Zargarlik", "Haykallar", "Milliy naqshlar"] as const;
-
-const CAT_LABEL_KEY: Record<string, string> = {
-  Keramika: "cat.ceramics",
-  Zargarlik: "cat.jewelry",
-  Haykallar: "cat.statues",
-  "Milliy naqshlar": "cat.patterns",
-};
+type ActiveType = "all" | MainType;
 
 export function Categories() {
   const ref = useReveal<HTMLElement>();
   const { t } = useI18n();
-  const [active, setActive] = useState<(typeof TAB_VALUES)[number]>("Barchasi");
+  const tCat = useCategoryT();
+  const tType = useTypeT();
 
-  const filtered = active === "Barchasi" ? ITEMS : ITEMS.filter((i) => i.cat === active);
+  const [activeType, setActiveType] = useState<ActiveType>("all");
+  const [activeCat, setActiveCat] = useState<Category | "all">("all");
+
+  const subcats =
+    activeType === "MOHIR_QOLLAR"
+      ? MOHIR_SUBCATS
+      : activeType === "MUZEY_SUVENIRLARI"
+      ? MUZEY_SUBCATS
+      : [];
+
+  const handleTypeChange = (type: ActiveType) => {
+    setActiveType(type);
+    setActiveCat("all");
+  };
+
+  const filtered = PRODUCTS.filter((p) => {
+    if (activeType !== "all" && p.type !== activeType) return false;
+    if (activeCat !== "all" && p.category !== activeCat) return false;
+    return true;
+  }).slice(0, 8);
 
   return (
     <section
@@ -58,23 +49,30 @@ export function Categories() {
               <span className="italic text-primary">{t("sec.categoriesTitle2")}</span>
             </h2>
           </div>
+          <Link
+            to="/shop"
+            className="hidden shrink-0 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground/80 transition-smooth hover:border-primary hover:text-primary md:inline-flex"
+          >
+            {t("cta.viewCollection")}
+          </Link>
         </div>
 
-        <div className="reveal mb-12 flex flex-wrap items-center gap-2 border-b border-border/50">
-          {TAB_VALUES.map((value, i) => {
-            const isActive = active === value;
-            const key = TAB_KEYS[i];
+        {/* Level 1: Main type tabs */}
+        <div className="reveal mb-4 flex flex-wrap items-center gap-2 border-b border-border/50">
+          {(["all", "MOHIR_QOLLAR", "MUZEY_SUVENIRLARI"] as ActiveType[]).map((type) => {
+            const isActive = activeType === type;
+            const label = type === "all" ? t("type.all") : tType(type);
             return (
               <button
-                key={value}
-                onClick={() => setActive(value)}
-                className={`relative -mb-px px-4 py-3 text-sm font-medium transition-colors ${
+                key={type}
+                onClick={() => handleTypeChange(type)}
+                className={`relative -mb-px px-5 py-3 text-sm font-semibold transition-colors ${
                   isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {t(key)}
+                {label}
                 <span
-                  className={`absolute inset-x-3 bottom-0 h-px transition-all duration-500 ${
+                  className={`absolute inset-x-3 bottom-0 h-[2px] rounded-full transition-all duration-500 ${
                     isActive ? "bg-primary opacity-100" : "bg-primary opacity-0"
                   }`}
                 />
@@ -83,36 +81,81 @@ export function Categories() {
           })}
         </div>
 
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((p) => (
-            <Link
-              key={p.id + p.cat}
-              to="/product/$id"
-              params={{ id: p.id }}
-              className="group block animate-float-up overflow-hidden rounded-xl border border-border/50 bg-card transition-smooth hover:border-primary/50"
+        {/* Level 2: Subcategory chips */}
+        {subcats.length > 0 && (
+          <div className="reveal mb-8 flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveCat("all")}
+              className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
+                activeCat === "all"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-foreground"
+              }`}
             >
-              <div className="relative aspect-square overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-80" />
-                <span className="absolute left-3 top-3 rounded-full border border-border/60 bg-background/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] text-foreground/80 backdrop-blur-md">
-                  {CAT_LABEL_KEY[p.cat] ? t(CAT_LABEL_KEY[p.cat]) : p.cat}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between p-4">
-                <h3 className="font-serif text-sm text-foreground transition-colors group-hover:text-primary">
-                  {p.name}
-                </h3>
-                <span className="font-serif text-sm text-primary">
-                  {p.price}
-                </span>
-              </div>
-            </Link>
-          ))}
+              {t("type.all")}
+            </button>
+            {subcats.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCat(cat)}
+                className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
+                  activeCat === cat
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-foreground"
+                }`}
+              >
+                {tCat(cat)}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {filtered.length === 0 ? (
+          <div className="reveal rounded-2xl border border-border/60 bg-card/40 p-16 text-center">
+            <p className="font-serif text-2xl text-foreground">{t("shop.emptyTitle")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("shop.emptyHint")}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+            {filtered.map((p) => (
+              <Link
+                key={p.id}
+                to="/product/$id"
+                params={{ id: p.id }}
+                className="group block animate-float-up overflow-hidden rounded-xl border border-border/50 bg-card transition-smooth hover:border-primary/50"
+              >
+                <div className="relative aspect-square overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-80" />
+                  <span className="absolute left-3 top-3 rounded-full border border-border/60 bg-background/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] text-foreground/80 backdrop-blur-md">
+                    {tCat(p.category)}
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between p-4">
+                  <h3 className="font-serif text-sm text-foreground transition-colors group-hover:text-primary line-clamp-1">
+                    {p.name}
+                  </h3>
+                  <span className="ml-2 shrink-0 font-serif text-sm text-primary">
+                    {formatPrice(p.price)}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        <div className="reveal mt-10 flex justify-center md:hidden">
+          <Link
+            to="/shop"
+            className="rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground/80 transition-smooth hover:border-primary hover:text-primary"
+          >
+            {t("cta.viewCollection")}
+          </Link>
         </div>
       </div>
     </section>

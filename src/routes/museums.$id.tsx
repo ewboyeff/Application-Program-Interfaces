@@ -4,16 +4,14 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { ProductCard } from "@/components/site/ProductCard";
 import { getMuseum } from "@/data/museums";
-import { getProduct, type Product } from "@/data/products";
+import { getProductsByMuseum, type Product } from "@/data/products";
 import { useI18n, useMuseumT } from "@/i18n/i18n";
 
 export const Route = createFileRoute("/museums/$id")({
   loader: ({ params }) => {
     const museum = getMuseum(params.id);
     if (!museum) throw notFound();
-    const products = museum.productIds
-      .map((pid) => getProduct(pid))
-      .filter((p): p is Product => Boolean(p));
+    const products = getProductsByMuseum(museum.id);
     return { museum, products };
   },
   head: ({ loaderData }) => ({

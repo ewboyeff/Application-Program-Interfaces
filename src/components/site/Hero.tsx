@@ -2,10 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n } from "@/i18n/i18n";
-import hero1 from "@/assets/hero-statue.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
+import hero1 from "@/assets/hero-city.jpg";
+import hero2 from "@/assets/hero-plate-red.jpg";
+import hero3 from "@/assets/hero-plate-blue.jpg";
+import hero4 from "@/assets/hero-zargarlik.jpg";
+import hero5 from "@/assets/hero-zargarlik-toj.jpg";
+import hero6 from "@/assets/hero-mis.jpg";
 
 const SLIDES = [
   {
@@ -16,24 +18,38 @@ const SLIDES = [
     blend: false,
   },
   {
-    image: hero2,
-    eyebrow: "Rishton keramikasi · XIX asr",
-    title: "Ko'k naqsh — Abadiy hikoya",
-    sub: "Qo'lda chizilgan an'anaviy laganlar — Rishton ustalari merosidan",
+    image: hero5,
+    eyebrow: "XIX asr · Xiva xonligi",
+    title: "Zargarlik san'ati — Durdonalari",
+    sub: "Oltin, marjon va feruza bilan bezatilgan kelin toji — Xiva zargarlik san'atining cho'qqisi.",
     blend: true,
+  },
+  {
+    image: hero6,
+    eyebrow: "XVIII–XIX asr · Buxoro · Mis va bronza",
+    title: "Misga bitilgan — Tarix",
+    sub: "Bronza va mis idishlar — O'rta Osiyo hunarmandchiligi an'analarining asrlar oshib yetib kelgan guvohi.",
+    blend: false,
+  },
+  {
+    image: hero2,
+    eyebrow: "Rishton sopol idishlari · XIX asr",
+    title: "Sopol — Rishton Nafasi",
+    sub: "Firuza va ko'k naqshlar — Rishton kulolchilik maktabining asriy an'anasi.",
+    blend: false,
   },
   {
     image: hero3,
-    eyebrow: "Samarqand keramikasi · XV asr",
-    title: "Naqshlar tilidagi rivoyat",
-    sub: "Qizil, ko'k va sariq ranglarning saroyona uyg'unligi",
-    blend: true,
+    eyebrow: "Samarqand sopol idishlari · XV asr",
+    title: "Ko'k Naqsh — Samarqand Ruhi",
+    sub: "Samarqand kulollari qo'lidan chiqqan idishlar — Temuriylar davri san'atining tirik merosi.",
+    blend: false,
   },
   {
     image: hero4,
-    eyebrow: "Buxoro zargarligi · XIX asr",
-    title: "Oltinda muhrlangan afsona",
-    sub: "Filigran oltin va marjon — amir saroyi xazinasidan ilhom",
+    eyebrow: "XIX asr oxiri – XX asr boshi · Xiva",
+    title: "To'g'nog'ich — Kumush va Marjonlar",
+    sub: "Kumush, marjonlar, feruza. Zargarlik san'atining noyob durdonasi.",
     blend: true,
   },
 ];
@@ -62,21 +78,15 @@ export function Hero() {
           <div
             key={s.image}
             className={`absolute inset-0 transition-opacity duration-[1400ms] ${
-              s.blend
-                ? "bg-[radial-gradient(ellipse_at_70%_50%,#0a1a2e_0%,#070d18_45%,#0f0f0f_75%)]"
-                : ""
-            } ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
           >
             <img
               src={s.image}
               alt={s.title}
-              className={`h-full w-full ${
-                s.blend
-                  ? "object-contain object-right p-6 mix-blend-screen sm:p-10 lg:p-14"
-                  : "object-cover object-center"
-              } ${i === active ? "animate-ken-burns" : ""}`}
+              className={`h-full w-full object-cover object-center ${
+                i === active ? "animate-ken-burns" : ""
+              }`}
               loading={i === 0 ? "eager" : "lazy"}
               fetchPriority={i === 0 ? "high" : "auto"}
             />
@@ -94,7 +104,6 @@ export function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-10">
         <div className="max-w-2xl">
           <p key={`eb-${active}`} className="eyebrow animate-float-up">
-            <span className="mr-3 inline-block h-px w-8 translate-y-[-4px] bg-primary align-middle" />
             {SLIDES[active].eyebrow}
           </p>
 
