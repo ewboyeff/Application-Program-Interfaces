@@ -15,12 +15,16 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "";
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || "")
+  .split(",").map(s => s.trim()).filter(Boolean);
+
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true);
     if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return cb(null, true);
-    if (ALLOWED_ORIGIN && origin === ALLOWED_ORIGIN) return cb(null, true);
+    if (ALLOWED_ORIGINS.some(o => origin === o)) return cb(null, true);
+    if (/^https:\/\/[^.]+\.workers\.dev$/.test(origin)) return cb(null, true);
+    if (/^https:\/\/[^.]+\.pages\.dev$/.test(origin)) return cb(null, true);
     cb(new Error("Not allowed by CORS"));
   },
 }));
