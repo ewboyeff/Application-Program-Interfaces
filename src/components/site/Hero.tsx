@@ -3,17 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n } from "@/i18n/i18n";
 import hero1 from "@/assets/hero-city.jpg";
-import hero2 from "@/assets/hero-plate-red.jpg";
-import hero3 from "@/assets/hero-plate-blue.jpg";
-import hero4 from "@/assets/hero-zargarlik.jpg";
 import hero5 from "@/assets/hero-zargarlik-toj.jpg";
 import hero6 from "@/assets/hero-mis.jpg";
+import heroSopol from "@/assets/hero-sopol.jpg";
 
 const SLIDES = [
   {
     image: hero1,
-    eyebrow: "Buxoro · Po-i-Kalon",
-    title: "Shahar — Tarix Nafasi",
+    eyebrow: "",
+    title: "Sharq tarixining betakror hikoyalari",
     sub: "O'zbekiston qadimiy shaharlari va muzeylaridan ilhomlangan kolleksiya",
     blend: false,
   },
@@ -32,25 +30,11 @@ const SLIDES = [
     blend: false,
   },
   {
-    image: hero2,
-    eyebrow: "Rishton sopol idishlari · XIX asr",
-    title: "Sopol — Rishton Nafasi",
-    sub: "Firuza va ko'k naqshlar — Rishton kulolchilik maktabining asriy an'anasi.",
+    image: heroSopol,
+    eyebrow: "Rishton · O'zbek kulolchiligi",
+    title: "Sopolga bitilgan — Qo'shiq",
+    sub: "Ko'k va yashil naqshlar bilan bezatilgan Rishton sopol san'ati — asrlar sinovidan o'tgan go'zallik.",
     blend: false,
-  },
-  {
-    image: hero3,
-    eyebrow: "Samarqand sopol idishlari · XV asr",
-    title: "Ko'k Naqsh — Samarqand Ruhi",
-    sub: "Samarqand kulollari qo'lidan chiqqan idishlar — Temuriylar davri san'atining tirik merosi.",
-    blend: false,
-  },
-  {
-    image: hero4,
-    eyebrow: "XIX asr oxiri – XX asr boshi · Xiva",
-    title: "To'g'nog'ich — Kumush va Marjonlar",
-    sub: "Kumush, marjonlar, feruza. Zargarlik san'atining noyob durdonasi.",
-    blend: true,
   },
 ];
 

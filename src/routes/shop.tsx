@@ -6,10 +6,41 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { ProductCard } from "@/components/site/ProductCard";
 import { PRODUCTS, MOHIR_SUBCATS, MUZEY_SUBCATS, type MainType, type Category } from "@/data/products";
-import { useI18n, useCategoryT, useTypeT } from "@/i18n/i18n";
+import { useI18n, useTypeT } from "@/i18n/i18n";
 import { fetchProducts } from "@/lib/api";
-import zargarlikImg from "@/assets/hero-zargarlik.jpg";
-import rishtonImg from "@/assets/col-rishton.jpg";
+import zargarlikImg from "@/assets/mohir-qollar.jpg";
+import rishtonImg from "@/assets/muzey-suvenirlar.jpg";
+import catZargarlik from "@/assets/cat-zargarlik.jpg";
+import catSopol from "@/assets/cat-sopol.jpg";
+import catYogoch from "@/assets/cat-yogoch.jpg";
+import catKiyimlar from "@/assets/cat-kiyimlar.jpg";
+import catShopperlar from "@/assets/cat-shopperlar.jpg";
+import catGilamalar from "@/assets/cat-gilamalar.jpg";
+import catMiniatyuralar from "@/assets/cat-miniatyuralar.jpg";
+import catKitoblar from "@/assets/cat-kitoblar.jpg";
+import catBolalar from "@/assets/cat-bolalar.jpg";
+import catPrintliIdishlar from "@/assets/cat-printli-idishlar.jpg";
+import catPrintliKiyimlar from "@/assets/cat-printli-kiyimlar.jpg";
+import catShopperlarMuzey from "@/assets/cat-shopperlar-muzey.jpg";
+import catOtkritkalar from "@/assets/cat-otkritkalar.jpg";
+import catBreloklar from "@/assets/cat-breloklar.jpg";
+
+const SUBCAT_IMAGES: Record<string, string> = {
+  "Zargarlik buyumlari": catZargarlik,
+  "Sopol buyumlar": catSopol,
+  "Yog'och o'ymakorligi": catYogoch,
+  "Kiyimlar": catKiyimlar,
+  "Shopperlar": catShopperlar,
+  "Gilamalar": catGilamalar,
+  "Miniatyuralar": catMiniatyuralar,
+  "Kitoblar va kataloglar": catKitoblar,
+  "Bolalar uchun": catBolalar,
+  "Bosma printli idishlar (muzey)": catPrintliIdishlar,
+  "Bosma printli kiyimlar": catPrintliKiyimlar,
+  "Shopperlar (muzey)": catShopperlarMuzey,
+  "Otkritkalar": catOtkritkalar,
+  "Breloklar va magnitlar": catBreloklar,
+};
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -32,7 +63,6 @@ function ShopPage() {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("default");
   const { t } = useI18n();
-  const tCat = useCategoryT();
   const tType = useTypeT();
 
   const { data: apiProducts = [] } = useQuery({
@@ -53,6 +83,7 @@ function ShopPage() {
     setActiveType(type);
     setActiveCat("all");
     setQ("");
+    setSort("default");
   };
 
   const handleBack = () => {
@@ -62,65 +93,58 @@ function ShopPage() {
     setSort("default");
   };
 
+  const handleBackToSubcats = () => {
+    setActiveCat("all");
+    setQ("");
+    setSort("default");
+  };
+
   const items = useMemo(() => {
-    if (!activeType) return [];
-    let list = allProducts.filter((p) => p.type === activeType);
-    if (activeCat !== "all") list = list.filter((p) => p.category === activeCat);
+    if (!activeType || activeCat === "all") return [];
+    let list = allProducts.filter((p) => p.type === activeType && p.category === activeCat);
     const s = q.trim().toLowerCase();
-    if (s) {
-      list = list.filter(
-        (p) =>
-          p.name.toLowerCase().includes(s) ||
-          p.museum.toLowerCase().includes(s) ||
-          p.short.toLowerCase().includes(s),
-      );
-    }
+    if (s) list = list.filter((p) =>
+      p.name.toLowerCase().includes(s) ||
+      p.museum.toLowerCase().includes(s) ||
+      p.short.toLowerCase().includes(s),
+    );
     if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
     if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
     return list;
   }, [activeType, activeCat, q, sort, allProducts]);
 
-  const mohirCount = allProducts.filter((p) => p.type === "MOHIR_QOLLAR").length;
-  const muzeyCount = allProducts.filter((p) => p.type === "MUZEY_SUVENIRLARI").length;
-
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      {/* Landing: two category cards */}
-      {!activeType ? (
+      {/* Step 1: Landing — two main category cards */}
+      {!activeType && (
         <section className="bg-background" style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "5rem" }}>
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <p className="eyebrow">{t("nav.shop")}</p>
             <h1 className="mt-2 font-serif text-2xl leading-tight tracking-tight sm:text-3xl">
               Kategoriyani <span className="italic text-primary">tanlang</span>
             </h1>
-
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
               <CategoryCard
                 image={zargarlikImg}
                 title={tType("MOHIR_QOLLAR")}
-                sub="Toshkent, Samarqand, Buxoro, Nukus ustalaridan"
-                count={mohirCount}
-                countLabel={t("shop.count")}
                 onClick={() => handleTypeChange("MOHIR_QOLLAR")}
               />
               <CategoryCard
                 image={rishtonImg}
                 title={tType("MUZEY_SUVENIRLARI")}
-                sub="14 hamkor muzeydan sertifikatlangan nusxalar"
-                count={muzeyCount}
-                countLabel={t("shop.count")}
                 onClick={() => handleTypeChange("MUZEY_SUVENIRLARI")}
               />
             </div>
           </div>
         </section>
-      ) : (
-        /* Products view */
+      )}
+
+      {/* Step 2: Subcategory cards */}
+      {activeType && activeCat === "all" && (
         <section className="bg-background pb-16" style={{ paddingTop: "calc(80px + 1.5rem)" }}>
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            {/* Back + title */}
             <div className="mb-8 flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -129,9 +153,46 @@ function ShopPage() {
                 <ArrowLeft className="h-3.5 w-3.5" />
                 {t("nav.shop")}
               </button>
-              <h1 className="font-serif text-2xl sm:text-3xl">
+              <h1 className="font-serif text-2xl sm:text-3xl">{tType(activeType)}</h1>
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {subcats.map((cat) => {
+                const img = SUBCAT_IMAGES[cat] ?? allProducts.find((p) => p.type === activeType && p.category === cat)?.image;
+                return (
+                  <SubcatCard
+                    key={cat}
+                    name={cat}
+                    image={img}
+                    onClick={() => setActiveCat(cat)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Step 3: Products */}
+      {activeType && activeCat !== "all" && (
+        <section className="bg-background pb-16" style={{ paddingTop: "calc(80px + 1.5rem)" }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            {/* Breadcrumb nav */}
+            <div className="mb-8 flex flex-wrap items-center gap-2">
+              <button
+                onClick={handleBack}
+                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {t("nav.shop")}
+              </button>
+              <span className="text-muted-foreground/40">/</span>
+              <button
+                onClick={handleBackToSubcats}
+                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
                 {tType(activeType)}
-              </h1>
+              </button>
+              <span className="text-muted-foreground/40">/</span>
+              <span className="text-sm text-foreground">{activeCat}</span>
             </div>
 
             {/* Toolbar */}
@@ -148,9 +209,6 @@ function ShopPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-                  <label className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                    {t("shop.sort")}
-                  </label>
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value as Sort)}
@@ -162,36 +220,6 @@ function ShopPage() {
                   </select>
                 </div>
               </div>
-
-              {/* Subcategory chips */}
-              {subcats.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={() => setActiveCat("all")}
-                    className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
-                      activeCat === "all"
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-foreground"
-                    }`}
-                  >
-                    {t("type.all")}
-                  </button>
-                  {subcats.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCat(cat)}
-                      className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
-                        activeCat === cat
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-foreground"
-                      }`}
-                    >
-                      {tCat(cat)}
-                    </button>
-                  ))}
-                </div>
-              )}
-
               <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
                 {items.length} {t("shop.count")}
               </p>
@@ -221,16 +249,10 @@ function ShopPage() {
 function CategoryCard({
   image,
   title,
-  sub,
-  count,
-  countLabel,
   onClick,
 }: {
   image: string;
   title: string;
-  sub: string;
-  count: number;
-  countLabel: string;
   onClick: () => void;
 }) {
   return (
@@ -259,13 +281,9 @@ function CategoryCard({
         <div className="absolute inset-0 bg-gradient-to-b from-card/70 to-card/90 transition-all duration-500 group-hover:from-primary/10 group-hover:to-card/90" />
         {/* Content */}
         <div className="relative z-10">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-primary">
-            {count} {countLabel}
-          </p>
-          <h2 className="mt-1 font-serif text-2xl leading-tight text-foreground transition-colors duration-300 group-hover:text-primary sm:text-3xl">
+          <h2 className="font-serif text-2xl leading-tight text-foreground transition-colors duration-300 group-hover:text-primary sm:text-3xl">
             {title}
           </h2>
-          <p className="mt-1 text-xs text-foreground/55">{sub}</p>
           <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
             <span className="border-b border-primary/40 pb-0.5 transition-all duration-300 group-hover:border-primary">
               Ko'rish
@@ -276,6 +294,50 @@ function CategoryCard({
       </div>
 
       {/* Animated border glow line at bottom */}
+      <span className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-gold scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+    </button>
+  );
+}
+
+function SubcatCard({
+  name,
+  image,
+  onClick,
+}: {
+  name: string;
+  image?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="group relative overflow-hidden rounded-2xl border border-border/50 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-primary/60 hover:shadow-glow"
+    >
+      <div className="relative aspect-[3/4] overflow-hidden">
+        {image ? (
+          <img
+            src={image}
+            alt={name}
+            className="h-full w-full object-cover object-center transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-card to-muted" />
+        )}
+        {/* Strong gradient covers bottom 50% */}
+        <div className="absolute inset-x-0 bottom-0 h-[50%] bg-gradient-to-t from-black via-black/80 to-transparent" />
+        {/* Hover gold shimmer */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-primary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        {/* Text pushed to bottom */}
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-6 text-center">
+          <p className="font-serif text-lg leading-snug text-white transition-colors group-hover:text-primary">
+            {name}
+          </p>
+          <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-primary">
+            <span className="border-b border-primary/40 pb-0.5 transition-all duration-300 group-hover:border-primary">Ko'rish</span>
+            <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+        </div>
+      </div>
       <span className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-gold scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
     </button>
   );

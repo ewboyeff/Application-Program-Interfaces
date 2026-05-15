@@ -5,13 +5,11 @@ import { Link } from "@tanstack/react-router";
 import { useShop } from "@/store/shop";
 import { toast } from "./Toaster";
 import { useI18n, useProductT } from "@/i18n/i18n";
-import { PRODUCTS as ALL_PRODUCTS, formatPrice } from "@/data/products";
+import { PRODUCTS as STATIC_PRODUCTS, formatPrice, type Product } from "@/data/products";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "@/lib/api";
 
-const FEATURED_IDS = ["kok-choynak", "ipak-ikat", "lauh", "suzani", "yog-chiroq", "registon-mini"];
-const PRODUCTS = ALL_PRODUCTS.filter((p) => FEATURED_IDS.includes(p.id))
-  .sort((a, b) => FEATURED_IDS.indexOf(a.id) - FEATURED_IDS.indexOf(b.id));
-
-function FeaturedCard({ product }: { product: (typeof PRODUCTS)[number] }) {
+function FeaturedCard({ product }: { product: Product }) {
   const { addToCart } = useShop();
   const { t } = useI18n();
   const tr = useProductT(product);
@@ -79,6 +77,14 @@ export function Featured() {
   const scroller = useRef<HTMLDivElement | null>(null);
   const { t } = useI18n();
 
+  const { data: apiProducts = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetchProducts(),
+    staleTime: 30_000,
+  });
+
+  const products = (apiProducts.length > 0 ? apiProducts : STATIC_PRODUCTS).slice(0, 8);
+
   const scroll = (dir: number) => {
     const el = scroller.current;
     if (!el) return;
@@ -125,7 +131,7 @@ export function Featured() {
           ref={scroller}
           className="no-scrollbar reveal -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-6 lg:-mx-10 lg:px-10"
         >
-          {PRODUCTS.map((p) => (
+          {products.map((p) => (
             <FeaturedCard key={p.id} product={p} />
           ))}
         </div>

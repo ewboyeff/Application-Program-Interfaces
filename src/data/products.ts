@@ -14,7 +14,6 @@ export type MainType = "MOHIR_QOLLAR" | "MUZEY_SUVENIRLARI";
 export type MohirSubcat =
   | "Zargarlik buyumlari"
   | "Sopol buyumlar"
-  | "Bosma printli idishlar"
   | "Kiyimlar"
   | "Shopperlar"
   | "Yog'och o'ymakorligi"
@@ -38,7 +37,6 @@ export type Category = MohirSubcat | MuzeySubcat;
 export const MOHIR_SUBCATS: MohirSubcat[] = [
   "Zargarlik buyumlari",
   "Sopol buyumlar",
-  "Bosma printli idishlar",
   "Kiyimlar",
   "Shopperlar",
   "Yog'och o'ymakorligi",
