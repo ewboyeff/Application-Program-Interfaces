@@ -1,0 +1,5 @@
+
+> museum-api@1.0.0 dev
+> tsx watch src/index.ts
+
+✅ API server: http://localhost:3201
