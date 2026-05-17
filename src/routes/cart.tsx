@@ -109,7 +109,7 @@ function CartPage() {
       <Navbar />
 
       <section className="pt-28 pb-20 lg:pt-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <p className="eyebrow">{t("cart.eyebrow")}</p>
           <h1 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">
             {t("cart.title1")} <span className="italic text-primary">{t("cart.title2")}</span>

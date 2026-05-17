@@ -85,7 +85,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-fade-bottom" />
 
       {/* Content */}
-      <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-10">
+      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="max-w-2xl">
           <p key={`eb-${active}`} className="eyebrow animate-float-up">
             {SLIDES[active].eyebrow}
@@ -93,7 +93,7 @@ export function Hero() {
 
           <h1
             key={`t-${active}`}
-            className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight text-foreground animate-float-up sm:text-6xl lg:text-7xl xl:text-[5.5rem]"
+            className="mt-6 font-serif text-4xl leading-[1.05] tracking-tight text-foreground animate-float-up sm:text-5xl lg:text-7xl xl:text-[5.5rem]"
           >
             {SLIDES[active].title.split(" — ").map((part, idx, arr) => (
               <span key={idx}>
@@ -135,7 +135,7 @@ export function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="mt-14 flex items-center gap-10 border-t border-border/50 pt-6">
+          <div className="mt-10 flex items-center gap-6 border-t border-border/50 pt-6 sm:mt-14 sm:gap-10">
             {[
               { v: "500+", l: t("hero.stat.exhibits") },
               { v: "7", l: t("hero.stat.museums") },

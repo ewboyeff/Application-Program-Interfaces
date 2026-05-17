@@ -59,7 +59,7 @@ function MuseumDetailPage() {
           <img src={museum.image} alt={tr.name} className="h-full w-full object-cover opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background" />
         </div>
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <Link
             to="/museums"
             className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-primary"
@@ -95,7 +95,7 @@ function MuseumDetailPage() {
 
       {/* Products */}
       <section className="bg-background py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
               <p className="eyebrow">{t("mus.detail.eyebrow")}</p>

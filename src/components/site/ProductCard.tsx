@@ -46,15 +46,15 @@ export function ProductCard({ product }: { product: Product }) {
       <Link
         to="/product/$id"
         params={{ id: product.id }}
-        className="block space-y-2 p-5"
+        className="block space-y-1.5 p-3 sm:space-y-2 sm:p-5"
       >
-        <p className="text-[11px] uppercase tracking-[0.22em] text-primary/80">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-primary/80 sm:text-[11px]">
           {tr.type}
         </p>
-        <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+        <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[11px]">
           {tr.category}
         </p>
-        <p className="font-serif text-xl leading-snug text-foreground transition-colors group-hover:text-primary">
+        <p className="font-serif text-base leading-snug text-foreground transition-colors group-hover:text-primary sm:text-xl">
           {tr.name}
         </p>
       </Link>

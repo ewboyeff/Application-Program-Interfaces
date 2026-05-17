@@ -8,7 +8,7 @@ export function Footer() {
   const { t } = useI18n();
   return (
     <footer id="footer" className="relative border-t border-border/60 bg-background pt-14">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
         {/* Newsletter CTA */}
         <div className="mb-12 grid grid-cols-1 items-center gap-6 rounded-2xl border border-primary/25 bg-gradient-to-br from-card to-background p-6 shadow-glow lg:grid-cols-2 lg:p-8">

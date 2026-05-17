@@ -67,7 +67,7 @@ function ProfilePage() {
       <Navbar />
 
       <section style={{ paddingTop: "calc(80px + 2.5rem)" }} className="pb-20">
-        <div className="mx-auto max-w-4xl px-6 lg:px-10">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
 
           {/* Header */}
           <div className="mb-8 flex items-center justify-between">

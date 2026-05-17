@@ -33,7 +33,7 @@ function MuseumsPage() {
       <Navbar />
 
       <section className="bg-background pb-24" style={{ paddingTop: "calc(80px + 2rem)" }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
           {/* Title */}
           <div className="mb-10">

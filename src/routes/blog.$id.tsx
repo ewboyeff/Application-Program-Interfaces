@@ -53,7 +53,7 @@ function BlogPostPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 lg:pt-40">
-        <div className="mx-auto max-w-4xl px-6 lg:px-10">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
           <Link
             to="/blog"
             className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-primary"
@@ -79,7 +79,7 @@ function BlogPostPage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl px-6 lg:px-10">
+        <div className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-10">
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
             <img
               src={post.image}
@@ -92,7 +92,7 @@ function BlogPostPage() {
 
       {/* Body */}
       <section className="py-20">
-        <div className="mx-auto max-w-3xl px-6 lg:px-10">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10">
           <article className="space-y-6 text-base leading-[1.85] text-foreground/85 sm:text-lg">
             {tr.body.map((para, i) => (
               <p key={i}>{para}</p>

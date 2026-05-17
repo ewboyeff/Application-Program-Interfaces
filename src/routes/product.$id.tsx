@@ -124,7 +124,7 @@ function ProductPage() {
       <Navbar />
 
       <section className="pt-32 pb-20 lg:pt-40">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <Link
             to="/shop"
             className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-primary"
@@ -247,7 +247,7 @@ function ProductPage() {
       {/* Related — same museum */}
       {related.length > 0 && (
         <section className="bg-background pb-28">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
             <div className="mb-10 flex items-end justify-between">
               <div>
                 <p className="eyebrow">{t("product.related.eyebrow")}</p>

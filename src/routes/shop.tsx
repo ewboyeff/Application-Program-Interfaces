@@ -120,7 +120,7 @@ function ShopPage() {
       {/* Step 1: Landing — two main category cards */}
       {!activeType && (
         <section className="bg-background" style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "5rem" }}>
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
             <p className="eyebrow">{t("nav.shop")}</p>
             <h1 className="mt-2 font-serif text-2xl leading-tight tracking-tight sm:text-3xl">
               Kategoriyani <span className="italic text-primary">tanlang</span>
@@ -144,7 +144,7 @@ function ShopPage() {
       {/* Step 2: Subcategory cards */}
       {activeType && activeCat === "all" && (
         <section className="bg-background pb-16" style={{ paddingTop: "calc(80px + 1.5rem)" }}>
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
             <div className="mb-8 flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -175,7 +175,7 @@ function ShopPage() {
       {/* Step 3: Products */}
       {activeType && activeCat !== "all" && (
         <section className="bg-background pb-16" style={{ paddingTop: "calc(80px + 1.5rem)" }}>
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
             {/* Breadcrumb nav */}
             <div className="mb-8 flex flex-wrap items-center gap-2">
               <button

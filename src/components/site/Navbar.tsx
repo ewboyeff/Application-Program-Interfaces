@@ -50,7 +50,7 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 lg:px-10">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-10">
         {/* Logo */}
         <Link to="/" className="group flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-full border border-primary/40 text-primary transition-smooth group-hover:bg-primary/10">

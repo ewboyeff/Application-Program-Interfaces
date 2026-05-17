@@ -47,7 +47,7 @@ function AboutPage() {
 
       {/* Stats */}
       <section className="border-y border-border/40 bg-card/30 py-7">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-4 gap-4">
             {[
               { icon: Building2, value: "14", label: "Hamkor muzey" },
@@ -67,7 +67,7 @@ function AboutPage() {
 
       {/* Decree — featured */}
       <section className="bg-background py-10">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="rounded-2xl border border-primary/20 bg-card/50 p-6 lg:p-8">
 
             {/* Top row */}
@@ -138,7 +138,7 @@ function AboutPage() {
 
       {/* About text + image */}
       <section className="bg-background py-10">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
             <div>
               <p className="eyebrow">— Bizning maqsadimiz</p>

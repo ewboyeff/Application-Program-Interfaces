@@ -23,7 +23,7 @@ function BlogPage() {
 
       {/* Yarmarkalar */}
       <section className="bg-background pb-14" style={{ paddingTop: "calc(80px + 2.5rem)" }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <h2 className="mb-8 font-serif text-2xl text-foreground sm:text-3xl">Yarmarkalar</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {FAIRS.map((f) => <FairCard key={f.id} fair={f} />)}
@@ -33,7 +33,7 @@ function BlogPage() {
 
       {/* Mahorat darslari */}
       <section className="border-t border-border/40 bg-background py-14">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <h2 className="mb-8 font-serif text-2xl text-foreground sm:text-3xl">Mahorat darslari</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {MASTERCLASSES.map((m) => <MasterclassCard key={m.id} item={m} />)}
@@ -43,7 +43,7 @@ function BlogPage() {
 
       {/* Tadbirlar */}
       <section className="border-t border-border/40 bg-background py-14">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <h2 className="mb-8 font-serif text-2xl text-foreground sm:text-3xl">Tadbirlar</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {ACTIVITIES.map((a) => <ActivityCard key={a.id} item={a} />)}
