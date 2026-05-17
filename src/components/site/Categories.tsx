@@ -38,13 +38,13 @@ export function Categories() {
     <section
       id="categories"
       ref={ref}
-      className="relative bg-background py-28 lg:py-36"
+      className="relative bg-background py-16 sm:py-28 lg:py-36"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="reveal mb-10 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="reveal mb-8 flex flex-col items-start gap-6 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">{t("sec.categoriesEyebrow")}</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <h2 className="mt-4 font-serif text-3xl leading-tight tracking-tight sm:text-4xl lg:text-6xl">
               {t("sec.categoriesTitle1")}{" "}
               <span className="italic text-primary">{t("sec.categoriesTitle2")}</span>
             </h2>

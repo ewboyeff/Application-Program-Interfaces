@@ -11,9 +11,9 @@ export function Story() {
     <section
       id="story"
       ref={ref}
-      className="relative overflow-hidden bg-background py-28 lg:py-36"
+      className="relative overflow-hidden bg-background py-16 sm:py-28 lg:py-36"
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:gap-14 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
         {/* Image */}
         <div className="reveal relative">
           <div className="relative overflow-hidden rounded-2xl border border-border shadow-card">
@@ -43,7 +43,7 @@ export function Story() {
         {/* Text */}
         <div className="reveal">
           <p className="eyebrow">{t("sec.storyEyebrow")}</p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl lg:text-6xl">
             {t("story.title1")} <br />
             <span className="italic text-primary">{t("story.titleHighlight")}</span>.
           </h2>
@@ -55,7 +55,7 @@ export function Story() {
             {t("story.p2")}
           </p>
 
-          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-border/50 pt-8">
+          <div className="mt-8 grid grid-cols-3 gap-4 border-t border-border/50 pt-6 sm:mt-10 sm:gap-6 sm:pt-8">
             {[
               { v: "100%", l: t("story.stat1") },
               { v: "14", l: t("story.stat2") },

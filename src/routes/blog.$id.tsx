@@ -25,9 +25,9 @@ export const Route = createFileRoute("/blog/$id")({
   notFoundComponent: () => (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="mx-auto max-w-2xl px-6 pt-40 pb-32 text-center">
+      <div className="mx-auto max-w-2xl px-4 pt-28 pb-20 text-center sm:px-6 sm:pt-40 sm:pb-32">
         <p className="eyebrow">— 404</p>
-        <h1 className="mt-4 font-serif text-5xl">Maqola topilmadi</h1>
+        <h1 className="mt-4 font-serif text-3xl sm:text-5xl">Maqola topilmadi</h1>
         <Link
           to="/blog"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-6 py-3 text-sm font-semibold text-primary-foreground"
@@ -52,7 +52,7 @@ function BlogPostPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden pt-32 lg:pt-40">
+      <section className="relative overflow-hidden pt-24 sm:pt-32 lg:pt-40">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
           <Link
             to="/blog"
@@ -71,10 +71,10 @@ function BlogPostPage() {
               <Clock className="h-3 w-3" /> {tr.readTime}
             </span>
           </div>
-          <h1 className="mt-5 font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 font-serif text-3xl leading-[1.05] tracking-tight sm:text-4xl lg:text-6xl">
             {tr.title}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
             {tr.excerpt}
           </p>
         </div>
@@ -108,14 +108,14 @@ function BlogPostPage() {
       </section>
 
       {/* More posts */}
-      <section className="border-t border-border/50 bg-background py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <section className="border-t border-border/50 bg-background py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <p className="eyebrow">{t("blog.moreEyebrow")}</p>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
             {t("blog.moreTitle1")} <span className="italic text-primary">{t("blog.moreTitle2")}</span>
           </h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:mt-10 md:grid-cols-3">
             {others.map((p) => (
               <OtherPostCard key={p.id} post={p} />
             ))}

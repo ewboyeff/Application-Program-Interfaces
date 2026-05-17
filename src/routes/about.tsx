@@ -33,7 +33,7 @@ function AboutPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-background" style={{ paddingTop: "calc(80px + 2rem)" }}>
         <div className="pointer-events-none absolute inset-0 bg-gradient-ember opacity-35" />
-        <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-10">
           <p className="eyebrow">{t("nav.about")}</p>
           <h1 className="mt-2 max-w-2xl font-serif text-3xl leading-tight tracking-tight sm:text-4xl">
             O'zbekiston merosini{" "}
@@ -48,7 +48,7 @@ function AboutPage() {
       {/* Stats */}
       <section className="border-y border-border/40 bg-card/30 py-7">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {[
               { icon: Building2, value: "14", label: "Hamkor muzey" },
               { icon: Users, value: "80+", label: "Mahalliy usta" },
@@ -125,8 +125,8 @@ function AboutPage() {
             </div>
 
             {/* Signature */}
-            <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-4">
-              <div className="flex items-baseline gap-2">
+            <div className="mt-5 flex flex-col gap-2 border-t border-border/40 pt-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-wrap items-baseline gap-2">
                 <p className="text-xs text-muted-foreground">O'zbekiston Respublikasi Prezidenti</p>
                 <p className="font-serif text-sm italic text-primary">Sh. Mirziyoyev</p>
               </div>

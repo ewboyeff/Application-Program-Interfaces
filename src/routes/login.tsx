@@ -44,7 +44,7 @@ function LoginPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <section className="flex min-h-screen items-center justify-center px-6 pt-20 pb-16">
+      <section className="flex min-h-screen items-center justify-center px-4 pt-20 pb-16 sm:px-6">
         <div className="w-full max-w-sm">
           <div className="mb-8 text-center">
             <p className="eyebrow mb-2">Xush kelibsiz</p>
@@ -56,7 +56,7 @@ function LoginPage() {
 
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-border/60 bg-card/60 p-8 shadow-card backdrop-blur-sm"
+            className="rounded-2xl border border-border/60 bg-card/60 p-5 shadow-card backdrop-blur-sm sm:p-8"
           >
             <div className="space-y-5">
               <div>

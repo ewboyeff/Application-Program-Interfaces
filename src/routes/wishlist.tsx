@@ -30,10 +30,10 @@ function WishlistPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <section className="pt-32 pb-24 lg:pt-40">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <section className="pt-24 pb-16 sm:pt-32 sm:pb-24 lg:pt-40">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <p className="eyebrow">{t("wish.eyebrow")}</p>
-          <h1 className="mt-4 font-serif text-5xl leading-[1.05] sm:text-6xl">
+          <h1 className="mt-4 font-serif text-3xl leading-[1.05] sm:text-5xl lg:text-6xl">
             {t("wish.title1")} <span className="italic text-primary">{t("wish.title2")}</span>
           </h1>
           <p className="mt-5 max-w-xl text-sm text-muted-foreground">

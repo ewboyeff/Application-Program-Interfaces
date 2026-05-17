@@ -20,15 +20,15 @@ export function Footer() {
           </div>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full items-center gap-2 rounded-full border border-border/70 bg-background/60 p-1.5 backdrop-blur"
+            className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:rounded-full sm:border sm:border-border/70 sm:bg-background/60 sm:p-1.5 sm:backdrop-blur"
           >
             <input
               type="email"
               required
               placeholder={t("sec.emailPh")}
-              className="flex-1 bg-transparent px-4 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              className="flex-1 rounded-full border border-border/70 bg-background/60 px-4 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground sm:rounded-none sm:border-0 sm:bg-transparent sm:py-2"
             />
-            <button className="inline-flex items-center gap-2 rounded-full bg-gradient-gold px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-smooth hover:scale-[1.02]">
+            <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-smooth hover:scale-[1.02] sm:w-auto">
               {t("cta.subscribe")}
               <Send className="h-3 w-3" />
             </button>

@@ -45,13 +45,13 @@ function ContactPage() {
         subtitle={t("contact.headerSub")}
       />
 
-      <section className="bg-background py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[1fr_440px] lg:px-10">
+      <section className="bg-background py-12 sm:py-20">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[1fr_440px] lg:px-10">
           {/* Form + Map */}
           <div className="space-y-8">
             <form
               onSubmit={submit}
-              className="rounded-2xl border border-border/60 bg-card/60 p-7 shadow-card lg:p-10"
+              className="rounded-2xl border border-border/60 bg-card/60 p-5 shadow-card sm:p-7 lg:p-10"
             >
               <p className="eyebrow">{t("contact.formEyebrow")}</p>
               <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
@@ -101,7 +101,7 @@ function ContactPage() {
 
               <button
                 type="submit"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-7 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02]"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] sm:mt-8 sm:w-auto sm:px-7 sm:py-4"
               >
                 {t("contact.send")}
                 <Send className="h-4 w-4" />

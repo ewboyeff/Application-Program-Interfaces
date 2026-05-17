@@ -70,8 +70,8 @@ function ProfilePage() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
 
           {/* Header */}
-          <div className="mb-8 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3 sm:gap-4">
               <div className="grid h-14 w-14 place-items-center rounded-full border border-primary/40 bg-primary/10 text-primary">
                 <User className="h-6 w-6" />
               </div>
@@ -140,7 +140,7 @@ function ProfilePage() {
                       className="overflow-hidden rounded-2xl border border-border/50 bg-card/40"
                     >
                       {/* Order header */}
-                      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/40 px-6 py-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/40 px-4 py-4 sm:px-6">
                         <div className="flex items-center gap-3">
                           <Package className="h-4 w-4 text-primary" />
                           <div>
@@ -167,7 +167,7 @@ function ProfilePage() {
                       {/* Order items */}
                       <div className="divide-y divide-border/30">
                         {order.items.map((item, i) => (
-                          <div key={i} className="flex items-center gap-4 px-6 py-3">
+                          <div key={i} className="flex items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
                             <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-border/40 bg-card">
                               {item.image_url && (
                                 <img
@@ -196,7 +196,7 @@ function ProfilePage() {
 
                       {/* Delivery info */}
                       {(order.delivery_method || order.address) && (
-                        <div className="flex items-center gap-2 border-t border-border/40 px-6 py-3 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2 border-t border-border/40 px-4 py-3 text-xs text-muted-foreground sm:px-6">
                           {order.delivery_method === "pickup" ? (
                             <MapPin className="h-3.5 w-3.5 shrink-0" />
                           ) : (
@@ -214,7 +214,7 @@ function ProfilePage() {
 
           {/* Info tab */}
           {tab === "info" && (
-            <div className="rounded-2xl border border-border/50 bg-card/40 p-8">
+            <div className="rounded-2xl border border-border/50 bg-card/40 p-5 sm:p-8">
               <div className="space-y-6">
                 <InfoRow label="To'liq ism" value={session.fullName || "—"} />
                 <InfoRow label="Email" value={session.email} />

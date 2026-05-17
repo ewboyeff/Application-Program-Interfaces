@@ -50,13 +50,13 @@ export function Collections() {
     <section
       id="collections"
       ref={ref}
-      className="relative bg-background py-28 lg:py-36"
+      className="relative bg-background py-16 sm:py-28 lg:py-36"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="mb-10 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <div className="reveal max-w-2xl">
             <p className="eyebrow">{t("sec.collectionsEyebrow")}</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <h2 className="mt-4 font-serif text-3xl leading-tight tracking-tight sm:text-4xl lg:text-6xl">
               {t("sec.collectionsTitle1")}{" "}
               <span className="italic text-primary">{t("sec.collectionsTitle2")}</span>
             </h2>

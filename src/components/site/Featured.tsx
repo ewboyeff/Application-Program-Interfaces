@@ -15,7 +15,7 @@ function FeaturedCard({ product }: { product: Product }) {
   const tr = useProductT(product);
 
   return (
-    <article className="group relative w-[280px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 sm:w-[320px]">
+    <article className="group relative w-[260px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-smooth hover:border-primary/50 sm:w-[320px]">
       <Link
         to="/product/$id"
         params={{ id: product.id }}
@@ -95,15 +95,15 @@ export function Featured() {
     <section
       id="featured"
       ref={ref}
-      className="relative overflow-hidden bg-background py-28 lg:py-36"
+      className="relative overflow-hidden bg-background py-16 sm:py-28 lg:py-36"
     >
       <div className="pointer-events-none absolute inset-0 bg-gradient-ember opacity-50" />
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="mb-14 flex items-end justify-between gap-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
           <div className="reveal">
             <p className="eyebrow">{t("sec.featuredEyebrow")}</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <h2 className="mt-4 font-serif text-3xl leading-tight tracking-tight sm:text-4xl lg:text-6xl">
               {t("sec.featuredTitle1")}{" "}
               <span className="italic text-primary">{t("sec.featuredTitle2")}</span>
             </h2>
@@ -129,7 +129,7 @@ export function Featured() {
 
         <div
           ref={scroller}
-          className="no-scrollbar reveal -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-6 lg:-mx-10 lg:px-10"
+          className="no-scrollbar reveal -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-6 sm:px-6 sm:pb-6 lg:-mx-10 lg:px-10"
         >
           {products.map((p) => (
             <FeaturedCard key={p.id} product={p} />

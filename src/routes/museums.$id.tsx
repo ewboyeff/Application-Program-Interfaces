@@ -28,9 +28,9 @@ export const Route = createFileRoute("/museums/$id")({
   notFoundComponent: () => (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="mx-auto max-w-2xl px-6 pt-40 pb-32 text-center">
+      <div className="mx-auto max-w-2xl px-4 pt-28 pb-20 text-center sm:px-6 sm:pt-40 sm:pb-32">
         <p className="eyebrow">— 404</p>
-        <h1 className="mt-4 font-serif text-5xl">Muzey topilmadi</h1>
+        <h1 className="mt-4 font-serif text-3xl sm:text-5xl">Muzey topilmadi</h1>
         <Link
           to="/museums"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-6 py-3 text-sm font-semibold text-primary-foreground"
@@ -54,7 +54,7 @@ function MuseumDetailPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden pt-32 pb-16 lg:pt-40">
+      <section className="relative isolate overflow-hidden pt-24 pb-12 sm:pt-32 sm:pb-16 lg:pt-40">
         <div className="absolute inset-0 -z-10">
           <img src={museum.image} alt={tr.name} className="h-full w-full object-cover opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background" />
@@ -68,19 +68,19 @@ function MuseumDetailPage() {
             {t("mus.back")}
           </Link>
 
-          <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div className="mt-6 grid grid-cols-1 gap-8 sm:mt-8 sm:gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
             <div>
               <p className="eyebrow inline-flex items-center gap-2">
                 <MapPin className="h-3 w-3" /> {tr.city}
               </p>
-              <h1 className="mt-4 font-serif text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
+              <h1 className="mt-4 font-serif text-3xl leading-[1.05] sm:text-5xl sm:leading-[1.05] lg:text-7xl">
                 {tr.name}
               </h1>
               <p className="mt-7 max-w-xl text-base leading-relaxed text-foreground/75 sm:text-lg">
                 {tr.description}
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-8 border-t border-border/50 pt-6">
+              <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-border/50 pt-5 sm:mt-10 sm:gap-8 sm:pt-6">
                 <Stat icon={<Building2 className="h-3.5 w-3.5" />} label={t("mus.founded")} value={tr.founded} />
                 <Stat icon={<Sparkles className="h-3.5 w-3.5" />} label={t("mus.exhibits")} value={museum.exhibits} />
               </div>

@@ -49,9 +49,9 @@ export const Route = createFileRoute("/product/$id")({
   notFoundComponent: () => (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="mx-auto max-w-2xl px-6 pt-40 pb-32 text-center">
+      <div className="mx-auto max-w-2xl px-4 pt-28 pb-20 text-center sm:px-6 sm:pt-40 sm:pb-32">
         <p className="eyebrow">— 404</p>
-        <h1 className="mt-4 font-serif text-5xl">Mahsulot topilmadi</h1>
+        <h1 className="mt-4 font-serif text-3xl sm:text-5xl">Mahsulot topilmadi</h1>
         <Link
           to="/shop"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-6 py-3 text-sm font-semibold text-primary-foreground"
@@ -123,7 +123,7 @@ function ProductPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <section className="pt-32 pb-20 lg:pt-40">
+      <section className="pt-24 pb-16 lg:pt-40 lg:pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <Link
             to="/shop"
@@ -133,7 +133,7 @@ function ProductPage() {
             {t("product.backToShop")}
           </Link>
 
-          <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="mt-6 grid grid-cols-1 gap-8 sm:mt-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Image */}
             <div className="relative">
               <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-card">
@@ -156,11 +156,11 @@ function ProductPage() {
                 <span className="text-primary/60">— </span>
                 {tr.type} · {tr.category}
               </p>
-              <h1 className="mt-4 font-serif text-4xl leading-[1.1] sm:text-5xl">
+              <h1 className="mt-4 font-serif text-3xl leading-[1.1] sm:text-4xl lg:text-5xl">
                 {tr.name}
               </h1>
-              <div className="mt-6 flex items-baseline gap-3">
-                <span className="font-serif text-4xl text-primary">
+              <div className="mt-4 flex items-baseline gap-3 sm:mt-6">
+                <span className="font-serif text-3xl text-primary sm:text-4xl">
                   {formatPrice(product.price)}
                 </span>
                 <span className="text-sm text-muted-foreground">{t("common.currency")}</span>
@@ -185,7 +185,7 @@ function ProductPage() {
               )}
 
               {/* Quantity + actions */}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4">
                 <div className="inline-flex items-center rounded-full border border-border/70 bg-card/60">
                   <button
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
@@ -209,7 +209,7 @@ function ProductPage() {
                     addToCart(product.id, qty);
                     toast(t("toast.addedCart"));
                   }}
-                  className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-gold px-7 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] sm:flex-none"
+                  className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-gold px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] sm:flex-none sm:px-7 sm:py-4"
                 >
                   <ShoppingBag className="h-4 w-4" />
                   {t("cta.addToCart")}
@@ -236,7 +236,7 @@ function ProductPage() {
 
           {/* Museum card */}
           {museum && (
-            <div className="mt-16">
+            <div className="mt-10 sm:mt-16">
               <p className="eyebrow mb-6">{t("product.museum.eyebrow")}</p>
               <MuseumCard museum={museum} />
             </div>
@@ -248,10 +248,10 @@ function ProductPage() {
       {related.length > 0 && (
         <section className="bg-background pb-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-            <div className="mb-10 flex items-end justify-between">
+            <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="eyebrow">{t("product.related.eyebrow")}</p>
-                <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
+                <h2 className="mt-3 font-serif text-2xl sm:text-3xl lg:text-4xl">
                   {t("product.related.title1")}{" "}
                   <span className="italic text-primary">{t("product.related.title2")}</span>
                 </h2>

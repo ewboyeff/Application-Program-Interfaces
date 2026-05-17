@@ -36,15 +36,15 @@ function MuseumsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
           {/* Title */}
-          <div className="mb-10">
-            <h1 className="font-serif text-5xl leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          <div className="mb-8 sm:mb-10">
+            <h1 className="font-serif text-3xl leading-[1.05] tracking-tight sm:text-5xl lg:text-7xl">
               {t("mus.headerTitle")}{" "}
               <span className="italic text-primary">{t("mus.headerHighlight")}</span>
             </h1>
           </div>
 
           {/* Region filter */}
-          <div className="no-scrollbar mb-10 -mx-6 flex items-center gap-2 overflow-x-auto px-6 lg:-mx-10 lg:px-10">
+          <div className="no-scrollbar mb-8 -mx-4 flex items-center gap-2 overflow-x-auto px-4 sm:mb-10 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
             <button
               onClick={() => setActiveRegion("all")}
               className={`shrink-0 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${

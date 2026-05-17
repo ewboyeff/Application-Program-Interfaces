@@ -108,7 +108,7 @@ function CartPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <section className="pt-28 pb-20 lg:pt-32">
+      <section className="pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <p className="eyebrow">{t("cart.eyebrow")}</p>
           <h1 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">
