@@ -1,5 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { ShopProvider } from "@/store/shop";
@@ -99,6 +100,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    // Tashqi linkdan kirganda ham back tugmasi sayt ichida qoladi
+    if (!sessionStorage.getItem("_nav")) {
+      sessionStorage.setItem("_nav", "1");
+      const cur = window.location.pathname + window.location.search;
+      if (cur !== "/") {
+        window.history.pushState(null, "", "/");
+        window.history.pushState(null, "", cur);
+      }
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
