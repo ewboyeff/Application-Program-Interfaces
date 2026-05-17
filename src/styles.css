@@ -157,10 +157,14 @@
 
   /* Admin panel — dark theme override */
   [data-admin] {
-    background-color: #f3f4f6 !important;
-    color: #111827 !important;
+    background-color: #f8f7f4 !important;
+    color: #1c1917 !important;
     font-family: ui-sans-serif, system-ui, sans-serif !important;
     color-scheme: light;
+    --background: #f8f7f4;
+    --foreground: #1c1917;
+    --border: #e7e5e4;
+    --muted-foreground: #78716c;
   }
   [data-admin] h1, [data-admin] h2, [data-admin] h3,
   [data-admin] h4, [data-admin] h5 {

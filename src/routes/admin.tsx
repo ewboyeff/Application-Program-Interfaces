@@ -141,7 +141,7 @@ function AdminLayout() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-5 lg:p-7">
+        <main className="flex-1 overflow-y-auto p-5 lg:p-7" style={{ backgroundColor: '#f8f7f4', color: '#1c1917' }}>
           <Outlet />
         </main>
       </div>
