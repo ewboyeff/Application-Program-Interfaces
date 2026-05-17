@@ -24,7 +24,7 @@ const SLIDES = [
   },
   {
     image: hero6,
-    eyebrow: "XVIII–XIX asr · Buxoro · Mis va bronza",
+    eyebrow: "",
     title: "Misga bitilgan — Tarix",
     sub: "Bronza va mis idishlar — O'rta Osiyo hunarmandchiligi an'analarining asrlar oshib yetib kelgan guvohi.",
     blend: false,
@@ -137,9 +137,9 @@ export function Hero() {
           {/* Stats */}
           <div className="mt-14 flex items-center gap-10 border-t border-border/50 pt-6">
             {[
-              { v: "120+", l: t("hero.stat.exhibits") },
-              { v: "14", l: t("hero.stat.museums") },
-              { v: "1989", l: t("hero.stat.founded") },
+              { v: "500+", l: t("hero.stat.exhibits") },
+              { v: "7", l: t("hero.stat.museums") },
+              { v: "2026", l: t("hero.stat.founded") },
             ].map((s) => (
               <div key={s.l}>
                 <div className="font-serif text-2xl text-primary">{s.v}</div>
