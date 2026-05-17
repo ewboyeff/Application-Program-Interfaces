@@ -166,12 +166,12 @@ function ContactPage() {
             <InfoCard
               icon={<Phone className="h-4 w-4" />}
               title={t("contact.info.phone")}
-              lines={["+998 71 123 45 67", "+998 90 123 45 67"]}
+              lines={["+998 90 982 81 35", "+998 94 820 36 01"]}
             />
             <InfoCard
               icon={<Mail className="h-4 w-4" />}
               title={t("contact.info.email")}
-              lines={["hello@museumshop.uz", "press@museumshop.uz"]}
+              lines={["davlatovismat19@gmail.com"]}
             />
             <InfoCard
               icon={<Clock className="h-4 w-4" />}
