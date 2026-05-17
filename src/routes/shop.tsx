@@ -24,7 +24,7 @@ import catPrintliKiyimlar from "@/assets/cat-printli-kiyimlar.jpg";
 import catShopperlarMuzey from "@/assets/cat-shopperlar-muzey.jpg";
 import catOtkritkalar from "@/assets/cat-otkritkalar.jpg";
 import catBreloklar from "@/assets/cat-breloklar.jpg";
-import catReplikalari from "@/assets/col-figurines.jpg";
+import catReplikalari from "@/assets/cat-replikalari.jpeg";
 
 const SUBCAT_IMAGES: Record<string, string> = {
   "Zargarlik buyumlari": catZargarlik,
