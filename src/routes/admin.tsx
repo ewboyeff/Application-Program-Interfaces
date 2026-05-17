@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, Link, useNavigate, redirect } from "@tanstack/react-router";
 import {
-  LayoutDashboard, Package, Building2, ShoppingCart, Users, LogOut, Menu, X, ChevronRight,
+  LayoutDashboard, Package, Building2, ShoppingCart, Users, LogOut, Menu, X, ChevronRight, MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
 import { getAdminSession, clearAdminSession } from "@/lib/admin-auth";
@@ -20,6 +20,7 @@ const NAV = [
   { to: "/admin/products", label: "Mahsulotlar", icon: Package },
   { to: "/admin/museums", label: "Muzeylar", icon: Building2 },
   { to: "/admin/users", label: "Foydalanuvchilar", icon: Users },
+  { to: "/admin/messages", label: "Murojatlar", icon: MessageSquare },
 ];
 
 function AdminLayout() {

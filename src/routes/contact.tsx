@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { PageHeader } from "@/components/site/PageHeader";
 import { toast } from "@/components/site/Toaster";
 import { useI18n } from "@/i18n/i18n";
+import { BASE } from "@/lib/api";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -29,10 +30,25 @@ function ContactPage() {
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const submit = (e: React.FormEvent) => {
+  const [sending, setSending] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast(t("toast.messageSent"));
-    setForm({ name: "", phone: "", email: "", message: "" });
+    setSending(true);
+    try {
+      const res = await fetch(`${BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      toast(t("toast.messageSent"));
+      setForm({ name: "", phone: "", email: "", message: "" });
+    } catch {
+      toast("Xatolik yuz berdi. Qayta urinib ko'ring.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -101,9 +117,10 @@ function ContactPage() {
 
               <button
                 type="submit"
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] sm:mt-8 sm:w-auto sm:px-7 sm:py-4"
+                disabled={sending}
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed sm:mt-8 sm:w-auto sm:px-7 sm:py-4"
               >
-                {t("contact.send")}
+                {sending ? "Yuborilmoqda…" : t("contact.send")}
                 <Send className="h-4 w-4" />
               </button>
             </form>
