@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -487,313 +487,480 @@ const Tadqiqot = () => {
     newsApi.getList({ per_page: 6 }).then(({ news }) => setArticles(news)).catch(() => {});
   }, []);
 
-  const handleDownloadReport = (type: 'annual' | 'halfyear') => {
+  const handleDownloadReport = async (type: 'annual' | 'halfyear') => {
+    const { default: jsPDF } = await import('jspdf');
     const year = new Date().getFullYear();
     const isAnnual = type === 'annual';
     const period = isAnnual
       ? year + '-yilgi yillik hisobot'
-      : year + '-yil birinchi yarmi (Yanvar–Iyun)';
+      : year + '-yil birinchi yarmi (Yanvar-Iyun)';
     const reportTitle = isAnnual
       ? 'Yillik Xayriya Hisoboti ' + year
       : 'Yarim Yillik Xayriya Hisoboti ' + year;
     const filename = isAnnual
-      ? 'Yillik_Xayriya_Hisoboti_' + year + '.html'
-      : '6_Oylik_Hisobot_' + year + '.html';
-    const coverTitleHtml = isAnnual
-      ? '<span>Yillik</span> Xayriya<br>Hisoboti ' + year
-      : '<span>Yarim Yillik</span><br>Xayriya Hisoboti<br>' + year;
+      ? 'Yillik_Xayriya_Hisoboti_' + year + '.pdf'
+      : '6_Oylik_Hisobot_' + year + '.pdf';
     const dateStr = new Date().toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' });
 
     const areaLabels = ["Taʼlim va ilm", "Ijtimoiy yordam", "Sogʼliqni saqlash", "Ekologiya va muhit"];
     const areaColors = ['#1A56DB', '#059669', '#7C3AED', '#F59E0B'];
     const areaPcts = researchStats.report.areaPcts;
     const findingsData = [
-      { label: "Hisobot bergan fondlar soni",        value: researchStats.report.findingsValues[0] ?? '124 ta' },
-      { label: "Platinum darajasidagi fondlar",       value: researchStats.report.findingsValues[1] ?? '11 ta'  },
+      { label: "Hisobot bergan fondlar soni",    value: researchStats.report.findingsValues[0] ?? '124 ta' },
+      { label: "Platinum darajasidagi fondlar",  value: researchStats.report.findingsValues[1] ?? '11 ta'  },
       { label: "Faol loyihalari boʼlgan fondlar",value: researchStats.report.findingsValues[2] ?? '38 ta'  },
-      { label: "Oʼartacha shaffoflik indeksi",  value: researchStats.report.findingsValues[3] ?? '68.7'   },
-      { label: "Yil davomida oʼsish",           value: researchStats.report.findingsValues[4] ?? '+10.5%' },
+      { label: "Oʼrtacha shaffoflik indeksi",    value: researchStats.report.findingsValues[3] ?? '68.7'   },
+      { label: "Yil davomida oʼsish",            value: researchStats.report.findingsValues[4] ?? '+10.5%' },
     ];
     const ctryData = [
       { name: "Qozogʼiston", score: researchStats.comparison.countryScores[0] ?? 79 },
-      { name: 'Toshkent',         score: researchStats.comparison.countryScores[1] ?? 65 },
-      { name: 'Samarqand',        score: researchStats.comparison.countryScores[2] ?? 69 },
+      { name: 'Toshkent',    score: researchStats.comparison.countryScores[1] ?? 65 },
+      { name: 'Samarqand',   score: researchStats.comparison.countryScores[2] ?? 69 },
       { name: "Fargʼona",    score: researchStats.comparison.countryScores[3] ?? 51 },
-      { name: 'Xorazm',           score: researchStats.comparison.countryScores[4] ?? 33 },
+      { name: 'Xorazm',      score: researchStats.comparison.countryScores[4] ?? 33 },
     ];
 
-    // SVG: area distribution bars
-    const aBarH = 28, aBarGap = 10;
-    const aChartH = (aBarH + aBarGap) * areaLabels.length;
-    const areaBarsHtml = areaLabels.map((lbl, i) => {
+    const hex = (h: string): [number, number, number] => [
+      parseInt(h.slice(1, 3), 16),
+      parseInt(h.slice(3, 5), 16),
+      parseInt(h.slice(5, 7), 16),
+    ];
+
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 18;
+    const CW = W - M * 2;
+
+    // -- PAGE 1: COVER --
+    doc.setFillColor(15, 23, 42);
+    doc.rect(0, 0, W, H, 'F');
+    doc.setFillColor(26, 86, 219);
+    doc.rect(0, 0, W, 3, 'F');
+    doc.setFillColor(5, 150, 105);
+    doc.rect(0, 3, W, 1.5, 'F');
+
+    doc.setFillColor(26, 86, 219);
+    doc.roundedRect(M, 20, 12, 12, 2.5, 2.5, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text('CI', M + 6, 28.5, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text('xayriya.info', M + 16, 26);
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("Charity Index - O'zbekiston", M + 16, 31.5);
+
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(148, 163, 184);
+    doc.text(period, W - M, 27, { align: 'right' });
+
+    doc.setDrawColor(30, 41, 59);
+    doc.setLineWidth(0.4);
+    doc.line(M, 40, W - M, 40);
+
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(147, 197, 253);
+    doc.text("O'ZBEKISTON XAYRIYA SEKTORI HISOBOTI", M, 60);
+
+    const tl1 = isAnnual ? 'Yillik Xayriya' : 'Yarim Yillik';
+    const tl2 = isAnnual ? ('Hisoboti ' + year) : ('Xayriya Hisoboti ' + year);
+    doc.setFontSize(34);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text(tl1, M, 80);
+    doc.setTextColor(96, 165, 250);
+    doc.text(tl2, M, 97);
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("O'zbekiston xayriya fondlarining shaffoflik, samaradorlik va", M, 114, { maxWidth: CW * 0.7 });
+    doc.text("jamoatchilik ishonchiga ta'siri bo'yicha kompleks tahlil", M, 121, { maxWidth: CW * 0.7 });
+
+    doc.setDrawColor(26, 86, 219);
+    doc.setLineWidth(2);
+    doc.line(M - 6, 70, M - 6, 128);
+
+    const kpiY = 148;
+    const kpiCardW = (CW - 8) / 3;
+    const kpis = [
+      { val: researchStats.report.statActive,        lbl: 'Faol fondlar',      clr: '#60A5FA' },
+      { val: researchStats.report.statBeneficiaries, lbl: 'Foydalanuvchilar',  clr: '#34D399' },
+      { val: researchStats.report.statTransparency,  lbl: "O'rt. shaffoflik",  clr: '#FBBF24' },
+    ];
+    kpis.forEach((k, i) => {
+      const kx = M + i * (kpiCardW + 4);
+      doc.setFillColor(22, 33, 62);
+      doc.roundedRect(kx, kpiY, kpiCardW, 40, 4, 4, 'F');
+      doc.setDrawColor(40, 51, 80);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(kx, kpiY, kpiCardW, 40, 4, 4, 'S');
+      const [cr, cg, cb] = hex(k.clr);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(cr, cg, cb);
+      doc.text(String(k.val), kx + 6, kpiY + 16);
+      doc.setFontSize(7.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(100, 116, 139);
+      doc.text(k.lbl.toUpperCase(), kx + 6, kpiY + 27);
+    });
+
+    doc.setDrawColor(30, 41, 59);
+    doc.setLineWidth(0.4);
+    doc.line(M, H - 24, W - M, H - 24);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text('Tayyorlangan: ' + dateStr, M, H - 14);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(148, 163, 184);
+    doc.text('xayriya.info platformasi', W - M, H - 17, { align: 'right' });
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+    doc.text('(c) ' + year + ' Barcha huquqlar himoyalangan', W - M, H - 12, { align: 'right' });
+
+    // -- PAGE 2: KEY STATS + DISTRIBUTION --
+    doc.addPage();
+    let y2 = M;
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, 0, W, 12, 'F');
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('XAYRIYA.INFO -- ' + reportTitle.toUpperCase(), M, 8.5);
+    doc.text('1-bet', W - M, 8.5, { align: 'right' });
+    y2 = 20;
+
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(M, y2, 9, 9, 2, 2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(26, 86, 219);
+    doc.text('01', M + 4.5, y2 + 6.2, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Asosiy Korsatkichlar', M + 13, y2 + 6.5);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text(period + ' natijalariga kora', M + 13, y2 + 12);
+    y2 += 18;
+
+    const statCards = [
+      { val: researchStats.report.statActive,        lbl: "Faol royxatga olingan fondlar",  bg: '#EFF6FF', bd: '#BFDBFE', cl: '#1A56DB' },
+      { val: researchStats.report.statBeneficiaries, lbl: "Jami foyda koruvchilar",          bg: '#ECFDF5', bd: '#A7F3D0', cl: '#059669' },
+      { val: researchStats.report.statRaised,        lbl: "Yigilgan va sarflangan mablag",  bg: '#F5F3FF', bd: '#DDD6FE', cl: '#7C3AED' },
+      { val: researchStats.report.statTransparency,  lbl: "Ortacha shaffoflik indeksi",      bg: '#FFFBEB', bd: '#FDE68A', cl: '#B45309' },
+    ];
+    const sCardW = (CW - 6) / 2;
+    const sCardH = 30;
+    statCards.forEach((sc, i) => {
+      const cx = M + (i % 2) * (sCardW + 6);
+      const cy = y2 + Math.floor(i / 2) * (sCardH + 5);
+      const [br, bgr, bb] = hex(sc.bg);
+      doc.setFillColor(br, bgr, bb);
+      doc.roundedRect(cx, cy, sCardW, sCardH, 3, 3, 'F');
+      const [er, eg, eb] = hex(sc.bd);
+      doc.setDrawColor(er, eg, eb);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(cx, cy, sCardW, sCardH, 3, 3, 'S');
+      const [vr, vg, vb] = hex(sc.cl);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(vr, vg, vb);
+      doc.text(String(sc.val), cx + 6, cy + 14);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 116, 139);
+      doc.text(sc.lbl, cx + 6, cy + 23, { maxWidth: sCardW - 10 });
+    });
+    y2 += 2 * sCardH + 5 + 14;
+
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(M, y2, 9, 9, 2, 2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(26, 86, 219);
+    doc.text('02', M + 4.5, y2 + 6.2, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Faoliyat Yonalishlari Taqsimoti', M + 13, y2 + 6.5);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("Xayriya fondlarining asosiy sohalari bo'yicha foiz ulushi", M + 13, y2 + 12);
+    y2 += 18;
+
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(M, y2, CW, 56, 3, 3, 'F');
+    const aLblW = 52;
+    const aBarMaxW = CW - aLblW - 24;
+    areaLabels.forEach((lbl, i) => {
+      const by = y2 + 8 + i * 11.5;
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(71, 85, 105);
+      doc.text(lbl, M + 8, by + 4.5);
       const pct = areaPcts[i] ?? 0;
-      const y = i * (aBarH + aBarGap);
-      const bw = Math.round((pct / 100) * 340);
-      const mid = y + aBarH / 2 + 5;
-      return '<text x="0" y="' + mid + '" font-size="12" fill="#475569" font-family="system-ui">' + lbl + '</text>'
-           + '<rect x="160" y="' + y + '" width="' + bw + '" height="' + aBarH + '" rx="6" fill="' + areaColors[i] + '" opacity="0.9"/>'
-           + '<text x="' + (160 + bw + 8) + '" y="' + mid + '" font-size="12" font-weight="700" fill="' + areaColors[i] + '" font-family="system-ui">' + pct + '%</text>';
-    }).join('');
+      const bw = (pct / 100) * aBarMaxW;
+      const [cr, cg, cb] = hex(areaColors[i]);
+      doc.setFillColor(cr, cg, cb);
+      doc.roundedRect(M + 8 + aLblW, by, Math.max(bw, 1), 7, 1.5, 1.5, 'F');
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(cr, cg, cb);
+      doc.text(pct + '%', M + 8 + aLblW + bw + 3, by + 5.5);
+    });
 
-    // SVG: country/region bars
-    const cBarH = 24, cBarGap = 12;
-    const cChartH = (cBarH + cBarGap) * ctryData.length;
-    const cColors = ['#F59E0B', '#1A56DB', '#1A56DB', '#94A3B8', '#94A3B8'];
-    const ctryBarsHtml = ctryData.map((c, i) => {
-      const y = i * (cBarH + cBarGap);
-      const bw = Math.round((c.score / 100) * 175);
-      const mid = y + cBarH / 2 + 5;
-      return '<text x="0" y="' + mid + '" font-size="11" fill="#475569" font-family="system-ui">' + c.name + '</text>'
-           + '<rect x="90" y="' + y + '" width="' + bw + '" height="' + cBarH + '" rx="5" fill="' + cColors[i] + '" opacity="0.85"/>'
-           + '<text x="' + (90 + bw + 6) + '" y="' + mid + '" font-size="11" font-weight="700" fill="' + cColors[i] + '" font-family="system-ui">' + c.score + '</text>';
-    }).join('');
+    // -- PAGE 3: FINDINGS + TRENDS --
+    doc.addPage();
+    let y3 = M;
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, 0, W, 12, 'F');
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('XAYRIYA.INFO -- ' + reportTitle.toUpperCase(), M, 8.5);
+    doc.text('2-bet', W - M, 8.5, { align: 'right' });
+    y3 = 20;
 
-    const findingsRowsHtml = findingsData.map(r =>
-      '<tr>'
-      + '<td style="padding:14px 16px;font-size:14px;color:#374151;border-bottom:1px solid #F1F5F9;">' + r.label + '</td>'
-      + '<td style="padding:14px 16px;border-bottom:1px solid #F1F5F9;">'
-      + '<span style="font-weight:800;color:#1A56DB;background:#EFF6FF;padding:4px 12px;border-radius:100px;display:inline-block;font-size:13px;">' + r.value + '</span>'
-      + '</td></tr>'
-    ).join('');
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(M, y3, 9, 9, 2, 2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(26, 86, 219);
+    doc.text('03', M + 4.5, y3 + 6.2, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Asosiy Natijalar', M + 13, y3 + 6.5);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("Tadqiqot davomida aniqlangan muhim korsatkichlar", M + 13, y3 + 12);
+    y3 += 18;
+
+    doc.setFillColor(241, 245, 249);
+    doc.rect(M, y3, CW, 8, 'F');
+    doc.setDrawColor(226, 232, 240);
+    doc.setLineWidth(0.5);
+    doc.line(M, y3 + 8, M + CW, y3 + 8);
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('KORSATKICH', M + 4, y3 + 5.5);
+    doc.text('QIYMAT', M + CW - 4, y3 + 5.5, { align: 'right' });
+    y3 += 8;
+
+    findingsData.forEach((row, i) => {
+      const rH = 11;
+      if (i % 2 === 0) {
+        doc.setFillColor(252, 252, 253);
+        doc.rect(M, y3, CW, rH, 'F');
+      }
+      doc.setDrawColor(241, 245, 249);
+      doc.setLineWidth(0.3);
+      doc.line(M, y3 + rH, M + CW, y3 + rH);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(55, 65, 81);
+      doc.text(row.label, M + 4, y3 + 7.5);
+      const vw = doc.getTextWidth(row.value) + 10;
+      doc.setFillColor(239, 246, 255);
+      doc.roundedRect(M + CW - vw - 4, y3 + 2, vw, 7, 2, 2, 'F');
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(26, 86, 219);
+      doc.text(row.value, M + CW - 4 - vw / 2, y3 + 7.5, { align: 'center' });
+      y3 += rH;
+    });
+    y3 += 14;
+
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(M, y3, 9, 9, 2, 2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(26, 86, 219);
+    doc.text('04', M + 4.5, y3 + 6.2, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text("O'sish Tendensiyalari", M + 13, y3 + 6.5);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("O'tgan yilga nisbatan asosiy o'zgarishlar", M + 13, y3 + 12);
+    y3 += 18;
+
+    const trends = [
+      { val: researchStats.analysis.statNewFunds,      lbl: "Yangi fondlar soni o'sishi" },
+      { val: researchStats.analysis.statOnlineReports, lbl: "Onlayn hisobot berish o'sishi" },
+      { val: researchStats.analysis.statUserRatings,   lbl: "Foydalanuvchi baholashlari o'sishi" },
+    ];
+    const tCardW = (CW - 8) / 3;
+    trends.forEach((tr, i) => {
+      const tx = M + i * (tCardW + 4);
+      doc.setFillColor(248, 250, 252);
+      doc.roundedRect(tx, y3, tCardW, 30, 3, 3, 'F');
+      doc.setDrawColor(226, 232, 240);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(tx, y3, tCardW, 30, 3, 3, 'S');
+      doc.setFontSize(20);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(5, 150, 105);
+      doc.text(String(tr.val), tx + 6, y3 + 16);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 116, 139);
+      doc.text(tr.lbl, tx + 6, y3 + 25, { maxWidth: tCardW - 10 });
+    });
+    y3 += 38;
+
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text("ORTACHA INDEKS BALLI -- KOP YILLIK DINAMIKA", M, y3 + 4);
+    y3 += 10;
 
     const avgVals = researchStats.analysis.avgValues;
-    const indexTimelineHtml = avgVals.map((val, i) => {
-      const y = year - (avgVals.length - 1 - i);
-      return '<div style="flex:1;background:#F8FAFC;border-radius:12px;padding:16px;text-align:center;border:1px solid #E2E8F0;">'
-           + '<div style="font-size:18px;font-weight:800;color:#1A56DB;">' + val + '</div>'
-           + '<div style="font-size:11px;color:#64748B;font-weight:600;margin-top:4px;">' + y + '-yil</div>'
-           + '</div>';
-    }).join('');
+    if (avgVals.length > 0) {
+      const tlCardW = (CW - (avgVals.length - 1) * 4) / avgVals.length;
+      avgVals.forEach((val, i) => {
+        const tlYear = year - (avgVals.length - 1 - i);
+        const tx = M + i * (tlCardW + 4);
+        doc.setFillColor(248, 250, 252);
+        doc.roundedRect(tx, y3, tlCardW, 22, 3, 3, 'F');
+        doc.setDrawColor(226, 232, 240);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(tx, y3, tlCardW, 22, 3, 3, 'S');
+        doc.setFontSize(13);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(26, 86, 219);
+        doc.text(String(val), tx + tlCardW / 2, y3 + 11, { align: 'center' });
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(100, 116, 139);
+        doc.text(tlYear + '-yil', tx + tlCardW / 2, y3 + 18, { align: 'center' });
+      });
+    }
 
-    const globalRowsHtml = [
-      { label: "Oʼlekiston oʼartacha bali", value: researchStats.comparison.globalValues[0] ?? '61.2 ball' },
-      { label: "Mintaqaviy eng yuqori ball",           value: researchStats.comparison.globalValues[1] ?? '82.4 ball' },
-      { label: "Mintaqaviy oʼartacha",            value: researchStats.comparison.globalValues[2] ?? '58.7 ball' },
-      { label: "Mintaqaviy oʼrin",                value: researchStats.comparison.globalValues[3] ?? "2-oʼrin" },
-    ].map(r =>
-      '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F1F5F9;">'
-      + '<span style="font-size:12px;color:#64748B;">' + r.label + '</span>'
-      + '<span style="font-size:13px;font-weight:800;color:#1A56DB;background:#EFF6FF;padding:3px 10px;border-radius:100px;">' + r.value + '</span>'
-      + '</div>'
-    ).join('');
+    // -- PAGE 4: COMPARISON --
+    doc.addPage();
+    let y4 = M;
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, 0, W, 12, 'F');
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('XAYRIYA.INFO -- ' + reportTitle.toUpperCase(), M, 8.5);
+    doc.text('3-bet', W - M, 8.5, { align: 'right' });
+    y4 = 20;
 
-    const trendsHtml = [
-      { value: researchStats.analysis.statNewFunds,    label: "Yangi fondlar soni oʼsishi" },
-      { value: researchStats.analysis.statOnlineReports, label: "Onlayn hisobot berish oʼsishi" },
-      { value: researchStats.analysis.statUserRatings, label: "Foydalanuvchi baholashlari oʼsishi" },
-    ].map(tr =>
-      '<div style="border-radius:14px;padding:20px;background:#F8FAFC;border:1px solid #E2E8F0;">'
-      + '<div style="font-size:30px;font-weight:900;color:#059669;letter-spacing:-1px;">' + tr.value + '</div>'
-      + '<div style="font-size:12px;color:#64748B;margin-top:6px;font-weight:500;">' + tr.label + '</div>'
-      + '</div>'
-    ).join('');
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(M, y4, 9, 9, 2, 2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(26, 86, 219);
+    doc.text('05', M + 4.5, y4 + 6.2, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Hududiy va Global Taqqoslash', M + 13, y4 + 6.5);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text("Viloyatlar kesimida va xalqaro korsatkichlar bilan solishtirish", M + 13, y4 + 12);
+    y4 += 18;
 
-    const html = `<!DOCTYPE html>
-<html lang="uz">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>${reportTitle}</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;background:#f1f5f9}
-.cover{background:#0F172A;color:white;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:56px 64px;position:relative;overflow:hidden;page-break-after:always}
-.cover::before{content:'';position:absolute;top:-120px;right:-120px;width:500px;height:500px;background:radial-gradient(circle,rgba(26,86,219,.18) 0%,transparent 70%);border-radius:50%}
-.cover::after{content:'';position:absolute;bottom:-60px;left:80px;width:320px;height:320px;background:radial-gradient(circle,rgba(5,150,105,.12) 0%,transparent 70%);border-radius:50%}
-.cv-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
-.cv-logo{display:flex;align-items:center;gap:12px}
-.cv-logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#1A56DB,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(26,86,219,.4)}
-.cv-logo-name{font-size:18px;font-weight:800;letter-spacing:-.5px;color:white}
-.cv-logo-sub{font-size:11px;color:#94A3B8;font-weight:500}
-.cv-badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;color:#94A3B8}
-.cv-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:72px 0 56px;position:relative;z-index:1}
-.cv-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(26,86,219,.25);border:1px solid rgba(99,179,237,.3);padding:6px 16px;border-radius:100px;font-size:11px;font-weight:700;color:#93C5FD;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;width:fit-content}
-.cv-title{font-size:54px;font-weight:900;line-height:1.08;letter-spacing:-2.5px;margin-bottom:20px;max-width:620px;color:white}
-.cv-title span{color:#60A5FA}
-.cv-subtitle{font-size:17px;color:#64748B;font-weight:400;max-width:500px;line-height:1.65}
-.cv-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:64px}
-.cv-kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:22px}
-.cv-kpi-val{font-size:30px;font-weight:900;letter-spacing:-1px;margin-bottom:5px}
-.cv-kpi-lbl{font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.cv-bottom{display:flex;justify-content:space-between;align-items:flex-end;padding-top:36px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:1}
-.page{background:white;max-width:900px;margin:0 auto;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
-.sec{padding:52px 64px;border-bottom:1px solid #F1F5F9}
-.sec:last-of-type{border-bottom:none}
-.sec-hdr{display:flex;align-items:center;gap:14px;margin-bottom:32px}
-.sec-num{width:34px;height:34px;background:#EFF6FF;color:#1A56DB;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
-.sec-ttl{font-size:21px;font-weight:800;color:#0F172A;letter-spacing:-.5px}
-.sec-sub{font-size:13px;color:#64748B;margin-top:3px}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.sc{border-radius:16px;padding:26px;border:1px solid}
-.sc.blue{background:#EFF6FF;border-color:#BFDBFE}.sc.green{background:#ECFDF5;border-color:#A7F3D0}.sc.purple{background:#F5F3FF;border-color:#DDD6FE}.sc.amber{background:#FFFBEB;border-color:#FDE68A}
-.sc-ico{font-size:26px;margin-bottom:14px}
-.sc-val{font-size:38px;font-weight:900;letter-spacing:-1.5px;margin-bottom:5px}
-.sc-val.blue{color:#1A56DB}.sc-val.green{color:#059669}.sc-val.purple{color:#7C3AED}.sc-val.amber{color:#B45309}
-.sc-lbl{font-size:13px;color:#64748B;font-weight:500}
-.chart-box{background:#F8FAFC;border-radius:14px;padding:24px}
-.ftbl{width:100%;border-collapse:collapse}
-.ftbl th{background:#F1F5F9;padding:13px 18px;text-align:left;font-size:11px;font-weight:800;color:#64748B;text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid #E2E8F0}
-.trends{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.footer{background:#0F172A;color:#475569;padding:40px 64px;display:flex;justify-content:space-between;align-items:center}
-@media print{body{background:white}.cover{min-height:100vh}}
-</style>
-</head>
-<body>
+    const col2W = (CW - 8) / 2;
+    const cColors2 = ['#F59E0B', '#1A56DB', '#1A56DB', '#94A3B8', '#94A3B8'];
 
-<!-- COVER -->
-<div class="cover">
-  <div class="cv-top">
-    <div class="cv-logo">
-      <div class="cv-logo-icon">&#9829;</div>
-      <div>
-        <div class="cv-logo-name">xayriya.info</div>
-        <div class="cv-logo-sub">Charity Index &mdash; O&#8216;zbekiston</div>
-      </div>
-    </div>
-    <div class="cv-badge">${period}</div>
-  </div>
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(M, y4, col2W, 82, 3, 3, 'F');
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('VILOYATLAR VA MINTAQALAR', M + 6, y4 + 8);
+    const rLblW = 30;
+    const rBarMax = col2W - rLblW - 18;
+    ctryData.forEach((c, i) => {
+      const by = y4 + 14 + i * 13;
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(71, 85, 105);
+      doc.text(c.name, M + 6, by + 5);
+      const bw2 = (c.score / 100) * rBarMax;
+      const [cr, cg, cb] = hex(cColors2[i]);
+      doc.setFillColor(cr, cg, cb);
+      doc.roundedRect(M + 6 + rLblW, by, Math.max(bw2, 1), 7, 1.5, 1.5, 'F');
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(cr, cg, cb);
+      doc.text(String(c.score), M + 6 + rLblW + bw2 + 3, by + 5.5);
+    });
 
-  <div class="cv-main">
-    <div class="cv-tag">&#9679;&nbsp; O&#8216;zbekiston Xayriya Sektori Hisoboti</div>
-    <h1 class="cv-title">${coverTitleHtml}</h1>
-    <p class="cv-subtitle">O&#8216;zbekiston xayriya fondlarining shaffoflik, samaradorlik va jamoatchilik ishonchiga ta&#8217;siri bo&#8216;yicha kompleks tahlil</p>
-    <div class="cv-kpis">
-      <div class="cv-kpi">
-        <div class="cv-kpi-val" style="color:#60A5FA">${researchStats.report.statActive}</div>
-        <div class="cv-kpi-lbl">Faol fondlar</div>
-      </div>
-      <div class="cv-kpi">
-        <div class="cv-kpi-val" style="color:#34D399">${researchStats.report.statBeneficiaries}</div>
-        <div class="cv-kpi-lbl">Foydalanuvchilar</div>
-      </div>
-      <div class="cv-kpi">
-        <div class="cv-kpi-val" style="color:#FBBF24">${researchStats.report.statTransparency}</div>
-        <div class="cv-kpi-lbl">O&#8216;rt. shaffoflik</div>
-      </div>
-    </div>
-  </div>
+    const globalData = [
+      { lbl: "O'zbekiston o'rtacha bali", val: researchStats.comparison.globalValues[0] ?? '61.2 ball' },
+      { lbl: 'Mintaqaviy eng yuqori ball', val: researchStats.comparison.globalValues[1] ?? '82.4 ball' },
+      { lbl: "Mintaqaviy o'rtacha",        val: researchStats.comparison.globalValues[2] ?? '58.7 ball' },
+      { lbl: "Mintaqaviy o'rin",           val: researchStats.comparison.globalValues[3] ?? "2-o'rin" },
+    ];
+    const rx2 = M + col2W + 8;
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(rx2, y4, col2W, 82, 3, 3, 'F');
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text('GLOBAL TAQQOSLASH', rx2 + 6, y4 + 8);
+    globalData.forEach((g, i) => {
+      const gy = y4 + 16 + i * 16;
+      if (i > 0) {
+        doc.setDrawColor(241, 245, 249);
+        doc.setLineWidth(0.3);
+        doc.line(rx2 + 4, gy, rx2 + col2W - 4, gy);
+      }
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 116, 139);
+      doc.text(g.lbl, rx2 + 6, gy + 8);
+      const vw2 = doc.getTextWidth(g.val) + 10;
+      doc.setFillColor(239, 246, 255);
+      doc.roundedRect(rx2 + col2W - vw2 - 6, gy + 2, vw2, 8, 2, 2, 'F');
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(26, 86, 219);
+      doc.text(g.val, rx2 + col2W - 6 - vw2 / 2, gy + 8, { align: 'center' });
+    });
 
-  <div class="cv-bottom">
-    <div style="font-size:13px;color:#64748B">Tayyorlangan: ${dateStr}</div>
-    <div style="text-align:right">
-      <div style="font-size:13px;font-weight:700;color:#94A3B8">xayriya.info platformasi</div>
-      <div style="font-size:11px;color:#334155;margin-top:3px">&#169; ${year} Barcha huquqlar himoyalangan</div>
-    </div>
-  </div>
-</div>
+    doc.setFillColor(15, 23, 42);
+    doc.rect(0, H - 20, W, 20, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(148, 163, 184);
+    doc.text('xayriya.info', M, H - 9);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+    doc.text("Charity Index Platformasi - O'zbekiston", M, H - 4);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text(reportTitle, W - M, H - 9, { align: 'right' });
+    doc.text('(c) ' + year + ' xayriya.info. Barcha huquqlar himoyalangan.', W - M, H - 4, { align: 'right' });
 
-<!-- CONTENT -->
-<div class="page">
-
-  <!-- 01: Key Stats -->
-  <div class="sec">
-    <div class="sec-hdr">
-      <div class="sec-num">01</div>
-      <div>
-        <div class="sec-ttl">Asosiy Ko&#8216;rsatkichlar</div>
-        <div class="sec-sub">${period} natijalariga ko&#8216;ra</div>
-      </div>
-    </div>
-    <div class="stats-grid">
-      <div class="sc blue"><div class="sc-ico">&#127963;</div><div class="sc-val blue">${researchStats.report.statActive}</div><div class="sc-lbl">Faol ro&#8216;yxatga olingan xayriya fondlari</div></div>
-      <div class="sc green"><div class="sc-ico">&#128101;</div><div class="sc-val green">${researchStats.report.statBeneficiaries}</div><div class="sc-lbl">Jami foyda ko&#8216;ruvchilar soni</div></div>
-      <div class="sc purple"><div class="sc-ico">&#128181;</div><div class="sc-val purple">${researchStats.report.statRaised}</div><div class="sc-lbl">Jami yig&#8216;ilgan va sarflangan mablag&#8216;</div></div>
-      <div class="sc amber"><div class="sc-ico">&#128202;</div><div class="sc-val amber">${researchStats.report.statTransparency}</div><div class="sc-lbl">O&#8216;rtacha shaffoflik indeksi ko&#8216;rsatkichi</div></div>
-    </div>
-  </div>
-
-  <!-- 02: Distribution -->
-  <div class="sec">
-    <div class="sec-hdr">
-      <div class="sec-num">02</div>
-      <div>
-        <div class="sec-ttl">Faoliyat Yo&#8216;nalishlari bo&#8216;yicha Taqsimot</div>
-        <div class="sec-sub">Xayriya fondlarining asosiy sohalari bo&#8216;yicha foiz ulushi</div>
-      </div>
-    </div>
-    <div class="chart-box">
-      <svg width="100%" height="${aChartH + 20}" viewBox="0 0 560 ${aChartH + 20}" xmlns="http://www.w3.org/2000/svg">${areaBarsHtml}</svg>
-    </div>
-  </div>
-
-  <!-- 03: Findings -->
-  <div class="sec">
-    <div class="sec-hdr">
-      <div class="sec-num">03</div>
-      <div>
-        <div class="sec-ttl">Asosiy Natijalar</div>
-        <div class="sec-sub">Tadqiqot davomida aniqlangan muhim ko&#8216;rsatkichlar</div>
-      </div>
-    </div>
-    <table class="ftbl">
-      <thead><tr><th>Ko&#8216;rsatkich</th><th>Qiymat</th></tr></thead>
-      <tbody>${findingsRowsHtml}</tbody>
-    </table>
-  </div>
-
-  <!-- 04: Trends -->
-  <div class="sec">
-    <div class="sec-hdr">
-      <div class="sec-num">04</div>
-      <div>
-        <div class="sec-ttl">O&#8216;sish Tendensiyalari</div>
-        <div class="sec-sub">O&#8216;tgan yilga nisbatan asosiy o&#8216;zgarishlar</div>
-      </div>
-    </div>
-    <div class="trends">${trendsHtml}</div>
-    <div style="margin-top:28px">
-      <div style="font-size:12px;font-weight:800;color:#475569;margin-bottom:12px;text-transform:uppercase;letter-spacing:.6px">O&#8216;rtacha Indeks Balli &mdash; Ko&#8216;p Yillik Dinamika</div>
-      <div style="display:flex;gap:12px">${indexTimelineHtml}</div>
-    </div>
-  </div>
-
-  <!-- 05: Comparison -->
-  <div class="sec">
-    <div class="sec-hdr">
-      <div class="sec-num">05</div>
-      <div>
-        <div class="sec-ttl">Hududiy va Global Taqqoslash</div>
-        <div class="sec-sub">Viloyatlar kesimida va xalqaro ko&#8216;rsatkichlar bilan solishtirish</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-      <div class="chart-box">
-        <div style="font-size:11px;font-weight:800;color:#64748B;margin-bottom:16px;text-transform:uppercase;letter-spacing:.6px">Viloyatlar va mintaqalar</div>
-        <svg width="100%" height="${cChartH + 10}" viewBox="0 0 300 ${cChartH + 10}" xmlns="http://www.w3.org/2000/svg">${ctryBarsHtml}</svg>
-      </div>
-      <div class="chart-box">
-        <div style="font-size:11px;font-weight:800;color:#64748B;margin-bottom:16px;text-transform:uppercase;letter-spacing:.6px">Global taqqoslash</div>
-        ${globalRowsHtml}
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <div>
-    <div style="font-size:16px;font-weight:800;color:#94A3B8">xayriya.info</div>
-    <div style="font-size:12px;color:#334155;margin-top:4px">Charity Index Platformasi &mdash; O&#8216;zbekiston</div>
-  </div>
-  <div style="font-size:12px;text-align:right">
-    <div style="color:#64748B">${reportTitle}</div>
-    <div style="color:#334155;margin-top:4px">&#169; ${year} xayriya.info. Barcha huquqlar himoyalangan.</div>
-  </div>
-</div>
-
-</body>
-</html>`;
-
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    doc.save(filename);
   };
 
   type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar';
