@@ -1,0 +1,13 @@
+{
+  "title": "Page Not Found",
+  "subtitle": "The page you're looking for doesn't exist or has been moved",
+  "backHome": "← Back to Home",
+  "viewFunds": "View Funds",
+  "quickLinks": "Quick links:",
+  "links": {
+    "funds": "🏛️ Funds",
+    "ranking": "🏆 Ranking",
+    "news": "📰 News",
+    "tadqiqot": "🔍 Research"
+  }
+}

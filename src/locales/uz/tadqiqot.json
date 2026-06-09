@@ -1,0 +1,119 @@
+{
+  "breadcrumb": { "home": "Bosh sahifa", "current": "Tadqiqot" },
+  "title": "Tadqiqot va Tahlil",
+  "subtitle": "Xayriya sohasidagi mustaqil tadqiqotlar va hisobotlar",
+  "close": "Yopish",
+
+  "cards": {
+    "report":      { "title": "O'zbekistonda Xayriya Holati 2026",    "desc": "Mamlakatdagi xayriya fondlari faoliyatini qamrab olgan yillik tahlil", "tag": "2026 yil",     "btn": "Ko'rish" },
+    "methodology": { "title": "Shaffoflik Indeksi Metodologiyasi",      "desc": "Indekslarni hisoblash usullari va omillar tahlili",                   "tag": "Metodologiya", "btn": "O'qish"  },
+    "analysis":    { "title": "Xayriya Trendlari 2024–2026",            "desc": "So'nggi ikki yil davomidagi o'zgarishlar",                            "tag": "Tahlil",       "btn": "O'qish"  },
+    "comparison":  { "title": "Xalqaro Taqqoslash",                     "desc": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",                  "tag": "Xalqaro",      "btn": "O'qish"  },
+    "hisobot":     { "title": "Xayriya Hisobotlari",                    "desc": "Yillik va 6 oylik hisobotlarni yuklab oling",                          "tag": "Hisobot",      "btn": "Yuklab olish" },
+    "maqolalar":   { "title": "Tadqiqot Maqolalari",                    "desc": "Admin tomonidan yuklangan tadqiqot va tahlil maqolalari",               "tag": "Maqola",       "btn": "Ko'rish" }
+  },
+
+  "report": {
+    "title": "O'zbekistonda Xayriya Holati 2026",
+    "subtitle": "Yillik tahlil hisoboti — asosiy ko'rsatkichlar",
+    "statActive": "Faol xayriya fondi",
+    "statBeneficiaries": "Foyda ko'ruvchilar",
+    "statRaised": "Jami yig'ilgan mablag'",
+    "statTransparency": "O'rtacha shaffoflik",
+    "distributionTitle": "Faoliyat sohalari bo'yicha taqsimlash",
+    "areas": ["Bolalar va ta'lim", "Tibbiyot va sog'liqni saqlash", "Ijtimoiy yordam", "Favqulodda yordam"],
+    "findingsTitle": "Asosiy xulosalar",
+    "findingsRows": [
+      { "label": "Reytingdagi fondlar soni",          "value": "124 ta"  },
+      { "label": "Platinum darajasidagi fondlar",     "value": "11 ta"   },
+      { "label": "Gold darajasidagi fondlar",         "value": "38 ta"   },
+      { "label": "O'rtacha indeks ball",              "value": "68.7"    },
+      { "label": "Oldingi yilga nisbatan o'sish",     "value": "+10.5%"  }
+    ],
+    "notePrefix": "Eslatma:",
+    "noteText": "Ushbu hisobot Charity Index platformasi tomonidan tayyorlangan. To'liq hisobotni yuklab olish uchun Hisobotlar bo'limiga o'ting."
+  },
+
+  "methodology": {
+    "title": "Shaffoflik Indeksi Metodologiyasi",
+    "subtitle": "Fondlar qanday baholanadi",
+    "formulaTitle": "Umumiy Indeks Formulasi",
+    "formulaLine1": "Umumiy = (Shaffoflik × 40%)",
+    "formulaLine2": "+ (Ochiqlik × 30%)",
+    "formulaLine3": "+ (Ishonchlilik × 30%)",
+    "scoreLevelsTitle": "Ball Darajalari",
+    "scoreRanges": ["90-100 ball", "75-89 ball", "60-74 ball", "45-59 ball", "0-44 ball"],
+    "transparencyTitle": "Shaffoflik Indeksi (40%)",
+    "opennessTitle": "Ochiqlik Indeksi (30%)",
+    "trustTitle": "Ishonchlilik Indeksi (30%)",
+    "factors": {
+      "transparency": ["Moliyaviy hisobotlar", "Sarflash tafsiloti", "Loyiha natijalari", "Audit o'tkazilgan", "Donor ma'lumotlari"],
+      "openness":     ["Rasmiy veb-sayt", "Ijtimoiy tarmoq", "Media ko'rinishi", "Murojaat imkoniyati", "Yangiliklar chastotasi"],
+      "trust":        ["Rasmiy ro'yxatdan o'tgan", "Faoliyat davomiyligi", "Foydalanuvchi reytingi", "Shikoyatlar tarixi", "Xalqaro hamkorlar"]
+    }
+  },
+
+  "analysis": {
+    "title": "Xayriya Trendlari 2024–2026",
+    "subtitle": "So'nggi ikki yil davomidagi o'zgarishlar tahlili",
+    "statNewFunds": "Yangi fondlar soni",
+    "statOnlineReports": "Online hisobotlar",
+    "statUserRatings": "Foydalanuvchi reytinglari",
+    "avgTitle": "Yil bo'yicha o'rtacha indeks",
+    "avgRows": [
+      { "label": "2024 yil o'rtacha", "value": "62.4 ball" },
+      { "label": "2025 yil o'rtacha", "value": "65.8 ball (+3.4)" },
+      { "label": "2026 yil o'rtacha", "value": "68.7 ball (+2.9)" }
+    ],
+    "growingTitle": "Eng ko'p o'sgan yo'nalishlar",
+    "growing": ["Raqamli hisobot yuritish", "Ijtimoiy tarmoq faolligi", "Donor shaffoflik darajasi", "Mustaqil audit o'tkazish"],
+    "challengesTitle": "Qiyinchiliklar va muammolar",
+    "challenges": [
+      "Ko'pgina fondlarda moliyaviy hisobot yuritish tizimi yo'q",
+      "Audit xizmatlari qimmat va qo'llab-quvvatlanmagan",
+      "Raqamli savodxonlik darajasi pastligi"
+    ]
+  },
+
+  "comparison": {
+    "title": "Xalqaro Taqqoslash",
+    "subtitle": "O'zbekiston xayriya sektori mintaqaviy taqqoslamada",
+    "regionalTitle": "Mintaqa davlatlari bilan taqqoslash (2026)",
+    "countries": ["🇰🇿 Qozog'iston", "🇰🇬 Qirg'iziston", "🇺🇿 O'zbekiston", "🇹🇯 Tojikiston", "🇹🇲 Turkmaniston"],
+    "globalTitle": "Global tendentsiyalar",
+    "globalRows": [
+      { "label": "Dunyo o'rtacha shaffoflik indeksi",    "value": "61.2 ball" },
+      { "label": "Rivojlangan davlatlar o'rtacha",       "value": "82.4 ball" },
+      { "label": "Markaziy Osiyo o'rtacha",              "value": "58.7 ball" },
+      { "label": "O'zbekiston pozitsiyasi (mintaqada)",  "value": "2-o'rin"   }
+    ],
+    "recommendationsTitle": "Xalqaro standartlar asosida tavsiyalar",
+    "recommendations": [
+      { "text": "Mustaqil audit tizimini kengaytirish",                             "priority": "Yuqori" },
+      { "text": "Online hisobot platformasini rivojlantirish",                      "priority": "Yuqori" },
+      { "text": "Xalqaro NGO hamkorliklari o'rnatish",                              "priority": "O'rta"  },
+      { "text": "Fond faoliyati to'g'risidagi qonunchilikni takomillashtirish",     "priority": "O'rta"  }
+    ],
+    "high": "Yuqori",
+    "medium": "O'rta"
+  },
+
+  "reportSection": {
+    "title": "Xayriya Hisobotlari",
+    "chooseSubtitle": "Qaysi hisobotni yuklab olmoqchisiz?",
+    "tag": "Hisobot",
+    "annual": "Yillik Xayriya Hisoboti 2026",
+    "annualDesc": "2026 yil davomidagi barcha fondlar faoliyati haqida to'liq hisobot",
+    "halfYear": "6 Oylik Hisobot (Yan–Iyn 2026)",
+    "halfYearDesc": "2026-yil birinchi yarim yilligi uchun fondlar faoliyati va statistikasi",
+    "download": "Yuklab olish"
+  },
+
+  "articlesSection": {
+    "title": "Tadqiqot Maqolalari",
+    "subtitle": "Admin tomonidan yuklangan maqolalar",
+    "empty": "Hozircha maqolalar mavjud emas",
+    "download": "Yuklab olish",
+    "readMore": "Batafsil"
+  }
+}

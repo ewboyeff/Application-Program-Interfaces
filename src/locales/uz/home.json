@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "line1": "O'zbekiston",
+    "line2": "Xayriya Fondlari",
+    "line3": "Indeksi",
+    "subtitle": "Shaffoflik, Ochiqlik va Ishonchlilik indekslari asosida har bir fondni ob'ektiv raqamlar bilan baholang",
+    "searchPlaceholder": "Fond nomini yoki kategoriyasini qidiring...",
+    "searchButton": "Qidirish",
+    "scrollHint": "Pastga aylantiring",
+    "popular": "Mashhur",
+    "tags": {
+      "education": "Ta'lim",
+      "verified": "Tasdiqlangan",
+      "topRating": "Top reyting",
+      "ecology": "Ekologiya"
+    }
+  },
+  "stats": {
+    "activeFunds": "ta Faol Fond",
+    "projects": "ta Loyiha",
+    "beneficiaries": "Benefitsiar",
+    "verified": "Tasdiqlangan"
+  },
+  "topFunds": {
+    "title": "Eng Yuqori Reytingli Fondlar",
+    "subtitle": "Shaffoflik bo'yicha eng yuqori baholangan fondlar",
+    "viewAll": "Barcha fondlarni ko'rish",
+    "noFunds": "Fondlar topilmadi",
+    "projects": "loyiha",
+    "details": "Batafsil"
+  },
+  "statsSection": {
+    "activeFunds": "Faol Fond",
+    "verified": "Tasdiqlangan",
+    "projects": "Loyiha",
+    "beneficiaries": "Benefitsiar"
+  },
+  "news": {
+    "title": "So'nggi Yangiliklar",
+    "viewAll": "Barcha yangiliklar"
+  },
+  "cta": {
+    "title": "Fondingizni Qo'shing",
+    "subtitle": "Xayriya fondingizni platformaga qo'shib shaffoflik indeksingizni oling",
+    "addFund": "Fond Qo'shish",
+    "learnMore": "Batafsil Ma'lumot"
+  },
+  "howItWorks": {
+    "title": "Qanday Ishlaydi?",
+    "step1": {
+      "title": "Fond Tanlang",
+      "text": "Kategoriya, viloyat va indeks darajasi bo'yicha filtrlang"
+    },
+    "step2": {
+      "title": "Indeksni Tekshiring",
+      "text": "Shaffoflik, Ochiqlik, Ishonchlilik — har bir omilni batafsil ko'ring"
+    },
+    "step3": {
+      "title": "Qaror Qiling",
+      "text": "Ob'ektiv ma'lumotlar asosida ishonchli fondni tanlang"
+    }
+  }
+}

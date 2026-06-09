@@ -1,0 +1,28 @@
+{
+  "title": "Contact Us",
+  "subtitle": "Send your questions and suggestions",
+  "subject": {
+    "fond_qoshish": "Add a Fund",
+    "hamkorlik": "Partnership Proposal",
+    "texnik": "Technical Issue",
+    "other": "Other"
+  },
+  "form": {
+    "fullName": "Full Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "messagePlaceholder": "Write your message...",
+    "submit": "Send Message",
+    "submitting": "Sending...",
+    "success": "Your message has been sent!",
+    "error": "An error occurred, please try again"
+  },
+  "info": {
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "hours": "Working Hours",
+    "hoursValue": "Mon–Fri: 9:00–18:00"
+  }
+}

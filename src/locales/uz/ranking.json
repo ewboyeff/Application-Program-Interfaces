@@ -1,0 +1,39 @@
+{
+  "title": "Fondlar",
+  "titleHighlight": "Reytingi",
+  "independentSystem": "Mustaqil Baholash Tizimi",
+  "subtitle": "Shaffoflik va ishonchlilik ko'rsatkichlari bo'yicha saralangan O'zbekistondagi eng yaxshi xayriya fondlari",
+  "searchPlaceholder": "Fondlarni qidiring...",
+  "categories": { "all": "Barchasi" },
+  "stats": {
+    "platinum": "Platinum",
+    "gold": "Gold",
+    "silver": "Silver",
+    "bronze": "Bronze"
+  },
+  "table": {
+    "rank": "O'rin",
+    "fund": "Fond",
+    "category": "Kategoriya",
+    "transparency": "Shaffoflik",
+    "openness": "Ochiqlik",
+    "trust": "Ishonchlilik",
+    "overall": "Umumiy",
+    "grade": "Daraja",
+    "actions": "Amallar"
+  },
+  "podium": {
+    "champion": "Chempion",
+    "second": "2-o'rin",
+    "third": "3-o'rin"
+  },
+  "score": "Ball",
+  "totalFunds": "Jami fondlar",
+  "avgScore": "O'rtacha ball",
+  "fundCount": "{{count}} ta",
+  "showing": "1-{{end}} / {{total}} ta fond ko'rsatilmoqda",
+  "noFunds": "Fondlar topilmadi",
+  "noFundsDesc": "Boshqa kategoriya tanlang yoki qidiruv so'rovini o'zgartiring",
+  "clearFilters": "Filtrlarni tozalash",
+  "donate": "Xayriya"
+}

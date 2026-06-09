@@ -1,0 +1,39 @@
+{
+  "title": "Funds Catalogue",
+  "subtitle": "Independent evaluation platform for charity funds in Uzbekistan",
+  "breadcrumb": { "home": "Home", "funds": "Funds" },
+  "filters": {
+    "title": "Filters",
+    "clear": "Clear",
+    "category": "Category",
+    "region": "Region",
+    "grade": "Grade",
+    "verifiedOnly": "Verified only",
+    "searchPlaceholder": "Search funds...",
+    "applyFilters": "Apply",
+    "allGrades": "All"
+  },
+  "sort": { "rating": "By rating", "name": "By name", "nameAZ": "By name (A-Z)", "newest": "Newest" },
+  "noResults": "No funds found matching your filters",
+  "noResultsDesc": "Try changing the filters or search query",
+  "clearFilters": "Clear all filters",
+  "foundCount": "{{count}} funds found",
+  "compare": {
+    "title": "Comparison",
+    "clear": "Clear all",
+    "compare": "Compare",
+    "hint": "Select up to 3 funds to compare",
+    "added": "Added",
+    "add": "Compare",
+    "barSelected": "{{count}} funds selected",
+    "barClear": "Clear",
+    "barStart": "Start comparison"
+  },
+  "projects": "{{count}} projects",
+  "score": "Score",
+  "viewDetails": "View details",
+  "overall": "Overall score",
+  "transparency": "Transparency",
+  "openness": "Openness",
+  "trust": "Trustworthiness"
+}

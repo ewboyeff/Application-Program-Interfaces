@@ -1,0 +1,137 @@
+{
+  "compare": "Taqqoslash",
+  "removeCompare": "Taqqoslashdan olib tashlash",
+  "downloadPDF": "PDF yuklash",
+  "complaint": "Shikoyat qoldirish",
+  "breadcrumb": { "home": "Bosh sahifa", "funds": "Fondlar" },
+  "website": "Veb-sayt",
+  "since": "{{year}} yildan",
+  "overallIndex": "Umumiy Indeks",
+  "inCompare": "Taqqoslashda",
+  "indexMetrics": "Indeks Ko'rsatkichlari",
+  "overallScore": "Umumiy Indeks Bali",
+  "transparency": "Shaffoflik",
+  "openness": "Ochiqlik",
+  "trust": "Ishonchlilik",
+  "lastCalculated": "Oxirgi hisob",
+  "weeklyUpdate": "Har hafta avtomatik yangilanadi",
+  "factors": "Omillar",
+  "gradeLabels": {
+    "platinum": "Platinum darajasi",
+    "gold": "Gold darajasi",
+    "silver": "Silver darajasi",
+    "bronze": "Bronze darajasi",
+    "unrated": "Baholanmagan"
+  },
+  "tabs": {
+    "overview": "Umumiy",
+    "projects": "Loyihalar",
+    "reports": "Hisobotlar",
+    "reviews": "Sharhlar"
+  },
+  "projects": {
+    "title": "Loyihalar",
+    "noProjects": "Loyihalar topilmadi",
+    "count": "{{count}} ta",
+    "budget": "Byudjet",
+    "spent": "{{amount}} sarflandi",
+    "beneficiaries": "{{count}} benefitsiar",
+    "tabs": {
+      "all": "Barchasi",
+      "active": "Faol",
+      "planned": "Rejalashtirilgan",
+      "completed": "Yakunlangan"
+    },
+    "status": {
+      "active": "Faol",
+      "completed": "Yakunlangan",
+      "planned": "Rejalashtirilgan"
+    }
+  },
+  "reports": {
+    "title": "Hisobotlar",
+    "subtitle": "Rasmiy hujjatlar va moliyaviy hisobotlar",
+    "noReports": "Hisobotlar topilmadi",
+    "noReportsYet": "Hozircha hisobotlar yo'q",
+    "loading": "Yuklanmoqda...",
+    "income": "Kirim",
+    "expense": "Chiqim",
+    "annual": "Yillik",
+    "quarterly": "Choraklik",
+    "monthly": "Oylik",
+    "showLess": "Kamroq ko'rsatish",
+    "showAll": "Barcha {{count}} ta hisobotni ko'rish",
+    "fileUnavailable": "Fayl hali yuklanmagan"
+  },
+  "chart": {
+    "title": "Moliyaviy Shaffoflik",
+    "subtitle": "Yillik kirim va chiqimlar statistikasi",
+    "income": "Kirim",
+    "expense": "Chiqim",
+    "noData": "Ma'lumot yo'q",
+    "noFinancialData": "Moliyaviy ma'lumotlar hali kiritilmagan",
+    "loading": "Yuklanmoqda...",
+    "totalIncome": "Jami Kirim",
+    "totalExpense": "Jami Chiqim",
+    "basedOnReports": "{{count}} ta hisobot asosida",
+    "efficiency": "{{pct}}% maqsadli sarf",
+    "tooltipTitle": "{{year}} yil hisoboti",
+    "million": "mln",
+    "thousand": "ming"
+  },
+  "reviews": {
+    "title": "Foydalanuvchi Baholari",
+    "subtitle": "Fond faoliyati haqida jamoatchilik fikri",
+    "noReviews": "Sharhlar yo'q",
+    "noReviewsApproved": "Hali tasdiqlangan izoh yo'q",
+    "writeReview": "Sharh yozing",
+    "loginRequired": "Sharh yozish uchun tizimga kiring",
+    "basedOnReviews": "{{count}} ta sharh asosida",
+    "noReviewsYet": "Hali sharh yo'q",
+    "loginCta": {
+      "title": "Siz ham o'z fikringizni qoldiring",
+      "subtitle": "Baholash uchun tizimga kirishingiz kerak",
+      "button": "Tizimga kirish"
+    },
+    "form": {
+      "title": "Fondni baholang",
+      "subtitle": "Sizning fikringiz boshqalar uchun muhim",
+      "placeholder": "Fond haqida o'z fikringizni yozing...",
+      "submit": "Sharhni yuborish",
+      "submitting": "Yuborilmoqda..."
+    },
+    "toast": {
+      "ratingRequired": "Iltimos, baho bering",
+      "success": "Rahmat! Izohingiz moderatsiyaga yuborildi",
+      "error": "Xatolik yuz berdi"
+    }
+  },
+  "complaintModal": {
+    "title": "Shikoyat Bildirish",
+    "reasonLabel": "Shikoyat sababi",
+    "descriptionLabel": "Batafsil yozing",
+    "placeholder": "Kamida 20 ta belgi...",
+    "charCount": "{{count}} / 20 ta belgi",
+    "cancel": "Bekor qilish",
+    "submit": "Yuborish",
+    "submitting": "Yuborilmoqda...",
+    "reasons": [
+      "Noto'g'ri ma'lumot",
+      "Firibgarlik shubhasi",
+      "Faoliyatsiz fond",
+      "Boshqa sabab"
+    ],
+    "toast": {
+      "loginRequired": "Shikoyat yuborish uchun tizimga kiring",
+      "reasonRequired": "Iltimos, shikoyat sababini tanlang",
+      "descriptionRequired": "Iltimos, batafsilroq ma'lumot bering (kamida 20 ta belgi)",
+      "success": "Shikoyatingiz qabul qilindi va mutaxassislarimiz tomonidan ko'rib chiqiladi",
+      "error": "Shikoyat yuborishda xatolik yuz berdi"
+    }
+  },
+  "pdf": {
+    "preparing": "PDF tayyorlanmoqda... ⏳",
+    "success": "PDF yuklandi! ✓",
+    "error": "PDF yuklashda xatolik yuz berdi"
+  }
+}

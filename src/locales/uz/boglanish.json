@@ -1,0 +1,28 @@
+{
+  "title": "Biz bilan bog'laning",
+  "subtitle": "Savol va takliflaringizni yuboring",
+  "subject": {
+    "fond_qoshish": "Fond qo'shish",
+    "hamkorlik": "Hamkorlik taklifi",
+    "texnik": "Texnik muammo",
+    "other": "Boshqa"
+  },
+  "form": {
+    "fullName": "To'liq ism",
+    "email": "Email",
+    "subject": "Mavzu",
+    "message": "Xabar",
+    "messagePlaceholder": "Xabaringizni yozing...",
+    "submit": "Xabar yuborish",
+    "submitting": "Yuborilmoqda...",
+    "success": "Xabaringiz yuborildi!",
+    "error": "Xatolik yuz berdi, qayta urinib ko'ring"
+  },
+  "info": {
+    "email": "Elektron Pochta",
+    "phone": "Telefon",
+    "address": "Manzil",
+    "hours": "Ish vaqti",
+    "hoursValue": "Du–Ju: 9:00–18:00"
+  }
+}

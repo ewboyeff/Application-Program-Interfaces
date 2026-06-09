@@ -1,0 +1,71 @@
+{
+  "pageTitle": "Index Methodology",
+  "pageSubtitle": "How funds are evaluated — complete formula and factors",
+  "formula": {
+    "title": "Overall Index Formula",
+    "text": "Overall = (Transparency × 40%) + (Openness × 30%) + (Trustworthiness × 30%)",
+    "example": "Example: (95 × 0.40) + (88 × 0.30) + (90 × 0.30) = 91.4 ≈ 92"
+  },
+  "scoreLevels": {
+    "title": "Score Levels",
+    "scoreCol": "Score",
+    "levelCol": "Level",
+    "colorCol": "Color"
+  },
+  "weight": "Weight",
+  "method": "Calculation Method",
+  "transparency": {
+    "title": "Transparency Index",
+    "subtitle": "Fund's financial and operational openness",
+    "badge": "40% of Overall Score",
+    "formula": "Transparency = Σ(factor_score × weight)",
+    "example": "Example: (95×0.25) + (98×0.20) + (90×0.20) + (100×0.20) + (88×0.15) = 94.6",
+    "factors": {
+      "reports": "Financial Reports",
+      "expenses": "Expense Details",
+      "results": "Project Results",
+      "audit": "Audit",
+      "donors": "Donor Information",
+      "total": "Total"
+    },
+    "methods": {
+      "reports": "PDF report availability",
+      "expenses": "Each expense is listed",
+      "results": "Results are documented",
+      "audit": "Independent audit conducted",
+      "donors": "Donor list available"
+    }
+  },
+  "openness": {
+    "title": "Openness Index",
+    "subtitle": "Fund's public relations",
+    "badge": "30% of Overall Score",
+    "formula": "Openness = Σ(factor_score × weight)",
+    "factors": {
+      "website": "Official Website",
+      "social": "Social Media",
+      "media": "Media Coverage",
+      "contact": "Contact Accessibility",
+      "news": "News Frequency"
+    }
+  },
+  "trust": {
+    "title": "Trustworthiness Index",
+    "subtitle": "Fund's stability and reputation",
+    "badge": "30% of Overall Score",
+    "formula": "Trustworthiness = Σ(factor_score × weight)",
+    "factors": {
+      "registration": "Official Registration",
+      "activity": "Activity Period",
+      "users": "Users",
+      "complaints": "Complaints",
+      "partners": "Partners"
+    }
+  },
+  "update": {
+    "title": "Update Schedule",
+    "step1": { "title": "Data Entry", "desc": "Admin enters scores for the fund" },
+    "step2": { "title": "Automatic Calculation", "desc": "System calculates using the formula" },
+    "step3": { "title": "Weekly Update", "desc": "Celery scheduler recalculates" }
+  }
+}

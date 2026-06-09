@@ -1,0 +1,40 @@
+{
+  "title": "Funds",
+  "titleHighlight": "Ranking",
+  "independentSystem": "Independent Rating System",
+  "subtitle": "Uzbekistan's best charity funds sorted by transparency and trustworthiness",
+  "searchPlaceholder": "Search funds...",
+  "categories": { "all": "All" },
+  "stats": {
+    "platinum": "Platinum",
+    "gold": "Gold",
+    "silver": "Silver",
+    "bronze": "Bronze"
+  },
+  "table": {
+    "rank": "Rank",
+    "fund": "Fund",
+    "category": "Category",
+    "transparency": "Transparency",
+    "openness": "Openness",
+    "trust": "Trust",
+    "overall": "Overall",
+    "grade": "Grade",
+    "actions": "Actions"
+  },
+  "podium": {
+    "champion": "Champion",
+    "second": "2nd Place",
+    "third": "3rd Place"
+  },
+  "score": "Score",
+  "totalFunds": "Total funds",
+  "avgScore": "Average score",
+  "fundCount_one": "{{count}} fund",
+  "fundCount_other": "{{count}} funds",
+  "showing": "Showing 1-{{end}} of {{total}} funds",
+  "noFunds": "No funds found",
+  "noFundsDesc": "Try another category or change the search query",
+  "clearFilters": "Clear filters",
+  "donate": "Donate"
+}

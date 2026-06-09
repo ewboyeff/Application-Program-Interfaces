@@ -1,0 +1,52 @@
+{
+  "logout": "Logout",
+  "tabs": {
+    "personal": "Personal Info",
+    "donations": "My Donations",
+    "saved": "Saved Funds",
+    "settings": "Settings"
+  },
+  "stats": {
+    "donations": "Donations",
+    "saved": "Saved"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "user": "User"
+  },
+  "personal": {
+    "title": "Personal Information",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "region": "Region",
+    "save": "Save Changes",
+    "errors": {
+      "fullName": "Name is required",
+      "phone": "Invalid phone format (+998 90 123 45 67)"
+    }
+  },
+  "donations": {
+    "empty": "No Donations",
+    "emptyDesc": "You haven't made any donations yet.",
+    "viewFunds": "View Funds"
+  },
+  "saved": {
+    "empty": "No Saved Funds",
+    "emptyDesc": "You can save funds you like.",
+    "searchFunds": "Search Funds"
+  },
+  "settings": {
+    "title": "Settings",
+    "notifications": "Notifications",
+    "notificationsDesc": "Receive updates via email",
+    "security": "Security",
+    "securityDesc": "Change password and sessions",
+    "change": "Change",
+    "payment": "Payment Methods",
+    "paymentDesc": "Manage cards",
+    "add": "Add",
+    "danger": "Danger Zone",
+    "deleteAccount": "Delete Account"
+  }
+}
