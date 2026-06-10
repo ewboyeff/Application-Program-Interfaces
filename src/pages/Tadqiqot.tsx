@@ -502,22 +502,25 @@ const Tadqiqot = () => {
       : '6_Oylik_Hisobot_' + year + '.pdf';
     const dateStr = new Date().toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    const areaLabels = ["Ta'lim va ilm", "Ijtimoiy yordam", "Sog'liqni saqlash", "Ekologiya va muhit"];
     const areaColors = ['#1A56DB', '#059669', '#7C3AED', '#F59E0B'];
+    // Labels from i18n, values from API
+    const areaLabels = t('report.areas', { returnObjects: true }) as string[];
     const areaPcts = researchStats.report.areaPcts;
+    const findingsLabels = (t('report.findingsRows', { returnObjects: true }) as Array<{label: string; value: string}>).map(r => r.label);
     const findingsData = [
-      { label: "Hisobot bergan fondlar soni",    value: researchStats.report.findingsValues[0] ?? '124 ta' },
-      { label: "Platinum darajasidagi fondlar",  value: researchStats.report.findingsValues[1] ?? '11 ta'  },
-      { label: "Faol loyihalari bo'lgan fondlar", value: researchStats.report.findingsValues[2] ?? '38 ta'  },
-      { label: "O'rtacha shaffoflik indeksi",    value: researchStats.report.findingsValues[3] ?? '68.7'   },
-      { label: "Yil davomida o'sish",            value: researchStats.report.findingsValues[4] ?? '+10.5%' },
+      { label: findingsLabels[0] ?? "Reytingdagi fondlar soni",      value: researchStats.report.findingsValues[0] ?? '124 ta' },
+      { label: findingsLabels[1] ?? "Platinum darajasidagi fondlar",  value: researchStats.report.findingsValues[1] ?? '11 ta'  },
+      { label: findingsLabels[2] ?? "Gold darajasidagi fondlar",      value: researchStats.report.findingsValues[2] ?? '38 ta'  },
+      { label: findingsLabels[3] ?? "O'rtacha indeks ball",           value: researchStats.report.findingsValues[3] ?? '68.7'   },
+      { label: findingsLabels[4] ?? "Oldingi yilga nisbatan o'sish",  value: researchStats.report.findingsValues[4] ?? '+10.5%' },
     ];
+    const countryNames = t('comparison.countries', { returnObjects: true }) as string[];
     const ctryData = [
-      { name: "Qozog'iston", score: researchStats.comparison.countryScores[0] ?? 79 },
-      { name: 'Toshkent',    score: researchStats.comparison.countryScores[1] ?? 65 },
-      { name: 'Samarqand',   score: researchStats.comparison.countryScores[2] ?? 69 },
-      { name: "Farg'ona",    score: researchStats.comparison.countryScores[3] ?? 51 },
-      { name: 'Xorazm',      score: researchStats.comparison.countryScores[4] ?? 33 },
+      { name: countryNames[0] ?? "Qozog'iston",  score: researchStats.comparison.countryScores[0] ?? 79 },
+      { name: countryNames[1] ?? "Qirg'iziston", score: researchStats.comparison.countryScores[1] ?? 65 },
+      { name: countryNames[2] ?? "O'zbekiston",  score: researchStats.comparison.countryScores[2] ?? 69 },
+      { name: countryNames[3] ?? "Tojikiston",   score: researchStats.comparison.countryScores[3] ?? 51 },
+      { name: countryNames[4] ?? "Turkmaniston", score: researchStats.comparison.countryScores[4] ?? 33 },
     ];
 
     const hex = (h: string): [number, number, number] => [
@@ -805,7 +808,7 @@ const Tadqiqot = () => {
     ctryData.forEach((c, i) => {
       const by = y4 + 15 + i * 14;
       doc.setFontSize(8); doc.setFont('helvetica', 'normal'); tc(40, 70, 60);
-      doc.text(s(c.name), M + 6, by + 5);
+      doc.text(s(c.name).trim(), M + 6, by + 5);
       const bw2 = (c.score / 100) * rBarMax;
       const col3 = cColors2[i];
       doc.setFillColor(col3[0], col3[1], col3[2]);
@@ -816,11 +819,12 @@ const Tadqiqot = () => {
     });
 
     // Right panel: global
+    const gRows = t('comparison.globalRows', { returnObjects: true }) as Array<{label: string}>;
     const globalData = [
-      { lbl: "O'zbekiston o'rtacha bali", val: researchStats.comparison.globalValues[0] ?? '61.2 ball' },
-      { lbl: 'Mintaqaviy eng yuqori ball', val: researchStats.comparison.globalValues[1] ?? '82.4 ball' },
-      { lbl: "Mintaqaviy o'rtacha",        val: researchStats.comparison.globalValues[2] ?? '58.7 ball' },
-      { lbl: "Mintaqaviy o'rin",           val: researchStats.comparison.globalValues[3] ?? "2-o'rin" },
+      { lbl: gRows[0]?.label ?? "Dunyo o'rtacha shaffoflik indeksi",    val: researchStats.comparison.globalValues[0] ?? '61.2 ball' },
+      { lbl: gRows[1]?.label ?? "Rivojlangan davlatlar o'rtacha",        val: researchStats.comparison.globalValues[1] ?? '82.4 ball' },
+      { lbl: gRows[2]?.label ?? "Markaziy Osiyo o'rtacha",               val: researchStats.comparison.globalValues[2] ?? '58.7 ball' },
+      { lbl: gRows[3]?.label ?? "O'zbekiston pozitsiyasi (mintaqada)",   val: researchStats.comparison.globalValues[3] ?? "2-o'rin" },
     ];
     const rx2 = M + col2W + 8;
     fc(...LG); doc.roundedRect(rx2, y4, col2W, 92, 3, 3, 'F');
