@@ -502,21 +502,21 @@ const Tadqiqot = () => {
       : '6_Oylik_Hisobot_' + year + '.pdf';
     const dateStr = new Date().toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    const areaLabels = ["Taʼlim va ilm", "Ijtimoiy yordam", "Sogʼliqni saqlash", "Ekologiya va muhit"];
+    const areaLabels = ["Ta'lim va ilm", "Ijtimoiy yordam", "Sog'liqni saqlash", "Ekologiya va muhit"];
     const areaColors = ['#1A56DB', '#059669', '#7C3AED', '#F59E0B'];
     const areaPcts = researchStats.report.areaPcts;
     const findingsData = [
       { label: "Hisobot bergan fondlar soni",    value: researchStats.report.findingsValues[0] ?? '124 ta' },
       { label: "Platinum darajasidagi fondlar",  value: researchStats.report.findingsValues[1] ?? '11 ta'  },
-      { label: "Faol loyihalari boʼlgan fondlar",value: researchStats.report.findingsValues[2] ?? '38 ta'  },
-      { label: "Oʼrtacha shaffoflik indeksi",    value: researchStats.report.findingsValues[3] ?? '68.7'   },
-      { label: "Yil davomida oʼsish",            value: researchStats.report.findingsValues[4] ?? '+10.5%' },
+      { label: "Faol loyihalari bo'lgan fondlar", value: researchStats.report.findingsValues[2] ?? '38 ta'  },
+      { label: "O'rtacha shaffoflik indeksi",    value: researchStats.report.findingsValues[3] ?? '68.7'   },
+      { label: "Yil davomida o'sish",            value: researchStats.report.findingsValues[4] ?? '+10.5%' },
     ];
     const ctryData = [
-      { name: "Qozogʼiston", score: researchStats.comparison.countryScores[0] ?? 79 },
+      { name: "Qozog'iston", score: researchStats.comparison.countryScores[0] ?? 79 },
       { name: 'Toshkent',    score: researchStats.comparison.countryScores[1] ?? 65 },
       { name: 'Samarqand',   score: researchStats.comparison.countryScores[2] ?? 69 },
-      { name: "Fargʼona",    score: researchStats.comparison.countryScores[3] ?? 51 },
+      { name: "Farg'ona",    score: researchStats.comparison.countryScores[3] ?? 51 },
       { name: 'Xorazm',      score: researchStats.comparison.countryScores[4] ?? 33 },
     ];
 
@@ -536,6 +536,11 @@ const Tadqiqot = () => {
     const fc = (r: number, g: number, b: number) => doc.setFillColor(r, g, b);
     const tc = (r: number, g: number, b: number) => doc.setTextColor(r, g, b);
     const dc = (r: number, g: number, b: number) => doc.setDrawColor(r, g, b);
+    // Strip chars outside Latin-1 range that Helvetica can't render
+    const s = (str: string) => str
+      .replace(/[ʼ‘’ʹ]/g, "'")
+      .replace(/[₿€£¥]/g, '')
+      .replace(/[^ -ÿ]/g, '');
 
     // Palette
     const TD: [number,number,number] = [11, 61, 54];    // teal dark
@@ -598,7 +603,7 @@ const Tadqiqot = () => {
       fc(...TM); doc.roundedRect(kx, kpiY, kpiCardW, 46, 4, 4, 'F');
       fc(...RA); doc.roundedRect(kx, kpiY, kpiCardW, 3.5, 1, 1, 'F');
       doc.setFontSize(26); doc.setFont('helvetica', 'bold'); tc(...WH);
-      doc.text(String(k.val), kx + 7, kpiY + 22);
+      doc.text(s(String(k.val)), kx + 7, kpiY + 22);
       doc.setFontSize(8); doc.setFont('helvetica', 'bold'); tc(...LC);
       doc.text(k.lbl, kx + 7, kpiY + 32);
       doc.setFontSize(7.5); doc.setFont('helvetica', 'normal'); tc(100, 160, 145);
@@ -645,7 +650,7 @@ const Tadqiqot = () => {
       const cy = y2 + Math.floor(i / 2) * (sCardH + 5);
       fc(...sc.col); doc.roundedRect(cx, cy, sCardW, sCardH, 3, 3, 'F');
       doc.setFontSize(20); doc.setFont('helvetica', 'bold'); tc(...WH);
-      doc.text(String(sc.val), cx + 7, cy + 15);
+      doc.text(s(String(sc.val)), cx + 7, cy + 15);
       doc.setFontSize(8.5); doc.setFont('helvetica', 'normal'); tc(200, 230, 220);
       doc.text(sc.lbl, cx + 7, cy + 25, { maxWidth: sCardW - 12 });
     });
@@ -710,10 +715,11 @@ const Tadqiqot = () => {
       dc(...BR); doc.setLineWidth(0.3); doc.line(M, y3 + rH, M + CW, y3 + rH);
       doc.setFontSize(9); doc.setFont('helvetica', 'normal'); tc(40, 70, 60);
       doc.text(row.label, M + 5, y3 + 8.5);
-      const vw = doc.getTextWidth(row.value) + 10;
+      const sv = s(row.value);
+      const vw = doc.getTextWidth(sv) + 10;
       fc(...TL); doc.roundedRect(M + CW - vw - 4, y3 + 2, vw, 7.5, 2, 2, 'F');
       doc.setFontSize(9); doc.setFont('helvetica', 'bold'); tc(...TM);
-      doc.text(row.value, M + CW - 4 - vw / 2, y3 + 8, { align: 'center' });
+      doc.text(sv, M + CW - 4 - vw / 2, y3 + 8, { align: 'center' });
       y3 += rH;
     });
     y3 += 14;
@@ -739,7 +745,7 @@ const Tadqiqot = () => {
       fc(...TM); doc.roundedRect(tx, y3, tCardW, 34, 3, 3, 'F');
       fc(...RA); doc.roundedRect(tx, y3, tCardW, 3.5, 1, 1, 'F');
       doc.setFontSize(22); doc.setFont('helvetica', 'bold'); tc(...WH);
-      doc.text(String(tr.val), tx + 7, y3 + 19);
+      doc.text(s(String(tr.val)), tx + 7, y3 + 19);
       doc.setFontSize(8); doc.setFont('helvetica', 'normal'); tc(180, 220, 210);
       doc.text(tr.lbl, tx + 7, y3 + 28, { maxWidth: tCardW - 12 });
     });
@@ -760,7 +766,7 @@ const Tadqiqot = () => {
         doc.roundedRect(tx, y3, tlCardW, 24, 3, 3, 'F');
         doc.setFontSize(13); doc.setFont('helvetica', 'bold');
         if (isLast) { tc(...WH); } else { tc(...TM); }
-        doc.text(String(val), tx + tlCardW / 2, y3 + 12, { align: 'center' });
+        doc.text(s(String(val)), tx + tlCardW / 2, y3 + 12, { align: 'center' });
         doc.setFontSize(7.5); doc.setFont('helvetica', 'normal');
         if (isLast) { tc(...LC); } else { tc(...MG); }
         doc.text(tlYear + '-yil', tx + tlCardW / 2, y3 + 19, { align: 'center' });
@@ -799,7 +805,7 @@ const Tadqiqot = () => {
     ctryData.forEach((c, i) => {
       const by = y4 + 15 + i * 14;
       doc.setFontSize(8); doc.setFont('helvetica', 'normal'); tc(40, 70, 60);
-      doc.text(c.name, M + 6, by + 5);
+      doc.text(s(c.name), M + 6, by + 5);
       const bw2 = (c.score / 100) * rBarMax;
       const col3 = cColors2[i];
       doc.setFillColor(col3[0], col3[1], col3[2]);
@@ -829,10 +835,11 @@ const Tadqiqot = () => {
       }
       doc.setFontSize(8.5); doc.setFont('helvetica', 'normal'); tc(...MG);
       doc.text(g.lbl, rx2 + 6, gy + 9);
-      const vw2 = doc.getTextWidth(g.val) + 10;
+      const sg = s(g.val);
+      const vw2 = doc.getTextWidth(sg) + 10;
       fc(...TL); doc.roundedRect(rx2 + col2W - vw2 - 6, gy + 2, vw2, 8, 2, 2, 'F');
       doc.setFontSize(9); doc.setFont('helvetica', 'bold'); tc(...TM);
-      doc.text(g.val, rx2 + col2W - 6 - vw2 / 2, gy + 8, { align: 'center' });
+      doc.text(sg, rx2 + col2W - 6 - vw2 / 2, gy + 8, { align: 'center' });
     });
 
     // Dark teal footer
