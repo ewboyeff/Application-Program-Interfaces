@@ -12,6 +12,7 @@ import { indexesApi, FactorsGrouped } from '@/src/api/indexes';
 import { newsApi } from '@/src/api/news';
 import { News } from '@/src/types';
 import { assetUrl, API_BASE } from '@/src/lib/utils';
+import { useToast } from '@/src/context/ToastContext';
 
 const resolveMediaUrl = (url: string) =>
   url.startsWith('http') ? url : `${API_BASE}${url}`;
@@ -476,6 +477,7 @@ const MaqolalarDialog = ({
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const Tadqiqot = () => {
   const { t } = useTranslation('tadqiqot');
+  const { showToast } = useToast();
   const [openDialog, setOpenDialog] = useState<'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar' | null>(null);
   const [researchStats, setResearchStats] = useState<ResearchStats>(DEFAULT_RESEARCH_STATS);
   const [factors, setFactors] = useState<FactorsGrouped | null>(null);
@@ -488,6 +490,7 @@ const Tadqiqot = () => {
   }, []);
 
   const handleDownloadReport = async (type: 'annual' | 'halfyear') => {
+    try {
     const { default: jsPDF } = await import('jspdf');
     const year = new Date().getFullYear();
     const isAnnual = type === 'annual';
@@ -543,7 +546,7 @@ const Tadqiqot = () => {
     const s = (str: string) => str
       .replace(/[ʼ‘’ʹ]/g, "'")
       .replace(/[₿€£¥]/g, '')
-      .replace(/[^ -ÿ]/g, '');
+      .replace(/[^ -ÿ]/g, '');
 
     // Palette
     const TD: [number,number,number] = [11, 61, 54];    // teal dark
@@ -858,6 +861,10 @@ const Tadqiqot = () => {
     doc.text('(c) ' + year + " xayriya.info. Barcha huquqlar himoyalangan.", W - M, H - 5, { align: 'right' });
 
     doc.save(filename);
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      showToast('PDF yuklab olishda xatolik yuz berdi', 'error');
+    }
   };
 
   type CardAction = 'report' | 'methodology' | 'analysis' | 'comparison' | 'hisobot' | 'maqolalar';

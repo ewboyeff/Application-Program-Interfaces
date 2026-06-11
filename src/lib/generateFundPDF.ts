@@ -42,7 +42,8 @@ export const generateFundPDF = async (fund: Fund) => {
   y += 10;
   doc.setFontSize(12);
   doc.setTextColor(100, 116, 139); // slate-500
-  doc.text(`${fund.indexes.grade.toUpperCase()} DARAJA | ${fund.is_verified ? 'TASDIQLANGAN' : 'TASDIQLANMAGAN'}`, margin, y);
+  const grade = fund.indexes?.grade ?? 'unrated';
+  doc.text(`${grade.toUpperCase()} DARAJA | ${fund.is_verified ? 'TASDIQLANGAN' : 'TASDIQLANMAGAN'}`, margin, y);
 
   y += 15;
   doc.setDrawColor(226, 232, 240); // slate-200
@@ -81,9 +82,9 @@ export const generateFundPDF = async (fund: Fund) => {
 
   y += 15;
   const scores = [
-    { label: 'Shaffoflik', score: fund.indexes.transparency },
-    { label: 'Ochiqlik', score: fund.indexes.openness },
-    { label: 'Ishonchlilik', score: fund.indexes.trust }
+    { label: 'Shaffoflik', score: fund.indexes?.transparency ?? 0 },
+    { label: 'Ochiqlik',   score: fund.indexes?.openness     ?? 0 },
+    { label: 'Ishonchlilik', score: fund.indexes?.trust      ?? 0 },
   ];
 
   scores.forEach((item, i) => {
@@ -113,7 +114,7 @@ export const generateFundPDF = async (fund: Fund) => {
   doc.text('UMUMIY INDEKS:', margin + 10, y + 12);
   doc.setFontSize(24);
   doc.setTextColor(26, 86, 219);
-  doc.text(`${fund.indexes.overall}/100`, margin + 10, y + 22);
+  doc.text(`${fund.indexes?.overall ?? 0}/100`, margin + 10, y + 22);
   
   doc.setTextColor(30, 41, 59);
   doc.setFontSize(12);
