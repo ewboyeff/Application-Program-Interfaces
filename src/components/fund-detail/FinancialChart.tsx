@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, PieChart, Pie, Cell,
+} from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { reportsApi, Report } from '@/src/api/reports';
@@ -11,7 +14,6 @@ interface FinancialChartProps {
 }
 
 function buildChartData(reports: Report[]) {
-  // Group by year, preferring annual reports per year to avoid double-counting
   const byYear: Record<string, { annual: Report[]; other: Report[] }> = {};
   reports.forEach((r) => {
     const year = r.period_start
@@ -27,15 +29,9 @@ function buildChartData(reports: Report[]) {
   return Object.entries(byYear)
     .map(([period, { annual, other }]) => {
       const source = annual.length > 0 ? annual : other;
-      const income = source.reduce((s, r) => s + r.total_income, 0);
+      const income  = source.reduce((s, r) => s + r.total_income,  0);
       const expense = source.reduce((s, r) => s + r.total_expense, 0);
-      return {
-        period,
-        incomeMln: income / 1_000_000,
-        expenseMln: expense / 1_000_000,
-        income,
-        expense,
-      };
+      return { period, incomeMln: income / 1_000_000, expenseMln: expense / 1_000_000, income, expense };
     })
     .sort((a, b) => a.period.localeCompare(b.period));
 }
@@ -79,13 +75,24 @@ export const FinancialChart: React.FC<FinancialChartProps> = ({ fundId, classNam
       .finally(() => setLoading(false));
   }, [fundId]);
 
-  const chartData = buildChartData(reports);
-  const totalIncome = reports.reduce((s, r) => s + r.total_income, 0);
-  const totalExpense = reports.reduce((s, r) => s + r.total_expense, 0);
+  const chartData     = buildChartData(reports);
+  const totalIncome   = reports.reduce((s, r) => s + r.total_income,  0);
+  const totalExpense  = reports.reduce((s, r) => s + r.total_expense, 0);
   const efficiencyPct = totalIncome > 0 ? Math.round((totalExpense / totalIncome) * 100) : 0;
 
+  const hasValues = totalIncome > 0 || totalExpense > 0;
+  const donutData = hasValues
+    ? [
+        { name: t('chart.totalIncome'),  value: Math.max(totalIncome,  0), color: '#22D3EE' },
+        { name: t('chart.totalExpense'), value: Math.max(totalExpense, 0), color: '#A78BFA' },
+      ].filter((d) => d.value > 0)
+    : [{ name: 'empty', value: 1, color: 'rgba(255,255,255,0.08)' }];
+
   return (
-    <div className={cn('rounded-[32px] overflow-hidden', className)} style={{ background: 'linear-gradient(145deg, #0D1B2E 0%, #0F2240 50%, #0A1628 100%)' }}>
+    <div
+      className={cn('rounded-[32px] overflow-hidden', className)}
+      style={{ background: 'linear-gradient(145deg, #0D1B2E 0%, #0F2240 50%, #0A1628 100%)' }}
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-8 pt-8 pb-6">
         <div>
@@ -111,7 +118,10 @@ export const FinancialChart: React.FC<FinancialChartProps> = ({ fundId, classNam
         <>
           {/* Stats cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-8 mb-8">
-            <div className="rounded-2xl p-5 text-white relative overflow-hidden group border border-cyan-500/20" style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.15) 0%, rgba(6,182,212,0.05) 100%)' }}>
+            <div
+              className="rounded-2xl p-5 text-white relative overflow-hidden group border border-cyan-500/20"
+              style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.15) 0%, rgba(6,182,212,0.05) 100%)' }}
+            >
               <TrendingUp className="absolute top-4 right-4 w-10 h-10 text-cyan-400 opacity-20 group-hover:scale-110 transition-transform" />
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400/70 mb-1">{t('chart.totalIncome')}</div>
               <div className="text-2xl font-black text-white">{formatMoney(totalIncome)}</div>
@@ -119,7 +129,10 @@ export const FinancialChart: React.FC<FinancialChartProps> = ({ fundId, classNam
                 {t('chart.basedOnReports', { count: reports.length })}
               </div>
             </div>
-            <div className="rounded-2xl p-5 text-white relative overflow-hidden group border border-violet-500/20" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(139,92,246,0.05) 100%)' }}>
+            <div
+              className="rounded-2xl p-5 text-white relative overflow-hidden group border border-violet-500/20"
+              style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(139,92,246,0.05) 100%)' }}
+            >
               <TrendingDown className="absolute top-4 right-4 w-10 h-10 text-violet-400 opacity-20 group-hover:scale-110 transition-transform" />
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-violet-400/70 mb-1">{t('chart.totalExpense')}</div>
               <div className="text-2xl font-black text-white">{formatMoney(totalExpense)}</div>
@@ -129,53 +142,141 @@ export const FinancialChart: React.FC<FinancialChartProps> = ({ fundId, classNam
             </div>
           </div>
 
-          {/* Chart */}
-          {chartData.length > 0 && (
-            <div className="px-4 pt-2 pb-6 border-t border-white/5">
-              <div className="h-72 w-full">
+          {/* Two charts side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-white/5">
+
+            {/* Left: Bar chart */}
+            <div className="px-4 pt-5 pb-6">
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/25 mb-3 px-2">
+                {t('chart.yearlyDynamics', 'Yillik dinamika')}
+              </p>
+              {chartData.length > 0 ? (
+                <div className="h-60 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData} margin={{ top: 8, right: 20, left: 4, bottom: 0 }} barGap={6} barCategoryGap="40%">
+                      <defs>
+                        <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%"   stopColor="#22D3EE" stopOpacity={1} />
+                          <stop offset="100%" stopColor="#0891B2" stopOpacity={1} />
+                        </linearGradient>
+                        <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%"   stopColor="#A78BFA" stopOpacity={1} />
+                          <stop offset="100%" stopColor="#7C3AED" stopOpacity={1} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
+                      <XAxis
+                        dataKey="period"
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 12, fontWeight: 700 }}
+                        dy={12}
+                      />
+                      <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontWeight: 700 }}
+                        tickFormatter={(v) =>
+                          v >= 1
+                            ? `${v} ${t('chart.million')}`
+                            : v > 0
+                            ? `${(v * 1000).toFixed(0)} ${t('chart.thousand')}`
+                            : '0'
+                        }
+                        width={60}
+                      />
+                      <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.04)', radius: 8 }} />
+                      <Legend
+                        verticalAlign="top"
+                        align="right"
+                        iconType="circle"
+                        iconSize={8}
+                        wrapperStyle={{ paddingBottom: 12, fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}
+                        formatter={(value) => value === 'incomeMln' ? t('chart.income') : t('chart.expense')}
+                      />
+                      <Bar dataKey="incomeMln"  name="incomeMln"  fill="url(#incomeGradient)"  radius={[6, 6, 0, 0]} maxBarSize={44} isAnimationActive />
+                      <Bar dataKey="expenseMln" name="expenseMln" fill="url(#expenseGradient)" radius={[6, 6, 0, 0]} maxBarSize={44} isAnimationActive />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <div className="h-60 flex items-center justify-center text-white/20 text-sm">
+                  {t('chart.noFinancialData')}
+                </div>
+              )}
+            </div>
+
+            {/* Right: Donut chart */}
+            <div className="px-4 pt-5 pb-6 border-t lg:border-t-0 lg:border-l border-white/5 flex flex-col items-center">
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/25 mb-3 self-start px-2">
+                {t('chart.incomeExpenseRatio', 'Kirim / Chiqim nisbati')}
+              </p>
+
+              {/* Donut */}
+              <div className="relative w-52 h-52 flex-shrink-0">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} margin={{ top: 10, right: 24, left: 8, bottom: 0 }} barGap={8} barCategoryGap="40%">
+                  <PieChart>
                     <defs>
-                      <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#22D3EE" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#0891B2" stopOpacity={1} />
+                      <linearGradient id="donutIncome" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%"   stopColor="#22D3EE" />
+                        <stop offset="100%" stopColor="#0891B2" />
                       </linearGradient>
-                      <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#A78BFA" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#7C3AED" stopOpacity={1} />
+                      <linearGradient id="donutExpense" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%"   stopColor="#A78BFA" />
+                        <stop offset="100%" stopColor="#7C3AED" />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
-                    <XAxis
-                      dataKey="period"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 12, fontWeight: 700 }}
-                      dy={12}
-                    />
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontWeight: 700 }}
-                      tickFormatter={(v) => v >= 1 ? `${v} ${t('chart.million')}` : v > 0 ? `${(v * 1000).toFixed(0)} ${t('chart.thousand')}` : '0'}
-                      width={60}
-                    />
-                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.04)', radius: 8 }} />
-                    <Legend
-                      verticalAlign="top"
-                      align="right"
-                      iconType="circle"
-                      iconSize={8}
-                      wrapperStyle={{ paddingBottom: 16, fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}
-                      formatter={(value) => value === 'incomeMln' ? t('chart.income') : t('chart.expense')}
-                    />
-                    <Bar dataKey="incomeMln" name="incomeMln" fill="url(#incomeGradient)" radius={[6, 6, 0, 0]} maxBarSize={48} isAnimationActive />
-                    <Bar dataKey="expenseMln" name="expenseMln" fill="url(#expenseGradient)" radius={[6, 6, 0, 0]} maxBarSize={48} isAnimationActive />
-                  </BarChart>
+                    <Pie
+                      data={donutData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={62}
+                      outerRadius={88}
+                      paddingAngle={donutData.length > 1 ? 4 : 0}
+                      dataKey="value"
+                      startAngle={90}
+                      endAngle={-270}
+                      stroke="none"
+                      isAnimationActive
+                    >
+                      {donutData.map((entry, i) => {
+                        const gradId = entry.color === '#22D3EE' ? 'url(#donutIncome)' : entry.color === '#A78BFA' ? 'url(#donutExpense)' : entry.color;
+                        return <Cell key={i} fill={gradId} />;
+                      })}
+                    </Pie>
+                  </PieChart>
                 </ResponsiveContainer>
+
+                {/* Center label */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span className="text-[28px] font-black text-white leading-none">{efficiencyPct}%</span>
+                  <span className="text-[10px] font-bold text-white/35 mt-1 uppercase tracking-widest">
+                    {t('chart.spent', 'sarflangan')}
+                  </span>
+                </div>
+              </div>
+
+              {/* Legend */}
+              <div className="mt-5 w-full max-w-[220px] space-y-3">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-3 h-3 rounded-full bg-cyan-400 flex-shrink-0" />
+                    <span className="text-xs font-bold text-white/45 truncate">{t('chart.totalIncome')}</span>
+                  </div>
+                  <span className="text-xs font-black text-cyan-300 flex-shrink-0">{formatMoney(totalIncome)}</span>
+                </div>
+                <div className="h-px bg-white/5" />
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-3 h-3 rounded-full bg-violet-400 flex-shrink-0" />
+                    <span className="text-xs font-bold text-white/45 truncate">{t('chart.totalExpense')}</span>
+                  </div>
+                  <span className="text-xs font-black text-violet-300 flex-shrink-0">{formatMoney(totalExpense)}</span>
+                </div>
               </div>
             </div>
-          )}
+
+          </div>
         </>
       )}
     </div>
