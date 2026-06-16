@@ -21,6 +21,8 @@ import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { fundsApi } from '@/src/api/funds';
 import { cn } from '@/src/lib/utils';
 
+const ITEMS_PER_PAGE = 10;
+
 export const AdminFunds: React.FC = () => {
   const navigate = useNavigate();
   const { funds, deleteFund, updateFund, fetchFunds } = useDataStore();
@@ -29,15 +31,21 @@ export const AdminFunds: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [verifiedFilter, setVerifiedFilter] = useState<'all' | 'verified' | 'unverified'>('all');
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedFunds, setSelectedFunds] = useState<string[]>([]);
   const [recalculating, setRecalculating] = useState<string | null>(null);
 
   useEffect(() => { fetchCategories(); }, []);
 
+  // Reset to page 1 when filters change
+  useEffect(() => { setCurrentPage(1); }, [searchQuery, categoryFilter, verifiedFilter]);
+
   const filteredFunds = funds
     .filter(fund => {
-      const matchesSearch = fund.name_uz.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           fund.inn.includes(searchQuery);
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = !q ||
+        fund.name_uz.toLowerCase().includes(q) ||
+        (fund.inn ?? '').toLowerCase().includes(q);
       const matchesCategory = categoryFilter === 'all' || fund.category === categoryFilter;
       const matchesVerified = verifiedFilter === 'all'
         ? true
@@ -47,17 +55,25 @@ export const AdminFunds: React.FC = () => {
       return matchesSearch && matchesCategory && matchesVerified;
     })
     .sort((a, b) => {
-      // Tasdiqlanmaganlar yuqorida
       if (!a.is_verified && b.is_verified) return -1;
       if (a.is_verified && !b.is_verified) return 1;
       return 0;
     });
 
+  const totalPages = Math.max(1, Math.ceil(filteredFunds.length / ITEMS_PER_PAGE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pageStart = (safePage - 1) * ITEMS_PER_PAGE;
+  const pageEnd = Math.min(pageStart + ITEMS_PER_PAGE, filteredFunds.length);
+  const pagedFunds = filteredFunds.slice(pageStart, pageEnd);
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
+    .filter(p => p === 1 || p === totalPages || Math.abs(p - safePage) <= 1);
+
   const toggleSelectAll = () => {
-    if (selectedFunds.length === filteredFunds.length) {
-      setSelectedFunds([]);
+    if (pagedFunds.every(f => selectedFunds.includes(f.id))) {
+      setSelectedFunds(prev => prev.filter(id => !pagedFunds.find(f => f.id === id)));
     } else {
-      setSelectedFunds(filteredFunds.map(f => f.id));
+      setSelectedFunds(prev => [...new Set([...prev, ...pagedFunds.map(f => f.id)])]);
     }
   };
 
@@ -180,9 +196,9 @@ export const AdminFunds: React.FC = () => {
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
                 <th className="px-6 py-4 w-12">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedFunds.length === filteredFunds.length && filteredFunds.length > 0}
+                  <input
+                    type="checkbox"
+                    checked={pagedFunds.length > 0 && pagedFunds.every(f => selectedFunds.includes(f.id))}
                     onChange={toggleSelectAll}
                     className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600/20"
                   />
@@ -198,7 +214,7 @@ export const AdminFunds: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {filteredFunds.map((fund) => (
+              {pagedFunds.map((fund) => (
                 <tr key={fund.id} className={cn(
                   "hover:bg-slate-50/50 transition-colors group",
                   selectedFunds.includes(fund.id) && "bg-blue-50/30"
@@ -295,20 +311,51 @@ export const AdminFunds: React.FC = () => {
         {/* Pagination */}
         <div className="px-8 py-4 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between">
           <p className="text-xs text-slate-500 font-medium">
-            Jami {filteredFunds.length} tadan 1-10 ko'rsatilmoqda
+            {filteredFunds.length === 0
+              ? 'Hech narsa topilmadi'
+              : `Jami ${filteredFunds.length} tadan ${pageStart + 1}–${pageEnd} ko'rsatilmoqda`}
           </p>
-          <div className="flex items-center gap-2">
-            <button className="p-2 text-slate-400 hover:text-slate-600 disabled:opacity-30" disabled>
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-1">
-              <button className="w-8 h-8 rounded-lg bg-blue-600 text-white text-xs font-bold">1</button>
-              <button className="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-600 text-xs font-bold transition-all">2</button>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={safePage === 1}
+                className="p-2 text-slate-400 hover:text-slate-600 disabled:opacity-30 transition-all"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="flex items-center gap-1">
+                {pageNumbers.map((p, idx) => {
+                  const prev = pageNumbers[idx - 1];
+                  return (
+                    <React.Fragment key={p}>
+                      {prev && p - prev > 1 && (
+                        <span className="w-8 text-center text-slate-400 text-xs">…</span>
+                      )}
+                      <button
+                        onClick={() => setCurrentPage(p)}
+                        className={cn(
+                          "w-8 h-8 rounded-lg text-xs font-bold transition-all",
+                          p === safePage
+                            ? "bg-blue-600 text-white"
+                            : "hover:bg-slate-200 text-slate-600"
+                        )}
+                      >
+                        {p}
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={safePage === totalPages}
+                className="p-2 text-slate-400 hover:text-slate-600 disabled:opacity-30 transition-all"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
-            <button className="p-2 text-slate-400 hover:text-slate-600">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </div>
