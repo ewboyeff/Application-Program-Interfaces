@@ -625,12 +625,14 @@ export default function Home() {
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button
-                onClick={() => navigate('/register')}
-                className="w-full sm:w-auto px-10 py-4 bg-white text-[#1E293B] font-black rounded-xl hover:bg-slate-100 transition-all shadow-lg"
+              <a
+                href="https://t.me/charityindexbot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-10 py-4 bg-white text-[#1E293B] font-black rounded-xl hover:bg-slate-100 transition-all shadow-lg text-center"
               >
                 {t('cta.addFund')}
-              </button>
+              </a>
               <button
                 onClick={() => navigate('/hamkorlik')}
                 className="w-full sm:w-auto px-10 py-4 border-2 border-white/20 text-white font-black rounded-xl hover:bg-white/10 transition-all"
