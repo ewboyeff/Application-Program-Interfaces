@@ -71,7 +71,7 @@ export const AdminFunds: React.FC = () => {
   const pagedFunds = filteredFunds.slice(pageStart, pageEnd);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
-    .filter(p => p === 1 || p === totalPages || Math.abs(p - safePage) <= 1);
+    .filter(p => p === 1 || p === totalPages || Math.abs(p - safePage) <= 2);
 
   const toggleSelectAll = () => {
     if (pagedFunds.every(f => selectedFunds.includes(f.id))) {
