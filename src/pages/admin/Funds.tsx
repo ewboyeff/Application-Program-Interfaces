@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Download,
   RefreshCw,
+  Loader2,
 } from 'lucide-react';
 import { useDataStore } from '@/src/store/useDataStore';
 import { useCategoryStore } from '@/src/store/useCategoryStore';
@@ -25,7 +26,7 @@ const ITEMS_PER_PAGE = 10;
 
 export const AdminFunds: React.FC = () => {
   const navigate = useNavigate();
-  const { funds, deleteFund, updateFund, fetchFunds } = useDataStore();
+  const { funds, fundsLoading, deleteFund, updateFund, fetchFunds } = useDataStore();
   const { categories, fetch: fetchCategories } = useCategoryStore();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +36,10 @@ export const AdminFunds: React.FC = () => {
   const [selectedFunds, setSelectedFunds] = useState<string[]>([]);
   const [recalculating, setRecalculating] = useState<string | null>(null);
 
-  useEffect(() => { fetchCategories(); }, []);
+  useEffect(() => {
+    fetchCategories();
+    fetchFunds();
+  }, []);
 
   // Reset to page 1 when filters change
   useEffect(() => { setCurrentPage(1); }, [searchQuery, categoryFilter, verifiedFilter]);
@@ -190,7 +194,12 @@ export const AdminFunds: React.FC = () => {
       )}
 
       {/* Funds Table */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden relative">
+        {fundsLoading && (
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10 rounded-3xl">
+            <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          </div>
+        )}
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
