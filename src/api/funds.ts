@@ -5,6 +5,18 @@ import { apiClient, adminApiClient } from './client';
 // Backend response → Frontend type transformers
 // ---------------------------------------------------------------------------
 
+function computeInitials(name: string): string {
+  const words = name
+    .trim()
+    .split(/\s+/)
+    .map((w) => w.replace(/^[^\p{L}\p{N}]+/u, ''))
+    .filter(Boolean);
+  const initials = words.slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  if (initials) return initials;
+  const stripped = name.replace(/[^\p{L}\p{N}]/gu, '');
+  return stripped.slice(0, 2).toUpperCase();
+}
+
 function mapIndexes(idx: any) {
   if (!idx) {
     return { transparency: 0, openness: 0, trust: 0, overall: 0, grade: 'unrated' as const, calculated_at: undefined };
@@ -33,7 +45,7 @@ export function mapFund(f: any): Fund {
     description_uz: f.description_uz ?? '',
     description_en: f.description_en ?? undefined,
     logo_url: f.logo_url ?? undefined,
-    logo_initials: f.logo_initials ?? '',
+    logo_initials: f.logo_initials || computeInitials(f.name_uz || f.name_en || f.name_ru || ''),
     logo_color: f.logo_color ?? '#1A56DB',
     website: f.website_url ?? '',
     telegram: f.telegram_url ?? '',
