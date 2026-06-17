@@ -26,7 +26,7 @@ const GRADES = [
 export default function Funds() {
   const { t } = useTranslation('funds');
   const { language } = useLanguage();
-  const { funds } = useDataStore();
+  const { funds, fundsLoading } = useDataStore();
   const { categories, regions } = useCategoryStore();
   const getCategoryName = useCategoryName();
   const fundName = (f: typeof funds[0]) => (language === 'en' && f.name_en) ? f.name_en : f.name_uz;
@@ -35,7 +35,6 @@ export default function Funds() {
     (localStorage.getItem('ciu_view_mode') as 'grid' | 'list') || 'grid'
   );
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   // Filter states
   const [search, setSearch] = useState(searchParams.get('search') || '');
@@ -56,13 +55,6 @@ export default function Funds() {
     const query = searchParams.get('search');
     if (query !== null) setSearch(query);
   }, [searchParams]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
 
   const activeFilterCount = useMemo(() => {
     let count = 0;
@@ -92,7 +84,7 @@ export default function Funds() {
     });
 
     return result;
-  }, [search, selectedCategories, selectedRegions, selectedGrade, verifiedOnly, sortBy]);
+  }, [funds, search, selectedCategories, selectedRegions, selectedGrade, verifiedOnly, sortBy]);
 
   // Reset to page 1 whenever filters change
   useEffect(() => { setCurrentPage(1); }, [search, selectedCategories, selectedRegions, selectedGrade, verifiedOnly, sortBy]);
@@ -330,7 +322,7 @@ export default function Funds() {
             </div>
 
             {/* Fund Grid/List */}
-            {isLoading ? (
+            {fundsLoading ? (
               <div className={cn(
                 'grid gap-5',
                 viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'
