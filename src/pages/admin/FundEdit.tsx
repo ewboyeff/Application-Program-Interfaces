@@ -449,17 +449,6 @@ export const AdminFundEdit: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700 ml-1">Ro'yxatdan o'tish raqami</label>
-                    <input
-                      type="text"
-                      name="registration"
-                      value={formData.registration}
-                      onChange={handleChange}
-                      placeholder="RO'YXAT-2024-001"
-                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-blue-600 transition-all outline-none"
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700 ml-1">Viloyat</label>
                     <select
                       name="region"
