@@ -20,7 +20,7 @@ interface AuthContextType {
   isAuthReady: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, full_name: string) => Promise<void>;
-  updateUser: (data: Partial<User>) => void;
+  updateUser: (data: { full_name?: string; phone?: string; region?: string }) => Promise<void>;
   logout: () => void;
 }
 
@@ -30,6 +30,8 @@ function toUser(api: ApiUser): User {
     email: api.email,
     full_name: api.full_name ?? '',
     role: api.role as User['role'],
+    phone: api.phone ?? undefined,
+    region: api.region ?? undefined,
   };
 }
 
@@ -73,9 +75,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(toUser(res.data.user));
   };
 
-  const updateUser = (data: Partial<User>) => {
+  const updateUser = async (data: { full_name?: string; phone?: string; region?: string }) => {
     if (!user) return;
-    setUser({ ...user, ...data });
+    const apiUser = await authApi.updateMe(data);
+    setUser(toUser(apiUser));
   };
 
   // Auto-logout after 30 minutes of inactivity

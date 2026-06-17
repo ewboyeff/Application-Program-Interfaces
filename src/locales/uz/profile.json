@@ -1,14 +1,13 @@
 {
   "logout": "Chiqish",
+  "comingSoon": "Tez orada qo'shiladi",
   "tabs": {
     "personal": "Shaxsiy ma'lumotlar",
     "donations": "Xayriyalarim",
-    "saved": "Saqlangan fondlar",
     "settings": "Sozlamalar"
   },
   "stats": {
-    "donations": "Xayriyalar",
-    "saved": "Saqlangan"
+    "donations": "Xayriyalar"
   },
   "roles": {
     "admin": "Administrator",
@@ -23,7 +22,8 @@
     "save": "O'zgarishlarni saqlash",
     "errors": {
       "fullName": "Ism kiritilishi shart",
-      "phone": "Telefon raqam formati noto'g'ri (+998 90 123 45 67)"
+      "phone": "Telefon raqam formati noto'g'ri (+998 90 123 45 67)",
+      "saveFailed": "Saqlashda xatolik yuz berdi, qaytadan urinib ko'ring"
     }
   },
   "donations": {
@@ -31,22 +31,31 @@
     "emptyDesc": "Siz hali birorta ham xayriya amalga oshirmagansiz.",
     "viewFunds": "Fondlarni ko'rish"
   },
-  "saved": {
-    "empty": "Saqlangan fondlar yo'q",
-    "emptyDesc": "O'zingizga yoqqan fondlarni saqlab qo'yishingiz mumkin.",
-    "searchFunds": "Fondlarni qidirish"
-  },
   "settings": {
     "title": "Sozlamalar",
     "notifications": "Bildirishnomalar",
     "notificationsDesc": "Email orqali yangiliklarni olish",
     "security": "Xavfsizlik",
-    "securityDesc": "Parolni o'zgartirish va seanslar",
+    "securityDesc": "Parolni o'zgartirish",
     "change": "O'zgartirish",
     "payment": "To'lov usullari",
     "paymentDesc": "Kartalarni boshqarish",
     "add": "Qo'shish",
     "danger": "Xavfli hudud",
-    "deleteAccount": "Hisobni o'chirish"
+    "deleteAccount": "Hisobni o'chirish",
+    "passwordForm": {
+      "current": "Joriy parol",
+      "next": "Yangi parol",
+      "confirm": "Yangi parolni tasdiqlang",
+      "submit": "Parolni yangilash",
+      "success": "Parol muvaffaqiyatli yangilandi",
+      "errors": {
+        "required": "Joriy parolni kiriting",
+        "tooShort": "Parol kamida 6 ta belgidan iborat bo'lishi kerak",
+        "mismatch": "Parollar mos kelmadi",
+        "wrongCurrent": "Joriy parol noto'g'ri",
+        "failed": "Parolni yangilashda xatolik yuz berdi"
+      }
+    }
   }
 }

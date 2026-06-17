@@ -1,14 +1,13 @@
 {
   "logout": "Logout",
+  "comingSoon": "Coming soon",
   "tabs": {
     "personal": "Personal Info",
     "donations": "My Donations",
-    "saved": "Saved Funds",
     "settings": "Settings"
   },
   "stats": {
-    "donations": "Donations",
-    "saved": "Saved"
+    "donations": "Donations"
   },
   "roles": {
     "admin": "Administrator",
@@ -23,7 +22,8 @@
     "save": "Save Changes",
     "errors": {
       "fullName": "Name is required",
-      "phone": "Invalid phone format (+998 90 123 45 67)"
+      "phone": "Invalid phone format (+998 90 123 45 67)",
+      "saveFailed": "Failed to save, please try again"
     }
   },
   "donations": {
@@ -31,22 +31,31 @@
     "emptyDesc": "You haven't made any donations yet.",
     "viewFunds": "View Funds"
   },
-  "saved": {
-    "empty": "No Saved Funds",
-    "emptyDesc": "You can save funds you like.",
-    "searchFunds": "Search Funds"
-  },
   "settings": {
     "title": "Settings",
     "notifications": "Notifications",
     "notificationsDesc": "Receive updates via email",
     "security": "Security",
-    "securityDesc": "Change password and sessions",
+    "securityDesc": "Change password",
     "change": "Change",
     "payment": "Payment Methods",
     "paymentDesc": "Manage cards",
     "add": "Add",
     "danger": "Danger Zone",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "passwordForm": {
+      "current": "Current password",
+      "next": "New password",
+      "confirm": "Confirm new password",
+      "submit": "Update password",
+      "success": "Password updated successfully",
+      "errors": {
+        "required": "Enter your current password",
+        "tooShort": "Password must be at least 6 characters",
+        "mismatch": "Passwords do not match",
+        "wrongCurrent": "Current password is incorrect",
+        "failed": "Failed to update password"
+      }
+    }
   }
 }

@@ -5,29 +5,32 @@ import {
   Mail,
   Shield,
   Settings,
-  Heart,
   History,
   ChevronRight,
   LogOut,
   Camera,
   CreditCard,
   Bell,
-  Lock
+  Lock,
+  Loader2,
+  Clock
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/src/components/layout/Layout';
 import { useAuth } from '@/src/context/AuthContext';
 import { useToast } from '@/src/context/ToastContext';
+import { authApi } from '@/src/api/auth';
 import { cn } from '@/src/lib/utils';
 
-type TabType = 'personal' | 'donations' | 'saved' | 'settings';
+type TabType = 'personal' | 'donations' | 'settings';
 
 export default function Profile() {
   const { user, logout, updateUser } = useAuth();
   const { showToast } = useToast();
   const { t } = useTranslation('profile');
   const [activeTab, setActiveTab] = useState<TabType>('personal');
+  const [saving, setSaving] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -37,6 +40,12 @@ export default function Profile() {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Password change form state
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordData, setPasswordData] = useState({ current: '', next: '', confirm: '' });
+  const [passwordErrors, setPasswordErrors] = useState<{ [key: string]: string }>({});
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
@@ -53,14 +62,52 @@ export default function Profile() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleUpdateProfile = (e: React.FormEvent) => {
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (validate()) {
-      updateUser(formData);
-      showToast(t('personal.save') + ' ✓', 'success');
-    } else {
+
+    if (!validate()) {
       showToast(t('personal.errors.fullName'), 'error');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      await updateUser(formData);
+      showToast(t('personal.save') + ' ✓', 'success');
+    } catch {
+      showToast(t('personal.errors.saveFailed'), 'error');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const validatePassword = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!passwordData.current) newErrors.current = t('settings.passwordForm.errors.required');
+    if (passwordData.next.length < 6) newErrors.next = t('settings.passwordForm.errors.tooShort');
+    if (passwordData.confirm !== passwordData.next) newErrors.confirm = t('settings.passwordForm.errors.mismatch');
+    setPasswordErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validatePassword()) return;
+
+    setPasswordSaving(true);
+    try {
+      await authApi.changePassword(passwordData.current, passwordData.next);
+      showToast(t('settings.passwordForm.success'), 'success');
+      setPasswordData({ current: '', next: '', confirm: '' });
+      setShowPasswordForm(false);
+    } catch (err: any) {
+      const code = err?.error?.code;
+      showToast(
+        code === 'WRONG_PASSWORD' ? t('settings.passwordForm.errors.wrongCurrent') : t('settings.passwordForm.errors.failed'),
+        'error'
+      );
+    } finally {
+      setPasswordSaving(false);
     }
   };
 
@@ -89,7 +136,6 @@ export default function Profile() {
   const tabs = [
     { id: 'personal',  label: t('tabs.personal'),  icon: UserIcon },
     { id: 'donations', label: t('tabs.donations'), icon: History },
-    { id: 'saved',     label: t('tabs.saved'),     icon: Heart },
     { id: 'settings',  label: t('tabs.settings'),  icon: Settings },
   ];
 
@@ -163,14 +209,10 @@ export default function Profile() {
               </div>
 
               {/* Quick Stats */}
-              <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="mt-6">
                 <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm text-center">
                   <div className="text-2xl font-black text-[#1A56DB]">0</div>
                   <div className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider mt-1">{t('stats.donations')}</div>
-                </div>
-                <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm text-center">
-                  <div className="text-2xl font-black text-[#7C3AED]">0</div>
-                  <div className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider mt-1">{t('stats.saved')}</div>
                 </div>
               </div>
             </div>
@@ -245,10 +287,12 @@ export default function Profile() {
                       </div>
                       
                       <div className="pt-4">
-                        <button 
+                        <button
                           type="submit"
-                          className="px-8 py-3.5 bg-[#1A56DB] text-white rounded-xl font-bold hover:bg-[#1D4ED8] transition-all shadow-lg shadow-blue-600/20"
+                          disabled={saving}
+                          className="px-8 py-3.5 bg-[#1A56DB] text-white rounded-xl font-bold hover:bg-[#1D4ED8] transition-all shadow-lg shadow-blue-600/20 disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
                         >
+                          {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                           {t('personal.save')}
                         </button>
                       </div>
@@ -261,6 +305,10 @@ export default function Profile() {
                     <div className="w-20 h-20 bg-[#F1F5F9] rounded-full flex items-center justify-center mx-auto mb-4">
                       <History className="w-10 h-10 text-[#94A3B8]" />
                     </div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-bold mb-3">
+                      <Clock className="w-3.5 h-3.5" />
+                      {t('comingSoon')}
+                    </div>
                     <h3 className="text-xl font-black text-[#1E293B]">{t('donations.empty')}</h3>
                     <p className="text-[#64748B] mt-2">{t('donations.emptyDesc')}</p>
                     <Link
@@ -272,75 +320,135 @@ export default function Profile() {
                   </div>
                 )}
 
-                {activeTab === 'saved' && (
-                  <div className="p-8 text-center py-20">
-                    <div className="w-20 h-20 bg-[#F1F5F9] rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Heart className="w-10 h-10 text-[#94A3B8]" />
-                    </div>
-                    <h3 className="text-xl font-black text-[#1E293B]">{t('saved.empty')}</h3>
-                    <p className="text-[#64748B] mt-2">{t('saved.emptyDesc')}</p>
-                    <Link
-                      to="/funds"
-                      className="inline-block mt-6 px-6 py-3 bg-[#1A56DB] text-white rounded-xl font-bold hover:bg-[#1D4ED8] transition-all"
-                    >
-                      {t('saved.searchFunds')}
-                    </Link>
-                  </div>
-                )}
-
                 {activeTab === 'settings' && (
                   <div className="p-8">
                     <h2 className="text-xl font-black text-[#1E293B] mb-8">{t('settings.title')}</h2>
                     
                     <div className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                            <Bell className="w-5 h-5 text-[#1A56DB]" />
+                      <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                              <Bell className="w-5 h-5 text-[#94A3B8]" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-[#1E293B]">{t('settings.notifications')}</div>
+                              <div className="text-xs text-[#64748B]">{t('settings.notificationsDesc')}</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-bold text-[#1E293B]">{t('settings.notifications')}</div>
-                            <div className="text-xs text-[#64748B]">{t('settings.notificationsDesc')}</div>
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-bold">
+                            <Clock className="w-3.5 h-3.5" />
+                            {t('comingSoon')}
                           </div>
                         </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" className="sr-only peer" defaultChecked />
-                          <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1A56DB]"></div>
-                        </label>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                            <Lock className="w-5 h-5 text-[#1A56DB]" />
+                      <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                              <Lock className="w-5 h-5 text-[#1A56DB]" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-[#1E293B]">{t('settings.security')}</div>
+                              <div className="text-xs text-[#64748B]">{t('settings.securityDesc')}</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-bold text-[#1E293B]">{t('settings.security')}</div>
-                            <div className="text-xs text-[#64748B]">{t('settings.securityDesc')}</div>
-                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowPasswordForm((v) => !v)}
+                            className="text-sm font-bold text-[#1A56DB] hover:underline"
+                          >
+                            {t('settings.change')}
+                          </button>
                         </div>
-                        <button className="text-sm font-bold text-[#1A56DB] hover:underline">{t('settings.change')}</button>
+
+                        {showPasswordForm && (
+                          <form onSubmit={handleChangePassword} className="mt-5 pt-5 border-t border-[#E2E8F0] space-y-4">
+                            <div>
+                              <label className="block text-xs font-bold text-[#374151] mb-1.5">{t('settings.passwordForm.current')}</label>
+                              <input
+                                type="password"
+                                value={passwordData.current}
+                                onChange={(e) => setPasswordData({ ...passwordData, current: e.target.value })}
+                                className={cn(
+                                  "w-full px-4 py-2.5 bg-white border rounded-xl text-sm text-[#1E293B] focus:border-[#1A56DB] outline-none transition-all",
+                                  passwordErrors.current ? "border-red-500" : "border-[#E2E8F0]"
+                                )}
+                              />
+                              {passwordErrors.current && <p className="text-red-500 text-xs mt-1 font-medium">{passwordErrors.current}</p>}
+                            </div>
+                            <div>
+                              <label className="block text-xs font-bold text-[#374151] mb-1.5">{t('settings.passwordForm.next')}</label>
+                              <input
+                                type="password"
+                                value={passwordData.next}
+                                onChange={(e) => setPasswordData({ ...passwordData, next: e.target.value })}
+                                className={cn(
+                                  "w-full px-4 py-2.5 bg-white border rounded-xl text-sm text-[#1E293B] focus:border-[#1A56DB] outline-none transition-all",
+                                  passwordErrors.next ? "border-red-500" : "border-[#E2E8F0]"
+                                )}
+                              />
+                              {passwordErrors.next && <p className="text-red-500 text-xs mt-1 font-medium">{passwordErrors.next}</p>}
+                            </div>
+                            <div>
+                              <label className="block text-xs font-bold text-[#374151] mb-1.5">{t('settings.passwordForm.confirm')}</label>
+                              <input
+                                type="password"
+                                value={passwordData.confirm}
+                                onChange={(e) => setPasswordData({ ...passwordData, confirm: e.target.value })}
+                                className={cn(
+                                  "w-full px-4 py-2.5 bg-white border rounded-xl text-sm text-[#1E293B] focus:border-[#1A56DB] outline-none transition-all",
+                                  passwordErrors.confirm ? "border-red-500" : "border-[#E2E8F0]"
+                                )}
+                              />
+                              {passwordErrors.confirm && <p className="text-red-500 text-xs mt-1 font-medium">{passwordErrors.confirm}</p>}
+                            </div>
+                            <button
+                              type="submit"
+                              disabled={passwordSaving}
+                              className="px-6 py-2.5 bg-[#1A56DB] text-white rounded-xl text-sm font-bold hover:bg-[#1D4ED8] transition-all disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
+                            >
+                              {passwordSaving && <Loader2 className="w-4 h-4 animate-spin" />}
+                              {t('settings.passwordForm.submit')}
+                            </button>
+                          </form>
+                        )}
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                            <CreditCard className="w-5 h-5 text-[#1A56DB]" />
+                      <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                              <CreditCard className="w-5 h-5 text-[#94A3B8]" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-[#1E293B]">{t('settings.payment')}</div>
+                              <div className="text-xs text-[#64748B]">{t('settings.paymentDesc')}</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-bold text-[#1E293B]">{t('settings.payment')}</div>
-                            <div className="text-xs text-[#64748B]">{t('settings.paymentDesc')}</div>
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-bold">
+                            <Clock className="w-3.5 h-3.5" />
+                            {t('comingSoon')}
                           </div>
                         </div>
-                        <button className="text-sm font-bold text-[#1A56DB] hover:underline">{t('settings.add')}</button>
                       </div>
                     </div>
 
                     <div className="mt-12 pt-8 border-t border-[#F1F5F9]">
                       <h3 className="text-sm font-bold text-red-600 mb-4">{t('settings.danger')}</h3>
-                      <button className="px-6 py-3 border border-red-200 text-red-600 rounded-xl text-sm font-bold hover:bg-red-50 transition-all">
-                        {t('settings.deleteAccount')}
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <button
+                          disabled
+                          className="px-6 py-3 border border-red-200 text-red-600 rounded-xl text-sm font-bold opacity-50 cursor-not-allowed"
+                        >
+                          {t('settings.deleteAccount')}
+                        </button>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-bold">
+                          <Clock className="w-3.5 h-3.5" />
+                          {t('comingSoon')}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 )}

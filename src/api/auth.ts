@@ -4,9 +4,17 @@ export interface ApiUser {
   id: string;
   email: string;
   full_name: string | null;
+  phone: string | null;
+  region: string | null;
   role: string;
   is_active: boolean;
   created_at: string;
+}
+
+export interface ProfileUpdatePayload {
+  full_name?: string;
+  phone?: string;
+  region?: string;
 }
 
 export interface LoginResponse {
@@ -59,5 +67,17 @@ export const authApi = {
     } catch {
       return null;
     }
+  },
+
+  async updateMe(payload: ProfileUpdatePayload): Promise<ApiUser> {
+    const res = await apiClient.patch<{ data: ApiUser }>('/api/v1/auth/me', payload);
+    return res.data;
+  },
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
+    await apiClient.post('/api/v1/auth/change-password', {
+      current_password: currentPassword,
+      new_password: newPassword,
+    });
   },
 };
