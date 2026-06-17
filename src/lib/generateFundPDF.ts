@@ -120,7 +120,7 @@ export const generateFundPDF = async (fund: Fund) => {
   doc.setFontSize(12);
   doc.text('DARAJA:', margin + 80, y + 12);
   doc.setFontSize(18);
-  doc.text(fund.indexes.grade.toUpperCase(), margin + 80, y + 22);
+  doc.text(grade.toUpperCase(), margin + 80, y + 22);
 
   y += 45;
   doc.setFontSize(10);

@@ -545,6 +545,7 @@ const Tadqiqot = () => {
     // Strip chars outside Latin-1 range that Helvetica can't render
     const s = (str: string) => str
       .replace(/[ʼ‘’ʹ]/g, "'")
+      .replace(/[—–]/g, '-')
       .replace(/[₿€£¥]/g, '')
       .replace(/[^ -ÿ]/g, '');
 

@@ -65,17 +65,17 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
               <th className="w-20 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.rank')}</th>
               <th className="py-5 px-4 text-left text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.fund')}</th>
               <th className="hidden md:table-cell py-5 px-4 text-left text-[10px] font-bold uppercase text-slate-400 tracking-wider">{t('table.category')}</th>
-              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden 2xl:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('transparency')}>
                   {t('table.transparency')} <SortIcon columnKey="transparency" />
                 </div>
               </th>
-              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden 2xl:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('openness')}>
                   {t('table.openness')} <SortIcon columnKey="openness" />
                 </div>
               </th>
-              <th className="hidden sm:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+              <th className="hidden 2xl:table-cell w-28 py-5 px-4 text-center text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                 <div className="flex items-center justify-center gap-1 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onSort('trust')}>
                   {t('table.trust')} <SortIcon columnKey="trust" />
                 </div>
@@ -105,15 +105,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
                 >
                   <td className="py-5 px-4 text-center">
                     <div className="flex items-center justify-center">
-                      {rank === 1 ? (
-                        <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center border border-amber-100 text-base">🥇</div>
-                      ) : rank === 2 ? (
-                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 text-base">🥈</div>
-                      ) : rank === 3 ? (
-                        <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center border border-orange-100 text-base">🥉</div>
-                      ) : (
-                        <span className="text-sm font-bold text-slate-400">{rank}</span>
-                      )}
+                      <span className="text-sm font-bold text-slate-400">{rank}</span>
                     </div>
                   </td>
                   <td className="py-5 px-4">
@@ -139,13 +131,13 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
                       {getCategoryName(fund.category)}
                     </span>
                   </td>
-                  <td className="hidden sm:table-cell py-5 px-4 text-center">
+                  <td className="hidden 2xl:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.transparency} />
                   </td>
-                  <td className="hidden sm:table-cell py-5 px-4 text-center">
+                  <td className="hidden 2xl:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.openness} />
                   </td>
-                  <td className="hidden sm:table-cell py-5 px-4 text-center">
+                  <td className="hidden 2xl:table-cell py-5 px-4 text-center">
                     <ScoreCell score={fund.indexes.trust} />
                   </td>
                   <td className="py-5 px-4 text-center">
