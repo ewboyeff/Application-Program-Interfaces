@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Send, Instagram, Mail, Phone, MapPin } from 'lucide-react';
-import { BoglanishModal } from '../modals/BoglanishModal';
 import { useSettingsStore } from '@/src/store/useSettingsStore';
 import { useTranslation } from 'react-i18next';
 
 export const Footer: React.FC = () => {
-  const [isBoglanishOpen, setIsBoglanishOpen] = useState(false);
   const { settings } = useSettingsStore();
   const { t } = useTranslation('footer');
 
@@ -91,14 +89,6 @@ export const Footer: React.FC = () => {
               <li><Link to="/tadqiqot" className="text-slate-400 hover:text-white transition-colors text-sm">{t('research')}</Link></li>
               <li><Link to="/hamkorlik" className="text-slate-400 hover:text-white transition-colors text-sm">{t('partnership')}</Link></li>
               <li><Link to="/boglanish" className="text-slate-400 hover:text-white transition-colors text-sm">{t('contact')}</Link></li>
-              <li>
-                <button
-                  onClick={() => setIsBoglanishOpen(true)}
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
-                >
-                  {t('sendRequest')}
-                </button>
-              </li>
             </ul>
           </div>
 
@@ -130,11 +120,6 @@ export const Footer: React.FC = () => {
           </p>
         </div>
       </div>
-
-      <BoglanishModal
-        isOpen={isBoglanishOpen}
-        onClose={() => setIsBoglanishOpen(false)}
-      />
     </footer>
   );
 };
