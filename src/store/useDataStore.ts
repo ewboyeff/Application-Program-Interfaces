@@ -1,9 +1,8 @@
 import { create } from 'zustand';
-import { Fund, Project, News, Review, Complaint } from '@/src/types';
+import { Fund, Project, News, Review } from '@/src/types';
 import { fundsApi, mapFund } from '@/src/api/funds';
 import { newsApi } from '@/src/api/news';
 import { reviewsApi } from '@/src/api/reviews';
-import { complaintsApi } from '@/src/api/complaints';
 import { adminApiClient } from '@/src/api/client';
 
 interface DataState {
@@ -11,7 +10,6 @@ interface DataState {
   projects: Project[];
   news: News[];
   reviews: Review[];
-  complaints: Complaint[];
 
   // Loading states
   fundsLoading: boolean;
@@ -36,14 +34,10 @@ interface DataState {
   setReviews: (reviews: Review[]) => void;
   updateReviewStatus: (id: string, status: 'pending' | 'approved' | 'rejected') => void;
 
-  setComplaints: (complaints: Complaint[]) => void;
-  updateComplaintStatus: (id: string, status: 'pending' | 'reviewed' | 'resolved') => void;
-
   // API fetch actions
   fetchFunds: () => Promise<void>;
   fetchNews: () => Promise<void>;
   fetchReviews: (fundId: string) => Promise<void>;
-  fetchComplaints: () => Promise<void>;
 }
 
 export const useDataStore = create<DataState>()((set) => ({
@@ -51,7 +45,6 @@ export const useDataStore = create<DataState>()((set) => ({
   projects: [],
   news: [],
   reviews: [],
-  complaints: [],
   fundsLoading: false,
   newsLoading: false,
 
@@ -77,10 +70,6 @@ export const useDataStore = create<DataState>()((set) => ({
   setReviews: (reviews) => set({ reviews }),
   updateReviewStatus: (id, status) =>
     set((s) => ({ reviews: s.reviews.map((r) => (r.id === id ? { ...r, status } : r)) })),
-
-  setComplaints: (complaints) => set({ complaints }),
-  updateComplaintStatus: (id, status) =>
-    set((s) => ({ complaints: s.complaints.map((c) => (c.id === id ? { ...c, status } : c)) })),
 
   // --- API fetch actions ---
   fetchFunds: async () => {
@@ -114,15 +103,6 @@ export const useDataStore = create<DataState>()((set) => ({
       set({ reviews });
     } catch (err) {
       console.error('fetchReviews failed:', err);
-    }
-  },
-
-  fetchComplaints: async () => {
-    try {
-      const { complaints } = await complaintsApi.getList({ per_page: 100 });
-      set({ complaints });
-    } catch (err) {
-      console.error('fetchComplaints failed:', err);
     }
   },
 }));

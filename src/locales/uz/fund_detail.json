@@ -2,7 +2,6 @@
   "compare": "Taqqoslash",
   "removeCompare": "Taqqoslashdan olib tashlash",
   "downloadPDF": "PDF yuklash",
-  "complaint": "Shikoyat qoldirish",
   "breadcrumb": { "home": "Bosh sahifa", "funds": "Fondlar" },
   "website": "Veb-sayt",
   "since": "{{year}} yildan",
@@ -104,29 +103,6 @@
       "ratingRequired": "Iltimos, baho bering",
       "success": "Rahmat! Izohingiz moderatsiyaga yuborildi",
       "error": "Xatolik yuz berdi"
-    }
-  },
-  "complaintModal": {
-    "title": "Shikoyat Bildirish",
-    "reasonLabel": "Shikoyat sababi",
-    "descriptionLabel": "Batafsil yozing",
-    "placeholder": "Kamida 20 ta belgi...",
-    "charCount": "{{count}} / 20 ta belgi",
-    "cancel": "Bekor qilish",
-    "submit": "Yuborish",
-    "submitting": "Yuborilmoqda...",
-    "reasons": [
-      "Noto'g'ri ma'lumot",
-      "Firibgarlik shubhasi",
-      "Faoliyatsiz fond",
-      "Boshqa sabab"
-    ],
-    "toast": {
-      "loginRequired": "Shikoyat yuborish uchun tizimga kiring",
-      "reasonRequired": "Iltimos, shikoyat sababini tanlang",
-      "descriptionRequired": "Iltimos, batafsilroq ma'lumot bering (kamida 20 ta belgi)",
-      "success": "Shikoyatingiz qabul qilindi va mutaxassislarimiz tomonidan ko'rib chiqiladi",
-      "error": "Shikoyat yuborishda xatolik yuz berdi"
     }
   },
   "pdf": {

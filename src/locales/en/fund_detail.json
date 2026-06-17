@@ -2,7 +2,6 @@
   "compare": "Compare",
   "removeCompare": "Remove from compare",
   "downloadPDF": "Download PDF",
-  "complaint": "File a complaint",
   "breadcrumb": { "home": "Home", "funds": "Funds" },
   "website": "Website",
   "since": "since {{year}}",
@@ -104,29 +103,6 @@
       "ratingRequired": "Please give a rating",
       "success": "Thank you! Your review has been submitted for moderation",
       "error": "An error occurred"
-    }
-  },
-  "complaintModal": {
-    "title": "File a Complaint",
-    "reasonLabel": "Reason for complaint",
-    "descriptionLabel": "Describe in detail",
-    "placeholder": "At least 20 characters...",
-    "charCount": "{{count}} / 20 characters",
-    "cancel": "Cancel",
-    "submit": "Submit",
-    "submitting": "Submitting...",
-    "reasons": [
-      "Incorrect information",
-      "Suspected fraud",
-      "Inactive fund",
-      "Other reason"
-    ],
-    "toast": {
-      "loginRequired": "Log in to submit a complaint",
-      "reasonRequired": "Please select a reason",
-      "descriptionRequired": "Please describe in more detail (at least 20 characters)",
-      "success": "Your complaint has been received and will be reviewed by our specialists",
-      "error": "Error submitting complaint"
     }
   },
   "pdf": {

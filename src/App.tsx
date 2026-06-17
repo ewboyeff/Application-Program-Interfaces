@@ -37,7 +37,6 @@ import { AdminDashboard } from './pages/admin/Dashboard';
 import { AdminFunds } from './pages/admin/Funds';
 import { AdminFundEdit } from './pages/admin/FundEdit';
 import { AdminReviews } from './pages/admin/Reviews';
-import { AdminComplaints } from './pages/admin/Complaints';
 import { AdminProjects } from './pages/admin/Projects';
 import { AdminReports } from './pages/admin/Reports';
 import { AdminUsers } from './pages/admin/Users';
@@ -121,7 +120,6 @@ export default function App() {
                   <Route path={ap('/reports')} element={<AdminReports />} />
                   <Route path={ap('/users')} element={<AdminUsers />} />
                   <Route path={ap('/reviews')} element={<AdminReviews />} />
-                  <Route path={ap('/complaints')} element={<AdminComplaints />} />
                   <Route path={ap('/news')} element={<AdminNews />} />
                   <Route path={ap('/indexes')} element={<AdminIndexes />} />
                   <Route path={ap('/partners')} element={<AdminPartners />} />

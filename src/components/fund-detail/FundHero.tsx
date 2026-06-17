@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Calendar, User, Globe, Send, Instagram, Check, Plus, AlertTriangle, FileText } from 'lucide-react';
+import { ChevronRight, Calendar, User, Globe, Send, Instagram, Check, Plus, FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Fund } from '@/src/types';
@@ -13,11 +13,10 @@ interface FundHeroProps {
   fund: Fund;
   selected: boolean;
   onCompare: () => void;
-  onComplaint: () => void;
   onDownloadPDF: () => void;
 }
 
-export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, onComplaint, onDownloadPDF }) => {
+export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, onDownloadPDF }) => {
   const { t, i18n } = useTranslation('fund_detail');
   const getCategoryName = useCategoryName();
 
@@ -184,14 +183,6 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
           >
             {selected ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
             {selected ? t('inCompare') : t('compare')}
-          </button>
-
-          <button
-            onClick={onComplaint}
-            className="flex items-center gap-2 px-5 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm font-bold hover:bg-red-500/20 transition-all"
-          >
-            <AlertTriangle className="w-4 h-4" />
-            {t('complaint')}
           </button>
 
           <button

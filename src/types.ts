@@ -81,13 +81,3 @@ export interface Review {
   date: string;
   status: 'pending' | 'approved' | 'rejected';
 }
-
-export interface Complaint {
-  id: string;
-  fundId: string;
-  userName: string;
-  reason: string;
-  description: string;
-  date: string;
-  status: 'pending' | 'reviewed' | 'resolved';
-}

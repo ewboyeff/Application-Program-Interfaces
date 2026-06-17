@@ -30,7 +30,6 @@ interface DashboardStats {
   total_users: number;
   total_applications: number;
   pending_reviews: number;
-  pending_complaints: number;
   funds_by_grade: {
     platinum: number;
     gold: number;
@@ -118,7 +117,7 @@ export const AdminDashboard: React.FC = () => {
         }))
     : [];
 
-  const pendingTotal = stats ? stats.pending_reviews + stats.pending_complaints : 0;
+  const pendingTotal = stats ? stats.pending_reviews : 0;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -149,7 +148,7 @@ export const AdminDashboard: React.FC = () => {
           icon={AlertTriangle}
           label="Kutilayotgan"
           value={`${pendingTotal} ta`}
-          sub="izoh + shikoyat"
+          sub="izoh"
           color="bg-rose-50 text-rose-600"
           loading={loading}
         />
@@ -217,7 +216,6 @@ export const AdminDashboard: React.FC = () => {
                 { label: "Foydalanuvchilar", value: stats?.total_users ?? 0, color: "bg-orange-400", max: Math.max(stats?.total_users ?? 1, 1) },
                 { label: "Murojaatlar", value: stats?.total_applications ?? 0, color: "bg-violet-500", max: Math.max(stats?.total_applications ?? 1, 1) },
                 { label: "Kutilayotgan izohlar", value: stats?.pending_reviews ?? 0, color: "bg-amber-400", max: Math.max(stats?.pending_reviews ?? 1, 1) },
-                { label: "Kutilayotgan shikoyatlar", value: stats?.pending_complaints ?? 0, color: "bg-rose-500", max: Math.max(stats?.pending_complaints ?? 1, 1) },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="flex items-center justify-between mb-1.5">

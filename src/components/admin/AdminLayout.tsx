@@ -7,7 +7,6 @@ import {
   FileText,
   Newspaper,
   Star,
-  AlertTriangle,
   Users,
   BarChart3,
   Settings,
@@ -57,11 +56,10 @@ export const AdminLayout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { adminLogout } = useAdminAuthStore();
-  const { reviews, complaints } = useDataStore();
+  const { reviews } = useDataStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const pendingReviews = reviews.filter(r => r.status === 'pending').length;
-  const pendingComplaints = complaints.filter(c => c.status === 'pending').length;
 
   const handleLogout = () => {
     adminLogout();
@@ -79,7 +77,6 @@ export const AdminLayout: React.FC = () => {
         reports: 'Hisobotlar',
         news: 'Yangiliklar',
         reviews: 'Izohlar',
-        complaints: 'Shikoyatlar',
         users: 'Foydalanuvchilar',
         indexes: 'Indeks omillari',
         settings: 'Sozlamalar',
@@ -185,13 +182,6 @@ export const AdminLayout: React.FC = () => {
                 label="Izohlar"
                 badge={pendingReviews}
                 active={location.pathname.startsWith(ap('/reviews'))}
-              />
-              <NavItem
-                to={ap('/complaints')}
-                icon={AlertTriangle}
-                label="Shikoyatlar"
-                badge={pendingComplaints}
-                active={location.pathname.startsWith(ap('/complaints'))}
               />
             </div>
           </div>

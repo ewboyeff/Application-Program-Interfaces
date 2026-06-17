@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/src/context/LanguageContext';
 import { Layout } from '@/src/components/layout/Layout';
 import { useCompareStore } from '@/src/store/compareStore';
 import { useToast } from '@/src/context/ToastContext';
@@ -18,17 +17,14 @@ import { ProjectsList } from '@/src/components/fund-detail/ProjectsList';
 import { ReportsList } from '@/src/components/fund-detail/ReportsList';
 import { FinancialChart } from '@/src/components/fund-detail/FinancialChart';
 import { ReviewSection } from '@/src/components/fund-detail/ReviewSection';
-import { ComplaintModal } from '@/src/components/fund-detail/ComplaintModal';
 
 export default function FundDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation('fund_detail');
-  const { language } = useLanguage();
   const { funds } = useDataStore();
   const { addFund, removeFund, isSelected } = useCompareStore();
   const { showToast } = useToast();
-  const [isComplaintModalOpen, setIsComplaintModalOpen] = useState(false);
   const [detailFund, setDetailFund] = useState<Fund | null>(null);
 
   // Fallback from store while detail loads
@@ -75,11 +71,10 @@ export default function FundDetail() {
 
   return (
     <Layout>
-      <FundHero 
-        fund={fund} 
-        selected={selected} 
-        onCompare={handleCompare} 
-        onComplaint={() => setIsComplaintModalOpen(true)} 
+      <FundHero
+        fund={fund}
+        selected={selected}
+        onCompare={handleCompare}
         onDownloadPDF={handleDownloadPDF}
       />
 
@@ -136,13 +131,6 @@ export default function FundDetail() {
           </motion.div>
         </div>
       </div>
-
-      <ComplaintModal
-        isOpen={isComplaintModalOpen}
-        onClose={() => setIsComplaintModalOpen(false)}
-        fundId={fund.id}
-        fundName={(language === 'en' && fund.name_en) ? fund.name_en : fund.name_uz}
-      />
     </Layout>
   );
 }
