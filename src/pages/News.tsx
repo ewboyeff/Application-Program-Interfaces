@@ -1,18 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Search, Bell, Send, Clock, Globe } from 'lucide-react';
+import { ChevronRight, Search, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Layout } from '@/src/components/layout/Layout';
 import { News } from '@/src/types';
 import { useDataStore } from '@/src/store/useDataStore';
 import { NewsCard } from '@/src/components/news/NewsCard';
 import { NewsDetail } from '@/src/components/news/NewsDetail';
-import { useToast } from '@/src/context/ToastContext';
 import { cn, formatDate } from '@/src/lib/utils';
 
 export default function NewsPage() {
-  const { showToast } = useToast();
   const { t } = useTranslation('news');
 
   const CATEGORIES = [
@@ -24,7 +22,6 @@ export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
-  const [email, setEmail] = useState('');
 
   const featuredNews = allNews.filter(n => n.is_featured).slice(0, 2);
   const featuredIds = featuredNews.map(n => n.id);
@@ -38,13 +35,6 @@ export default function NewsPage() {
       return matchesSearch && matchesCategory;
     });
   }, [allNews, searchQuery, activeCategory, featuredIds]);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    showToast(t('newsletter.comingSoon'), 'info');
-    setEmail('');
-  };
 
   return (
     <Layout>
@@ -155,34 +145,6 @@ export default function NewsPage() {
               <p className="text-[#64748B]">{t('notFoundDesc')}</p>
             </div>
           )}
-
-          {/* NEWSLETTER SECTION */}
-          <div className="mt-16 bg-[#1A56DB] rounded-[24px] p-12 text-center relative overflow-hidden shadow-xl">
-            <div className="relative z-10">
-              <Bell className="w-12 h-12 text-white/80 mx-auto mb-4" />
-              <h2 className="text-[28px] font-[800] text-white">{t('newsletter.title')}</h2>
-              <p className="text-white/75 text-base mt-2 max-w-xl mx-auto">
-                {t('newsletter.subtitle')}
-              </p>
-              
-              <form onSubmit={handleSubscribe} className="max-w-[400px] mx-auto mt-6 flex">
-                <input 
-                  type="email"
-                  placeholder={t('newsletter.placeholder')}
-                  required
-                  className="flex-1 px-4 py-[14px] bg-white rounded-l-[12px] text-sm text-[#1E293B] outline-none"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <button 
-                  type="submit"
-                  className="px-6 py-[14px] bg-[#1E293B] text-white font-[700] rounded-r-[12px] hover:bg-black transition-all whitespace-nowrap"
-                >
-                  {t('newsletter.subscribe')}
-                </button>
-              </form>
-            </div>
-          </div>
         </div>
       </div>
 
