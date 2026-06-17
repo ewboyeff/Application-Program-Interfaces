@@ -101,7 +101,7 @@ export default function Ranking() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -mr-64 -mt-64" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-600/5 rounded-full blur-[100px] -ml-48 -mb-48" />
         
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="max-w-[1600px] mx-auto px-4 relative z-10">
           <div className="flex flex-col items-center text-center">
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
@@ -158,7 +158,7 @@ export default function Ranking() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-20">
+      <div className="max-w-[1600px] mx-auto px-4 pt-8 pb-16 relative z-20">
         {/* Filter Bar */}
         <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 p-3 mb-8 flex flex-col md:flex-row items-center gap-3">
           <div className="flex items-center gap-2 overflow-x-auto w-full md:flex-1 p-1 pb-2 md:pb-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#CBD5E1 transparent' }}>
