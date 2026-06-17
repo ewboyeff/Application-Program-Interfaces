@@ -26,6 +26,7 @@ export default function FundDetail() {
   const { addFund, removeFund, isSelected } = useCompareStore();
   const { showToast } = useToast();
   const [detailFund, setDetailFund] = useState<Fund | null>(null);
+  const [notFound, setNotFound] = useState(false);
 
   // Fallback from store while detail loads
   const storeFund = funds.find((f) => f.slug === slug);
@@ -33,16 +34,15 @@ export default function FundDetail() {
   useEffect(() => {
     if (!slug) return;
     window.scrollTo(0, 0);
+    setNotFound(false);
     fundsApi.getBySlug(slug)
       .then(setDetailFund)
-      .catch(() => {
-        if (!storeFund) navigate('/funds');
-      });
+      .catch(() => setNotFound(true));
   }, [slug]);
 
   useEffect(() => {
-    if (!storeFund && !detailFund) navigate('/funds');
-  }, [storeFund, detailFund]);
+    if (notFound && !storeFund) navigate('/funds');
+  }, [notFound, storeFund]);
 
   const fund = detailFund ?? storeFund;
   if (!fund) return null;
