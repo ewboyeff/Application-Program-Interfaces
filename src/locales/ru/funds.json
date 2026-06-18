@@ -8,20 +8,32 @@
     "category": "Категория",
     "region": "Регион",
     "grade": "Уровень",
-    "verifiedOnly": "Только проверенные"
+    "verifiedOnly": "Только проверенные",
+    "searchPlaceholder": "Поиск фонда...",
+    "applyFilters": "Применить",
+    "allGrades": "Все"
   },
-  "sort": { "rating": "По рейтингу", "name": "По названию", "newest": "Новые" },
+  "sort": { "rating": "По рейтингу", "name": "По названию", "nameAZ": "По названию (А-Я)", "newest": "Новые" },
   "noResults": "Фонды не найдены по выбранным фильтрам",
+  "noResultsDesc": "Попробуйте изменить фильтры или проверьте поисковый запрос",
   "clearFilters": "Сбросить фильтры",
+  "foundCount": "Найдено {{count}} фондов",
   "compare": {
     "title": "Сравнение",
     "clear": "Очистить всё",
     "compare": "Сравнить",
     "hint": "Выберите до 3 фондов для сравнения",
     "added": "Добавлено",
-    "add": "Сравнить"
+    "add": "Сравнить",
+    "barSelected": "Выбрано {{count}} фондов",
+    "barClear": "Очистить",
+    "barStart": "Начать сравнение"
   },
   "projects": "{{count}} проектов",
   "score": "Балл",
-  "viewDetails": "Подробнее"
+  "viewDetails": "Подробнее",
+  "overall": "Общий балл",
+  "transparency": "Прозрачность",
+  "openness": "Открытость",
+  "trust": "Надёжность"
 }

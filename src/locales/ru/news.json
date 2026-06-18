@@ -5,7 +5,17 @@
   "categories": {
     "all": "Все",
     "fund": "Новость фонда",
-    "platform": "Платформа"
+    "platform": "Платформа",
+    "news": "Новости"
+  },
+  "readTime": "{{count}} мин",
+  "platform": "Платформа",
+  "detail": {
+    "source": "Источник",
+    "viewFund": "Смотреть фонд",
+    "share": "Поделиться:",
+    "copyLink": "Скопировать ссылку",
+    "linkCopied": "Ссылка скопирована ✓"
   },
   "searchPlaceholder": "Поиск новостей...",
   "notFound": "Новости не найдены",

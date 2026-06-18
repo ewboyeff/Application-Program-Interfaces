@@ -38,5 +38,28 @@
   "subject": "Тема",
   "website": "Веб-сайт",
   "viewAll": "Посмотреть все результаты",
-  "noResults": "Результаты не найдены"
+  "noResults": "Результаты не найдены",
+  "categories": {
+    "Ta'lim": "Образование",
+    "Sog'liqni saqlash": "Здравоохранение",
+    "Bolalar": "Дети",
+    "Ekologiya": "Экология",
+    "Kambag'alikni qisqartirish": "Сокращение бедности",
+    "Ijtimoiy ko'mak": "Социальная помощь"
+  },
+  "regions": {
+    "Toshkent": "Ташкент",
+    "Samarqand": "Самарканд",
+    "Farg'ona": "Фергана",
+    "Buxoro": "Бухара",
+    "Namangan": "Наманган",
+    "Andijon": "Андижан",
+    "Qashqadaryo": "Кашкадарья",
+    "Surxondaryo": "Сурхандарья",
+    "Xorazm": "Хорезм",
+    "Sirdaryo": "Сырдарья",
+    "Jizzax": "Джизак",
+    "Navoiy": "Навои",
+    "Qoraqalpog'iston": "Каракалпакстан"
+  }
 }

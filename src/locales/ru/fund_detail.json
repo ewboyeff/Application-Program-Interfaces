@@ -2,6 +2,26 @@
   "compare": "Сравнить",
   "removeCompare": "Убрать из сравнения",
   "downloadPDF": "Скачать PDF",
+  "breadcrumb": { "home": "Главная", "funds": "Фонды" },
+  "website": "Сайт",
+  "since": "с {{year}} года",
+  "overallIndex": "Общий индекс",
+  "inCompare": "В сравнении",
+  "indexMetrics": "Показатели индекса",
+  "overallScore": "Общий балл индекса",
+  "transparency": "Прозрачность",
+  "openness": "Открытость",
+  "trust": "Надёжность",
+  "lastCalculated": "Последний расчёт",
+  "weeklyUpdate": "Автоматически обновляется каждую неделю",
+  "factors": "Факторы",
+  "gradeLabels": {
+    "platinum": "Уровень Platinum",
+    "gold": "Уровень Gold",
+    "silver": "Уровень Silver",
+    "bronze": "Уровень Bronze",
+    "unrated": "Не оценён"
+  },
   "tabs": {
     "overview": "Обзор",
     "projects": "Проекты",
@@ -11,6 +31,16 @@
   "projects": {
     "title": "Проекты",
     "noProjects": "Проекты не найдены",
+    "count": "{{count}}",
+    "budget": "Бюджет",
+    "spent": "израсходовано {{amount}}",
+    "beneficiaries": "{{count}} бенефициаров",
+    "tabs": {
+      "all": "Все",
+      "active": "Активные",
+      "planned": "Запланированные",
+      "completed": "Завершённые"
+    },
     "status": {
       "active": "Активный",
       "completed": "Завершён",
@@ -19,27 +49,65 @@
   },
   "reports": {
     "title": "Финансовые отчёты",
+    "subtitle": "Официальные документы и финансовые отчёты",
     "noReports": "Отчёты не найдены",
+    "noReportsYet": "Отчётов пока нет",
+    "loading": "Загрузка...",
     "income": "Доход",
     "expense": "Расход",
     "annual": "Годовой",
-    "quarterly": "Квартальный"
+    "quarterly": "Квартальный",
+    "monthly": "Месячный",
+    "showLess": "Показать меньше",
+    "showAll": "Показать все {{count}} отчётов",
+    "fileUnavailable": "Файл ещё не загружен"
   },
   "chart": {
-    "title": "Финансовые показатели",
+    "title": "Финансовая прозрачность",
+    "subtitle": "Статистика годового дохода и расхода",
     "income": "Доход",
     "expense": "Расход",
-    "noData": "Нет данных"
+    "noData": "Нет данных",
+    "noFinancialData": "Финансовые данные пока не внесены",
+    "loading": "Загрузка...",
+    "totalIncome": "Общий доход",
+    "totalExpense": "Общий расход",
+    "basedOnReports": "На основе {{count}} отчётов",
+    "efficiency": "{{pct}}% целевых расходов",
+    "tooltipTitle": "Отчёт за {{year}} год",
+    "million": "млн",
+    "thousand": "тыс"
   },
   "reviews": {
-    "title": "Отзывы",
+    "title": "Оценки пользователей",
+    "subtitle": "Общественное мнение о деятельности фонда",
     "noReviews": "Отзывов пока нет",
+    "noReviewsApproved": "Пока нет подтверждённых отзывов",
     "writeReview": "Написать отзыв",
-    "loginRequired": "Войдите, чтобы оставить отзыв"
+    "loginRequired": "Войдите, чтобы оставить отзыв",
+    "basedOnReviews": "На основе {{count}} отзывов",
+    "noReviewsYet": "Отзывов пока нет",
+    "loginCta": {
+      "title": "Поделитесь своим мнением",
+      "subtitle": "Войдите, чтобы оценить этот фонд",
+      "button": "Войти"
+    },
+    "form": {
+      "title": "Оцените фонд",
+      "subtitle": "Ваше мнение важно для других",
+      "placeholder": "Напишите своё мнение о фонде...",
+      "submit": "Отправить отзыв",
+      "submitting": "Отправка..."
+    },
+    "toast": {
+      "ratingRequired": "Пожалуйста, поставьте оценку",
+      "success": "Спасибо! Ваш отзыв отправлен на модерацию",
+      "error": "Произошла ошибка"
+    }
   },
   "pdf": {
-    "preparing": "Подготовка PDF...",
-    "success": "PDF загружен!",
+    "preparing": "Подготовка PDF... ⏳",
+    "success": "PDF загружен! ✓",
     "error": "Ошибка при загрузке PDF"
   }
 }

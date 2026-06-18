@@ -14,11 +14,13 @@
   "table": {
     "rank": "Место",
     "fund": "Фонд",
+    "category": "Категория",
     "transparency": "Прозрачность",
     "openness": "Открытость",
     "trust": "Надёжность",
     "overall": "Итого",
-    "grade": "Уровень"
+    "grade": "Уровень",
+    "actions": "Действия"
   },
   "podium": {
     "champion": "Чемпион",
@@ -32,5 +34,9 @@
   "fundCount_few": "{{count}} фонда",
   "fundCount_many": "{{count}} фондов",
   "fundCount_other": "{{count}} фондов",
-  "noFunds": "Фонды не найдены"
+  "showing": "Показано 1-{{end}} / {{total}} фондов",
+  "noFunds": "Фонды не найдены",
+  "noFundsDesc": "Выберите другую категорию или измените поисковый запрос",
+  "clearFilters": "Очистить фильтры",
+  "donate": "Пожертвовать"
 }
