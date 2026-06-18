@@ -107,6 +107,15 @@ export function truncate(text: string, length: number): string {
 }
 
 /**
+ * Maps an app language code to an Intl/Date locale string.
+ */
+export function dateLocale(lang: string): string {
+  if (lang === 'en') return 'en-GB';
+  if (lang === 'ru') return 'ru-RU';
+  return 'uz-UZ';
+}
+
+/**
  * Format date: "2025-04-10" → "10 Apr 2025"
  */
 export function formatDate(dateStr: string): string {

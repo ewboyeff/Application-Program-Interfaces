@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import i18n from '../i18n';
 
-export type Language = 'uz' | 'en';
+export type Language = 'uz' | 'ru' | 'en';
 
 interface LanguageContextType {
   language: Language;
@@ -13,7 +13,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('ciu_lang');
-    const valid: Language[] = ['uz', 'en'];
+    const valid: Language[] = ['uz', 'ru', 'en'];
     return (saved && valid.includes(saved as Language)) ? saved as Language : 'uz';
   });
 

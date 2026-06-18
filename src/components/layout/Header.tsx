@@ -41,6 +41,7 @@ export const Header: React.FC = () => {
 
   const languages: { id: Language; label: string; flag: string }[] = [
     { id: 'uz', label: 'O\'zbekcha', flag: '🇺🇿' },
+    { id: 'ru', label: 'Русский', flag: '🇷🇺' },
     { id: 'en', label: 'English', flag: '🇺🇸' },
   ];
 

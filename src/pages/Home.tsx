@@ -49,8 +49,14 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const fundName = (f: typeof funds[0]) => (language === 'en' && f.name_en) ? f.name_en : f.name_uz;
-  const fundDesc = (f: typeof funds[0]) => (language === 'en' && (f as any).description_en) ? (f as any).description_en : f.description_uz;
+  const fundName = (f: typeof funds[0]) =>
+    (language === 'en' && f.name_en) ? f.name_en :
+    (language === 'ru' && f.name_ru) ? f.name_ru :
+    f.name_uz;
+  const fundDesc = (f: typeof funds[0]) =>
+    (language === 'en' && (f as any).description_en) ? (f as any).description_en :
+    (language === 'ru' && (f as any).description_ru) ? (f as any).description_ru :
+    f.description_uz;
   const searchRef = useRef<HTMLDivElement>(null);
   const [publicStats, setPublicStats] = useState<PublicStats>({
     total_funds: 0,

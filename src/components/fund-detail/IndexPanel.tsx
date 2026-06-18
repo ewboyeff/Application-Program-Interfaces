@@ -6,7 +6,7 @@ import { Fund } from '@/src/types';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { IndexCard } from './IndexCard';
 import { RadarChart } from './RadarChart';
-import { cn } from '@/src/lib/utils';
+import { cn, dateLocale } from '@/src/lib/utils';
 import { indexesApi, FundFactorScore } from '@/src/api/indexes';
 
 interface IndexPanelProps {
@@ -66,7 +66,7 @@ export const IndexPanel: React.FC<IndexPanelProps> = ({ fund, className }) => {
         </div>
         {fund.indexes?.calculated_at && (
           <div className="flex items-center gap-2 text-slate-400 text-sm font-medium">
-            <span>{t('lastCalculated')}: {new Date(fund.indexes.calculated_at).toLocaleDateString(i18n.language === 'en' ? 'en-GB' : 'uz-UZ', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+            <span>{t('lastCalculated')}: {new Date(fund.indexes.calculated_at).toLocaleDateString(dateLocale(i18n.language), { day: '2-digit', month: 'short', year: 'numeric' })}</span>
             <RefreshCw className="w-4 h-4" />
           </div>
         )}

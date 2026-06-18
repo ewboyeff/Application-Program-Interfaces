@@ -29,7 +29,10 @@ export default function Funds() {
   const { funds, fundsLoading } = useDataStore();
   const { categories, regions } = useCategoryStore();
   const getCategoryName = useCategoryName();
-  const fundName = (f: typeof funds[0]) => (language === 'en' && f.name_en) ? f.name_en : f.name_uz;
+  const fundName = (f: typeof funds[0]) =>
+    (language === 'en' && f.name_en) ? f.name_en :
+    (language === 'ru' && f.name_ru) ? f.name_ru :
+    f.name_uz;
   const [searchParams, setSearchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>(
     (localStorage.getItem('ciu_view_mode') as 'grid' | 'list') || 'grid'

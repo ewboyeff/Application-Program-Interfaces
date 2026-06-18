@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
-import { cn, assetUrl } from '@/src/lib/utils';
+import { cn, assetUrl, dateLocale } from '@/src/lib/utils';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
 
 interface FundHeroProps {
@@ -163,7 +163,7 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
               </div>
               <div className="mt-4 text-[10px] text-white/40 font-medium uppercase tracking-widest">
                 {t('lastCalculated')}: {fund.indexes.calculated_at
-                  ? new Date(fund.indexes.calculated_at).toLocaleDateString(i18n.language === 'en' ? 'en-GB' : 'uz-UZ', { day: '2-digit', month: 'short', year: 'numeric' })
+                  ? new Date(fund.indexes.calculated_at).toLocaleDateString(dateLocale(i18n.language), { day: '2-digit', month: 'short', year: 'numeric' })
                   : '—'}
               </div>
             </div>

@@ -27,6 +27,10 @@ import ruHamkorlik from './locales/ru/hamkorlik.json';
 import ruCompare from './locales/ru/compare.json';
 import ruNews from './locales/ru/news.json';
 import ruFundDetail from './locales/ru/fund_detail.json';
+import ruTadqiqot from './locales/ru/tadqiqot.json';
+import ruNotFound from './locales/ru/notFound.json';
+import ruProfile from './locales/ru/profile.json';
+import ruMetodologiya from './locales/ru/metodologiya.json';
 
 import enCommon from './locales/en/common.json';
 import enNav from './locales/en/nav.json';
@@ -81,6 +85,10 @@ i18n.use(initReactI18next).init({
       compare: ruCompare,
       news: ruNews,
       fund_detail: ruFundDetail,
+      tadqiqot: ruTadqiqot,
+      notFound: ruNotFound,
+      profile: ruProfile,
+      metodologiya: ruMetodologiya,
     },
     en: {
       common: enCommon,
