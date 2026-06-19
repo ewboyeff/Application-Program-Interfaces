@@ -10,6 +10,12 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const SITE_TITLES: Record<Language, string> = {
+  uz: "Charity Index Uzbekistan — Xayriya Fondlari Platformasi",
+  ru: "Индекс благотворительных фондов Узбекистана",
+  en: "Charity Funds Index of Uzbekistan",
+};
+
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('ciu_lang');
@@ -26,6 +32,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     i18n.changeLanguage(language);
   }, []);
+
+  useEffect(() => {
+    document.title = SITE_TITLES[language];
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
