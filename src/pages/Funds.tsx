@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Layout } from '@/src/components/layout/Layout';
 import { FundCard } from '@/src/components/funds/FundCard';
 import { FundCardSkeleton } from '@/src/components/ui/Skeleton';
-import { cn } from '@/src/lib/utils';
+import { cn, MULTI_SECTOR_CATEGORY } from '@/src/lib/utils';
 import { useCompareStore } from '@/src/store/compareStore';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { useDataStore } from '@/src/store/useDataStore';
@@ -71,7 +71,7 @@ export default function Funds() {
   const filteredFunds = useMemo(() => {
     let result = funds.filter((fund) => {
       const matchesSearch = fundName(fund).toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(fund.category);
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(fund.category) || fund.category === MULTI_SECTOR_CATEGORY;
       const matchesRegion = selectedRegions.length === 0 || selectedRegions.includes(fund.region);
       const matchesGrade = !selectedGrade || fund.indexes.grade === selectedGrade;
       const matchesVerified = !verifiedOnly || fund.is_verified;

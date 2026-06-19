@@ -3,6 +3,9 @@ import { twMerge } from 'tailwind-merge';
 
 export const API_BASE = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || 'http://localhost:8000';
 
+/** Funds tagged with this category appear under every category filter, in addition to their own. */
+export const MULTI_SECTOR_CATEGORY = "Ko'p tarmoqli";
+
 export function assetUrl(path: string | null | undefined): string | undefined {
   if (!path) return undefined;
   if (path.startsWith('http')) return path;

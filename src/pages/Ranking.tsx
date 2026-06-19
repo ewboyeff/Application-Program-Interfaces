@@ -5,7 +5,7 @@ import { Search, ChevronRight, Trophy, Medal, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Layout } from '@/src/components/layout/Layout';
 import { RankingTable } from '@/src/components/ranking/RankingTable';
-import { cn, getScoreColor } from '@/src/lib/utils';
+import { cn, getScoreColor, MULTI_SECTOR_CATEGORY } from '@/src/lib/utils';
 import { useDataStore } from '@/src/store/useDataStore';
 import { useCategoryStore } from '@/src/store/useCategoryStore';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
@@ -38,7 +38,7 @@ export default function Ranking() {
   const filteredAndSortedFunds = useMemo(() => {
     let result = funds.filter(fund => {
       const matchesSearch = fund.name_uz.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = activeCategory === 'Barchasi' || fund.category === activeCategory;
+      const matchesCategory = activeCategory === 'Barchasi' || fund.category === activeCategory || fund.category === MULTI_SECTOR_CATEGORY;
       return matchesSearch && matchesCategory;
     });
 
