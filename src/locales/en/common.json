@@ -44,8 +44,10 @@
     "Sog'liqni saqlash": "Healthcare",
     "Bolalar": "Children",
     "Ekologiya": "Ecology",
-    "Kambag'alikni qisqartirish": "Poverty Reduction",
-    "Ijtimoiy ko'mak": "Social Support"
+    "Kambag'likni qisqartirish": "Poverty Alleviation",
+    "Ijtimoiy yordam": "Social Aid",
+    "Madaniyat": "Arts & Culture",
+    "Ko'p tarmoqli": "Multi-purpose"
   },
   "regions": {
     "Toshkent": "Tashkent",

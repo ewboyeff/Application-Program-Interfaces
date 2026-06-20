@@ -44,8 +44,10 @@
     "Sog'liqni saqlash": "Здравоохранение",
     "Bolalar": "Дети",
     "Ekologiya": "Экология",
-    "Kambag'alikni qisqartirish": "Сокращение бедности",
-    "Ijtimoiy ko'mak": "Социальная помощь"
+    "Kambag'likni qisqartirish": "Сокращение бедности",
+    "Ijtimoiy yordam": "Социальная помощь",
+    "Madaniyat": "Культура и искусство",
+    "Ko'p tarmoqli": "Многопрофильный"
   },
   "regions": {
     "Toshkent": "Ташкент",
