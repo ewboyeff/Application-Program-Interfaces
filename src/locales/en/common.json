@@ -50,7 +50,8 @@
     "Ko'p tarmoqli": "Multi-purpose"
   },
   "regions": {
-    "Toshkent": "Tashkent",
+    "Toshkent shahri": "Tashkent City",
+    "Toshkent viloyati": "Tashkent Region",
     "Samarqand": "Samarkand",
     "Farg'ona": "Fergana",
     "Buxoro": "Bukhara",
