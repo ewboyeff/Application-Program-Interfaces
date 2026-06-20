@@ -155,9 +155,9 @@ export default function Home() {
             transition={{ delay: 0.1 }}
             className="text-center max-w-3xl mx-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
           >
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
               {t('hero.line1')} <br />
-              {t('hero.line2')} <br />
+              {t('hero.line2')}{' '}
               <span className="bg-gradient-to-r from-[#60A5FA] to-[#34D399] bg-clip-text text-transparent drop-shadow-sm">
                 {t('hero.line3')}
               </span>
