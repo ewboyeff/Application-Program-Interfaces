@@ -1,8 +1,7 @@
 {
   "hero": {
-    "line1": "O'zbekiston",
-    "line2": "Xayriya Fondlari",
-    "line3": "Indeksi",
+    "line1": "O'zbekiston Xayriya Fondlari",
+    "line2": "Indeksi",
     "subtitle": "Shaffoflik, Ochiqlik va Ishonchlilik indekslari asosida har bir fondni ob'ektiv raqamlar bilan baholang",
     "searchPlaceholder": "Fond nomini yoki kategoriyasini qidiring...",
     "searchButton": "Qidirish",

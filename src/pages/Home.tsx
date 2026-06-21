@@ -157,9 +157,8 @@ export default function Home() {
           >
             <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
               {t('hero.line1')} <br />
-              {t('hero.line2')}{' '}
               <span className="bg-gradient-to-r from-[#60A5FA] to-[#34D399] bg-clip-text text-transparent drop-shadow-sm">
-                {t('hero.line3')}
+                {t('hero.line2')}
               </span>
             </h1>
           </motion.div>

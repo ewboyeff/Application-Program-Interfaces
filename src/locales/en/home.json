@@ -1,8 +1,7 @@
 {
   "hero": {
-    "line1": "Uzbekistan",
-    "line2": "Charity Funds",
-    "line3": "Index",
+    "line1": "Charity Funds Index",
+    "line2": "of Uzbekistan",
     "subtitle": "Evaluate each fund objectively based on Transparency, Openness and Trustworthiness indices",
     "searchPlaceholder": "Search by fund name or category...",
     "searchButton": "Search",
