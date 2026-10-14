@@ -5,7 +5,8 @@ import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { useCompareStore } from '@/src/store/compareStore';
-import { formatMoney, formatNumber, assetUrl } from '@/src/lib/utils';
+import { formatMoney, formatNumber, assetUrl, getFundName } from '@/src/lib/utils';
+import { useCategoryName } from '@/src/hooks/useCategoryName';
 
 interface CompareTableProps {
   funds: Fund[];
@@ -47,7 +48,8 @@ const COLORS = [
 
 export const CompareTable: React.FC<CompareTableProps> = ({ funds }) => {
   const { removeFund } = useCompareStore();
-  const { t } = useTranslation('compare');
+  const { t, i18n } = useTranslation('compare');
+  const getCategoryName = useCategoryName();
 
   const getMaxValue = (path: string): number => {
     const values = funds.map((f) => {
@@ -185,7 +187,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({ funds }) => {
                           className={`ring-2 ring-white shadow-md`}
                         />
                         <div className={`text-sm font-bold text-slate-800 truncate max-w-[140px] text-center`}>
-                          {fund.name_uz}
+                          {getFundName(fund, i18n.language)}
                         </div>
                         <GradeBadge grade={fund.indexes.grade} />
                         <div className="h-[26px] flex items-center justify-center">
@@ -260,8 +262,8 @@ export const CompareTable: React.FC<CompareTableProps> = ({ funds }) => {
               })}
             </tr>
 
-            <DataRow label={t('category')} path="category" />
-            <DataRow label={t('region')} path="region" />
+            <DataRow label={t('category')} path="category" formatter={(v) => getCategoryName(v)} />
+            <DataRow label={t('region')} path="region" formatter={(v) => t(`regions.${v}`, { ns: 'common', defaultValue: v })} />
             <DataRow label={t('foundedYear')} path="founded_year" formatter={(v) => v || '—'} />
             <DataRow
               label={t('activityPeriod')}

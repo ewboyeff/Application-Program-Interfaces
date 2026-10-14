@@ -2,7 +2,7 @@ import React from 'react';
 import { Globe, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { News } from '@/src/types';
-import { cn, formatDate, assetUrl } from '@/src/lib/utils';
+import { cn, formatDate, assetUrl, getNewsTitle, getNewsContent } from '@/src/lib/utils';
 
 interface NewsCardProps {
   news: News;
@@ -10,12 +10,18 @@ interface NewsCardProps {
 }
 
 export const NewsCard: React.FC<NewsCardProps> = ({ news, onClick }) => {
-  const { t } = useTranslation('news');
+  const { t, i18n } = useTranslation('news');
 
   const categoryLabel =
     news.category === 'Fond yangiligi' ? t('categories.fund') :
     news.category === 'Platforma'      ? t('categories.platform') :
     t('categories.news');
+
+  const title = getNewsTitle(news, i18n.language);
+  const content = getNewsContent(news, i18n.language);
+  const excerpt = (i18n.language === 'ru' && news.excerpt_ru) ? news.excerpt_ru :
+                  (i18n.language === 'en' && news.excerpt_en) ? news.excerpt_en :
+                  (content.length > 180 ? content.slice(0, 180) + '...' : content);
 
   return (
     <div
@@ -27,7 +33,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onClick }) => {
         {news.image_url && (
           <img
             src={assetUrl(news.image_url)}
-            alt={news.title}
+            alt={title}
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
@@ -48,11 +54,11 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onClick }) => {
       {/* CARD BODY */}
       <div className="p-5 flex-1 flex flex-col">
         <h3 className="text-[#1E293B] text-[15px] font-[700] leading-[1.4] line-clamp-2 mb-2 group-hover:text-[#1A56DB] transition-colors">
-          {news.title}
+          {title}
         </h3>
         
         <p className="text-[#64748B] text-[13px] leading-[1.6] line-clamp-2">
-          {news.excerpt}
+          {excerpt}
         </p>
         
         <div className="h-px bg-[#F1F5F9] w-full my-3" />
@@ -77,7 +83,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onClick }) => {
           </div>
           
           <span className="text-[#94A3B8] text-[12px]">
-            {formatDate(news.date)}
+            {formatDate(news.date, i18n.language)}
           </span>
         </div>
       </div>

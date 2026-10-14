@@ -109,5 +109,22 @@
     "preparing": "Подготовка PDF... ⏳",
     "success": "PDF загружен! ✓",
     "error": "Ошибка при загрузке PDF"
+  },
+  "factorNames": {
+    "Moliyaviy hisobotlar": "Финансовая отчетность",
+    "Sarflash tafsiloti": "Детализация расходов",
+    "Loyiha natijalari": "Результаты проектов",
+    "Audit o'tkazilgan": "Проведение аудита",
+    "Donor ma'lumotlari": "Информация о донорах",
+    "Rasmiy veb-sayt": "Официальный веб-сайт",
+    "Ijtimoiy tarmoq": "Социальные сети",
+    "Media ko'rinishi": "Медийная видимость",
+    "Murojaat imkoniyati": "Доступность обращений",
+    "Yangiliklar chastotasi": "Частота обновлений",
+    "Rasmiy ro'yxatdan o'tgan": "Официальная регистрация",
+    "Faoliyat davomiyligi": "Срок деятельности",
+    "Foydalanuvchi reytingi": "Рейтинг пользователей",
+    "Shikoyatlar tarixi": "История жалоб",
+    "Xalqaro hamkorlar": "Международные партнеры"
   }
 }

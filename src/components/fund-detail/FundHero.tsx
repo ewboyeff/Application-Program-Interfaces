@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
-import { cn, assetUrl, dateLocale } from '@/src/lib/utils';
+import { cn, assetUrl, dateLocale, getFundName, getFundDesc } from '@/src/lib/utils';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
 
 interface FundHeroProps {
@@ -42,7 +42,7 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
           <ChevronRight className="w-4 h-4" />
           <Link to="/funds" className="hover:text-white transition-colors">{t('breadcrumb.funds')}</Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-white/80 truncate">{fund.name_uz}</span>
+          <span className="text-white/80 truncate">{getFundName(fund, i18n.language)}</span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -58,7 +58,7 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
               {fund.logo_url ? (
                 <img
                   src={assetUrl(fund.logo_url)}
-                  alt={fund.name_uz}
+                  alt={getFundName(fund, i18n.language)}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -75,7 +75,7 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
           {/* CENTER - Info */}
           <div className="flex-1 min-w-0">
             <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
-              {fund.name_uz}
+              {getFundName(fund, i18n.language)}
             </h1>
 
             <div className="flex flex-wrap gap-2 mt-3">
@@ -142,7 +142,7 @@ export const FundHero: React.FC<FundHeroProps> = ({ fund, selected, onCompare, o
             </div>
 
             <p className="mt-4 text-white/70 text-sm leading-relaxed max-w-xl">
-              {fund.description_uz}
+              {getFundDesc(fund, i18n.language)}
             </p>
           </div>
 

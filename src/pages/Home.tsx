@@ -9,10 +9,10 @@ import { Layout } from '@/src/components/layout/Layout';
 import { SectionTitle } from '@/src/components/ui/SectionTitle';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
-import { VerifiedBadge } from '@/src/components/ui/VerifiedBadge';
-import { getScoreBg, cn, formatDate, assetUrl } from '@/src/lib/utils';
+import { getScoreBg, cn, formatDate, assetUrl, getFundName, getFundDesc, getNewsTitle, getNewsContent } from '@/src/lib/utils';
 import { useDataStore } from '@/src/store/useDataStore';
 import { apiClient } from '@/src/api/client';
+import { Fund } from '@/src/types';
 
 interface PublicStats {
   total_funds: number;
@@ -49,14 +49,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const fundName = (f: typeof funds[0]) =>
-    (language === 'en' && f.name_en) ? f.name_en :
-    (language === 'ru' && f.name_ru) ? f.name_ru :
-    f.name_uz;
-  const fundDesc = (f: typeof funds[0]) =>
-    (language === 'en' && (f as any).description_en) ? (f as any).description_en :
-    (language === 'ru' && (f as any).description_ru) ? (f as any).description_ru :
-    f.description_uz;
+  const fundName = (f: Fund) => getFundName(f, language);
+  const fundDesc = (f: Fund) => getFundDesc(f, language);
   const searchRef = useRef<HTMLDivElement>(null);
   const [publicStats, setPublicStats] = useState<PublicStats>({
     total_funds: 0,
@@ -223,7 +217,7 @@ export default function Home() {
                       <FundAvatar initials={fund.logo_initials} color={fund.logo_color} size="sm" />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-slate-900 truncate">{fundName(fund)}</div>
-                        <div className="text-xs text-slate-400">{fund.category}</div>
+                        <div className="text-xs text-slate-400">{getCategoryName(fund.category)}</div>
                       </div>
                       <div className={cn(
                         "px-2 py-0.5 rounded text-[10px] font-bold",
@@ -569,15 +563,20 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h4 className="text-lg font-black text-[#1E293B] mb-3 line-clamp-2 group-hover:text-[#1A56DB] transition-colors">
-                    {news.title}
+                    {getNewsTitle(news, language)}
                   </h4>
                   <p className="text-sm text-[#64748B] mb-6 line-clamp-2 font-medium">
-                    {news.excerpt}
+                    {(() => {
+                      const c = getNewsContent(news, language);
+                      if (language === 'ru' && news.excerpt_ru) return news.excerpt_ru;
+                      if (language === 'en' && news.excerpt_en) return news.excerpt_en;
+                      return c.length > 150 ? c.slice(0, 150) + '...' : c;
+                    })()}
                   </p>
                   <div className="flex items-center justify-between pt-4 border-t border-[#F1F5F9]">
                     <div className="flex items-center gap-2 text-[#94A3B8] text-xs font-bold">
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>{formatDate(news.date)}</span>
+                      <span>{formatDate(news.date, language)}</span>
                     </div>
                     <span className="text-sm font-black text-[#1A56DB] flex items-center gap-1 group-hover:gap-2 transition-all">
                       {t('topFunds.details')} <ArrowRight className="w-4 h-4" />

@@ -109,5 +109,22 @@
     "preparing": "PDF tayyorlanmoqda... ⏳",
     "success": "PDF yuklandi! ✓",
     "error": "PDF yuklashda xatolik yuz berdi"
+  },
+  "factorNames": {
+    "Moliyaviy hisobotlar": "Moliyaviy hisobotlar",
+    "Sarflash tafsiloti": "Sarflash tafsiloti",
+    "Loyiha natijalari": "Loyiha natijalari",
+    "Audit o'tkazilgan": "Audit o'tkazilgan",
+    "Donor ma'lumotlari": "Donor ma'lumotlari",
+    "Rasmiy veb-sayt": "Rasmiy veb-sayt",
+    "Ijtimoiy tarmoq": "Ijtimoiy tarmoq",
+    "Media ko'rinishi": "Media ko'rinishi",
+    "Murojaat imkoniyati": "Murojaat imkoniyati",
+    "Yangiliklar chastotasi": "Yangiliklar chastotasi",
+    "Rasmiy ro'yxatdan o'tgan": "Rasmiy ro'yxatdan o'tgan",
+    "Faoliyat davomiyligi": "Faoliyat davomiyligi",
+    "Foydalanuvchi reytingi": "Foydalanuvchi reytingi",
+    "Shikoyatlar tarixi": "Shikoyatlar tarixi",
+    "Xalqaro hamkorlar": "Xalqaro hamkorlar"
   }
 }

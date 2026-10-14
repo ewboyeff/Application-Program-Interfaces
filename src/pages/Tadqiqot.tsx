@@ -177,23 +177,29 @@ const MethodologyDialog = ({
   onOpenChange: (v: boolean) => void;
   factors: FactorsGrouped | null;
 }) => {
-  const { t } = useTranslation('tadqiqot');
+  const { t, i18n } = useTranslation('tadqiqot');
   const scoreRanges = t('methodology.scoreRanges', { returnObjects: true }) as string[];
 
   const tFallback = t('methodology.factors.transparency', { returnObjects: true }) as string[];
   const oFallback = t('methodology.factors.openness',     { returnObjects: true }) as string[];
   const trFallback = t('methodology.factors.trust',       { returnObjects: true }) as string[];
 
+  const getFactorName = (f: { name_uz: string; name_ru?: string | null; name_en?: string | null }) => {
+    if (i18n.language === 'ru' && f.name_ru) return f.name_ru;
+    if (i18n.language === 'en' && f.name_en) return f.name_en;
+    return f.name_uz;
+  };
+
   const transparencyFactors: Factor[] = factors
-    ? factors.transparency.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    ? factors.transparency.map(f => ({ name: getFactorName(f), weight: weightPct(f.weight) }))
     : tFallback.map((name, i) => ({ name, weight: ['25%', '20%', '20%', '20%', '15%'][i] ?? '20%' }));
 
   const opennessFactors: Factor[] = factors
-    ? factors.openness.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    ? factors.openness.map(f => ({ name: getFactorName(f), weight: weightPct(f.weight) }))
     : oFallback.map((name, i) => ({ name, weight: ['20%', '20%', '15%', '20%', '25%'][i] ?? '20%' }));
 
   const trustFactors: Factor[] = factors
-    ? factors.trust.map(f => ({ name: f.name_uz, weight: weightPct(f.weight) }))
+    ? factors.trust.map(f => ({ name: getFactorName(f), weight: weightPct(f.weight) }))
     : trFallback.map((name, i) => ({ name, weight: ['25%', '20%', '20%', '20%', '15%'][i] ?? '20%' }));
 
   return (

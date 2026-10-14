@@ -30,6 +30,7 @@
   "score": "Балл",
   "totalFunds": "Всего фондов",
   "avgScore": "Средний балл",
+  "fundCount": "{{count}} фондов",
   "fundCount_one": "{{count}} фонд",
   "fundCount_few": "{{count}} фонда",
   "fundCount_many": "{{count}} фондов",

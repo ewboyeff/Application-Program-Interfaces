@@ -5,7 +5,7 @@ import { Search, ChevronRight, Trophy, Medal, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Layout } from '@/src/components/layout/Layout';
 import { RankingTable } from '@/src/components/ranking/RankingTable';
-import { cn, getScoreColor, MULTI_SECTOR_CATEGORY } from '@/src/lib/utils';
+import { cn, getScoreColor, MULTI_SECTOR_CATEGORY, getFundName } from '@/src/lib/utils';
 import { useDataStore } from '@/src/store/useDataStore';
 import { useCategoryStore } from '@/src/store/useCategoryStore';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
@@ -17,7 +17,7 @@ type SortConfig = {
 };
 
 export default function Ranking() {
-  const { t } = useTranslation('ranking');
+  const { t, i18n } = useTranslation('ranking');
   const navigate = useNavigate();
   const { funds } = useDataStore();
   const { categories } = useCategoryStore();
@@ -37,7 +37,10 @@ export default function Ranking() {
 
   const filteredAndSortedFunds = useMemo(() => {
     let result = funds.filter(fund => {
-      const matchesSearch = fund.name_uz.toLowerCase().includes(search.toLowerCase());
+      const q = search.toLowerCase();
+      const locName = getFundName(fund, i18n.language).toLowerCase();
+      const uzName = (fund.name_uz || '').toLowerCase();
+      const matchesSearch = locName.includes(q) || uzName.includes(q);
       const matchesCategory = activeCategory === 'Barchasi' || fund.category === activeCategory || fund.category === MULTI_SECTOR_CATEGORY;
       return matchesSearch && matchesCategory;
     });
@@ -46,8 +49,8 @@ export default function Ranking() {
       let valA: any, valB: any;
       
       if (sortConfig.key === 'name_uz') {
-        valA = a.name_uz;
-        valB = b.name_uz;
+        valA = getFundName(a, i18n.language);
+        valB = getFundName(b, i18n.language);
       } else {
         valA = a.indexes[sortConfig.key as keyof Fund['indexes']];
         valB = b.indexes[sortConfig.key as keyof Fund['indexes']];
@@ -59,7 +62,7 @@ export default function Ranking() {
     });
 
     return result;
-  }, [funds, search, activeCategory, sortConfig]);
+  }, [funds, search, activeCategory, sortConfig, i18n.language]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -269,7 +272,10 @@ export default function Ranking() {
               </button>
             </div>
             <p className="text-xs text-[#94A3B8] font-bold uppercase tracking-wider">
-              {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredAndSortedFunds.length)} / {filteredAndSortedFunds.length} ta fond
+              {t('showing', {
+                end: Math.min(currentPage * PAGE_SIZE, filteredAndSortedFunds.length),
+                total: filteredAndSortedFunds.length
+              })}
             </p>
           </div>
         )}

@@ -11,7 +11,7 @@ import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { Fund } from '@/src/types';
 import { CompareRadar } from '@/src/components/compare/CompareRadar';
 import { CompareTable } from '@/src/components/compare/CompareTable';
-import { assetUrl } from '@/src/lib/utils';
+import { assetUrl, getFundName } from '@/src/lib/utils';
 
 function resolveLogoUrl(url?: string | null): string | undefined {
   return assetUrl(url);
@@ -20,7 +20,7 @@ function resolveLogoUrl(url?: string | null): string | undefined {
 function AddFundDropdown({ onAdd }: { onAdd: (fund: Fund) => void }) {
   const { funds, fetchFunds, fundsLoading } = useDataStore();
   const { selectedFunds } = useCompareStore();
-  const { t } = useTranslation('compare');
+  const { t, i18n } = useTranslation('compare');
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const ref = useRef<HTMLDivElement>(null);
@@ -42,7 +42,12 @@ function AddFundDropdown({ onAdd }: { onAdd: (fund: Fund) => void }) {
   }, []);
 
   const results = funds
-    .filter(f => f.name_uz.toLowerCase().includes(search.toLowerCase()) && !selectedFunds.some(sf => sf.id === f.id))
+    .filter(f => {
+      const q = search.toLowerCase();
+      const loc = getFundName(f, i18n.language).toLowerCase();
+      const uz = (f.name_uz || '').toLowerCase();
+      return (loc.includes(q) || uz.includes(q)) && !selectedFunds.some(sf => sf.id === f.id);
+    })
     .slice(0, 6);
 
   return (
@@ -81,7 +86,7 @@ function AddFundDropdown({ onAdd }: { onAdd: (fund: Fund) => void }) {
                 >
                   <FundAvatar initials={fund.logo_initials} color={fund.logo_color} size="sm" imageUrl={resolveLogoUrl(fund.logo_url)} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold text-slate-800 truncate">{fund.name_uz}</div>
+                    <div className="text-sm font-bold text-slate-800 truncate">{getFundName(fund, i18n.language)}</div>
                     <GradeBadge grade={fund.indexes.grade} className="scale-75 origin-left" />
                   </div>
                   <span className="text-sm font-black text-blue-600 shrink-0">{fund.indexes.overall}</span>
@@ -100,7 +105,7 @@ function AddFundDropdown({ onAdd }: { onAdd: (fund: Fund) => void }) {
 export default function Compare() {
   const { selectedFunds, clearFunds, addFund, removeFund } = useCompareStore();
   const { showToast } = useToast();
-  const { t } = useTranslation('compare');
+  const { t, i18n } = useTranslation('compare');
   const navigate = useNavigate();
   const [showResults, setShowResults] = useState(false);
 
@@ -160,7 +165,7 @@ export default function Compare() {
                     <div key={fund.id} className="flex items-center gap-2.5 pl-2 pr-3 py-2 bg-blue-50 border border-blue-200 rounded-2xl">
                       <FundAvatar initials={fund.logo_initials} color={fund.logo_color} size="xs" imageUrl={resolveLogoUrl(fund.logo_url)} />
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-slate-800 truncate max-w-[100px]">{fund.name_uz}</p>
+                        <p className="text-xs font-bold text-slate-800 truncate max-w-[100px]">{getFundName(fund, i18n.language)}</p>
                         <p className="text-[10px] font-black text-blue-600">{fund.indexes.overall} {t('totalScore')}</p>
                       </div>
                       <button onClick={() => removeFund(fund.id)} className="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
@@ -219,7 +224,7 @@ export default function Compare() {
                       <div className={`${colors[i]} px-5 py-3 flex items-center gap-3`}>
                         <FundAvatar initials={fund.logo_initials} color={fund.logo_color} size="sm" imageUrl={resolveLogoUrl(fund.logo_url)} className="border-2 border-white/30" />
                         <div className="min-w-0">
-                          <p className="text-white font-bold text-sm truncate">{fund.name_uz}</p>
+                          <p className="text-white font-bold text-sm truncate">{getFundName(fund, i18n.language)}</p>
                           <GradeBadge grade={fund.indexes.grade} className="scale-75 origin-left" />
                         </div>
                       </div>

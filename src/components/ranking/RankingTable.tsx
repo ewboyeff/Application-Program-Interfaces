@@ -7,7 +7,7 @@ import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { VerifiedBadge } from '@/src/components/ui/VerifiedBadge';
-import { getScoreColor, getScoreBg, cn } from '@/src/lib/utils';
+import { getScoreColor, getScoreBg, cn, getFundName } from '@/src/lib/utils';
 import { useToast } from '@/src/context/ToastContext';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
 
@@ -26,7 +26,7 @@ interface RankingTableProps {
 export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, onSort, rankOffset = 0 }) => {
   const navigate = useNavigate();
   const { showToast } = useToast();
-  const { t } = useTranslation('ranking');
+  const { t, i18n } = useTranslation('ranking');
   const getCategoryName = useCategoryName();
 
   const SortIcon = ({ columnKey }: { columnKey: SortConfig['key'] }) => {
@@ -52,7 +52,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
       const full = url.startsWith('http') ? url : `https://${url}`;
       window.open(full, '_blank', 'noopener,noreferrer');
     } else {
-      showToast(`${fund.name_uz} fondining xayriya havolasi mavjud emas`, 'error');
+      showToast(`${getFundName(fund, i18n.language)} fondining xayriya havolasi mavjud emas`, 'error');
     }
   };
 
@@ -120,7 +120,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({ funds, sortConfig, o
                       </div>
                       <div className="flex flex-col min-w-0">
                         <span className="font-bold text-sm text-slate-900 tracking-tight truncate group-hover:text-blue-600 transition-colors">
-                          {fund.name_uz}
+                          {getFundName(fund, i18n.language)}
                         </span>
                         <span className="text-[10px] text-slate-400 font-medium md:hidden">{getCategoryName(fund.category)}</span>
                       </div>

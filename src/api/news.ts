@@ -3,15 +3,21 @@ import { apiClient } from './client';
 
 function mapNews(n: any): News {
   const content = n.content_uz ?? n.content_ru ?? n.content_en ?? '';
+  const contentRu = n.content_ru ?? undefined;
+  const contentEn = n.content_en ?? undefined;
   return {
     id: n.id,
     category: 'Yangiliklar',
-    title: n.title_uz ?? n.title_ru ?? '',
+    title: n.title_uz ?? n.title_ru ?? n.title_en ?? '',
     title_uz: n.title_uz ?? undefined,
+    title_ru: n.title_ru ?? undefined,
     title_en: n.title_en ?? undefined,
     excerpt: content.length > 200 ? content.slice(0, 200) + '...' : content,
+    excerpt_ru: contentRu ? (contentRu.length > 200 ? contentRu.slice(0, 200) + '...' : contentRu) : undefined,
+    excerpt_en: contentEn ? (contentEn.length > 200 ? contentEn.slice(0, 200) + '...' : contentEn) : undefined,
     content,
-    content_en: n.content_en ?? undefined,
+    content_ru: contentRu,
+    content_en: contentEn,
     fund_slug: null,
     fund_name: null,
     fundId: n.fund_id ?? null,

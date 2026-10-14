@@ -8,10 +8,10 @@ import { News } from '@/src/types';
 import { useDataStore } from '@/src/store/useDataStore';
 import { NewsCard } from '@/src/components/news/NewsCard';
 import { NewsDetail } from '@/src/components/news/NewsDetail';
-import { cn, formatDate } from '@/src/lib/utils';
+import { cn, formatDate, getNewsTitle, getNewsContent } from '@/src/lib/utils';
 
 export default function NewsPage() {
-  const { t } = useTranslation('news');
+  const { t, i18n } = useTranslation('news');
 
   const CATEGORIES = [
     { id: 'all', label: t('categories.all') },
@@ -29,12 +29,14 @@ export default function NewsPage() {
   const filteredNews = useMemo(() => {
     return allNews.filter(news => {
       if (featuredIds.includes(news.id)) return false;
-      const matchesSearch = news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           news.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      const title = getNewsTitle(news, i18n.language).toLowerCase();
+      const content = getNewsContent(news, i18n.language).toLowerCase();
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = title.includes(q) || content.includes(q);
       const matchesCategory = activeCategory === 'all' || news.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [allNews, searchQuery, activeCategory, featuredIds]);
+  }, [allNews, searchQuery, activeCategory, featuredIds, i18n.language]);
 
   return (
     <Layout>
@@ -106,12 +108,12 @@ export default function NewsPage() {
                      t('categories.news')}
                   </span>
                   <h2 className="text-[20px] font-[700] text-white leading-[1.3] mb-3">
-                    {news.title}
+                    {getNewsTitle(news, i18n.language)}
                   </h2>
                   
                   <div className="flex items-center gap-3">
                     <span className="text-[12px] text-white/80">{news.fund_name || t('platform')}</span>
-                    <span className="text-[12px] text-white/70 ml-auto">{formatDate(news.date)}</span>
+                    <span className="text-[12px] text-white/70 ml-auto">{formatDate(news.date, i18n.language)}</span>
                   </div>
                 </div>
               </motion.div>

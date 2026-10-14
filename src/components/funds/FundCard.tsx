@@ -7,7 +7,7 @@ import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { VerifiedBadge } from '@/src/components/ui/VerifiedBadge';
-import { getScoreColor, getScoreBg, cn, assetUrl } from '@/src/lib/utils';
+import { getScoreColor, getScoreBg, cn, assetUrl, getFundName, getFundDesc } from '@/src/lib/utils';
 import { useCategoryName } from '@/src/hooks/useCategoryName';
 import { useCompareStore } from '@/src/store/compareStore';
 import { useToast } from '@/src/context/ToastContext';
@@ -21,7 +21,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
   const navigate = useNavigate();
   const { addFund, removeFund, isSelected } = useCompareStore();
   const { showToast } = useToast();
-  const { t } = useTranslation('funds');
+  const { t, i18n } = useTranslation('funds');
   const getCategoryName = useCategoryName();
   const selected = isSelected(fund.id);
 
@@ -62,7 +62,9 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-1">
-            <h3 className="font-extrabold text-[17px] text-[#1E293B] tracking-[-0.3px] truncate group-hover:text-[#1A56DB] transition-colors duration-300">{fund.name_uz}</h3>
+            <h3 className="font-extrabold text-[17px] text-[#1E293B] tracking-[-0.3px] truncate group-hover:text-[#1A56DB] transition-colors duration-300">
+              {getFundName(fund, i18n.language)}
+            </h3>
             <VerifiedBadge isVerified={fund.is_verified} />
           </div>
           <div className="flex gap-2 mb-2">
@@ -73,7 +75,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
               {t(`regions.${fund.region}`, { ns: 'common', defaultValue: fund.region })}
             </span>
           </div>
-          <p className="text-xs text-[#64748B] line-clamp-1 font-medium">{fund.description_uz}</p>
+          <p className="text-xs text-[#64748B] line-clamp-1 font-medium">{getFundDesc(fund, i18n.language)}</p>
         </div>
 
         <div className="hidden sm:flex items-center gap-4 sm:gap-8 px-3 sm:px-6 border-x border-[#F1F5F9]">
@@ -128,7 +130,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
           <FundAvatar initials={fund.logo_initials} color={fund.logo_color} imageUrl={assetUrl(fund.logo_url)} size="md" />
           <div className="flex-1 min-w-0">
             <h3 className="font-extrabold text-[17px] text-[#1E293B] tracking-[-0.3px] truncate group-hover:text-[#1A56DB] transition-colors duration-300">
-              {fund.name_uz}
+              {getFundName(fund, i18n.language)}
             </h3>
             <div className="flex flex-wrap gap-1.5 mt-1">
               <GradeBadge grade={fund.indexes.grade} className="scale-90 origin-left" />
@@ -147,7 +149,7 @@ export const FundCard: React.FC<FundCardProps> = ({ fund, viewMode }) => {
         </div>
 
         <p className="text-xs text-[#64748B] line-clamp-2 mb-4 font-medium">
-          {fund.description_uz}
+          {getFundDesc(fund, i18n.language)}
         </p>
 
         <div className="mt-auto">

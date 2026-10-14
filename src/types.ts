@@ -7,10 +7,15 @@ export interface Fund {
   name_ru: string;
   name_en: string;
   category: string;
+  category_ru?: string;
+  category_en?: string;
   region: string;
+  region_ru?: string;
+  region_en?: string;
   director: string;
   founded_year: number;
   description_uz: string;
+  description_ru?: string;
   description_en?: string;
   logo_url?: string;
   logo_initials: string;
@@ -40,12 +45,16 @@ export interface Project {
   id: string;
   title: string;
   title_uz?: string;
+  title_ru?: string;
+  title_en?: string;
   fundId: string;
   status: 'active' | 'completed' | 'planned';
   budget: number;
   spent: number;
   beneficiaries: number;
   region: string;
+  region_ru?: string;
+  region_en?: string;
   start_date: string;
   end_date: string;
 }
@@ -55,9 +64,13 @@ export interface News {
   category: string;
   title: string;
   title_uz?: string;
+  title_ru?: string;
   title_en?: string;
   excerpt: string;
+  excerpt_ru?: string;
+  excerpt_en?: string;
   content: string;
+  content_ru?: string;
   content_en?: string;
   fund_slug: string | null;
   fund_name: string | null;

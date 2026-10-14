@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, Loader2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { fundsApi } from '@/src/api/funds';
 import { Fund } from '@/src/types';
-import { assetUrl } from '@/src/lib/utils';
+import { assetUrl, getFundName } from '@/src/lib/utils';
+import { useCategoryName } from '@/src/hooks/useCategoryName';
 import { FundAvatar } from './FundAvatar';
 import { GradeBadge } from './GradeBadge';
 
@@ -14,6 +16,8 @@ interface SearchModalProps {
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  const { t, i18n } = useTranslation('common');
+  const getCategoryName = useCategoryName();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
@@ -116,7 +120,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Fond nomi bo'yicha qidiring..."
+                  placeholder={`${t('search')}...`}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -154,8 +158,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                           size="sm"
                         />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold text-slate-900 truncate">{fund.name_uz}</p>
-                          <p className="text-xs text-slate-400 truncate">{fund.category} · {fund.region}</p>
+                          <p className="text-sm font-bold text-slate-900 truncate">{getFundName(fund, i18n.language)}</p>
+                          <p className="text-xs text-slate-400 truncate">
+                            {getCategoryName(fund.category)} · {t(`regions.${fund.region}`, { defaultValue: fund.region })}
+                          </p>
                         </div>
                         <GradeBadge grade={fund.indexes.grade} className="shrink-0 scale-90" />
                       </button>
@@ -168,14 +174,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               {!loading && query.trim() && results.length === 0 && (
                 <div className="py-10 text-center text-slate-400">
                   <Search className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                  <p className="text-sm font-medium">Natija topilmadi</p>
+                  <p className="text-sm font-medium">{t('noResults', { defaultValue: 'Natija topilmadi' })}</p>
                 </div>
               )}
 
               {/* Empty state hint */}
               {!query && (
                 <div className="px-4 py-4 text-xs text-slate-400 font-medium">
-                  Fond nomi yozing va natijalarni ko'ring
+                  {t('search', { defaultValue: 'Qidiruv' })}...
                 </div>
               )}
 
@@ -186,7 +192,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                     onClick={goToSearch}
                     className="w-full flex items-center justify-between text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors"
                   >
-                    <span>"{query}" bo'yicha barcha natijalar</span>
+                    <span>{t('viewAll', { defaultValue: 'Barcha natijalar' })}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

@@ -3,7 +3,7 @@ import { Users, Calendar, CheckCircle2, Circle, Clock, Loader2 } from 'lucide-re
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { projectsApi, ProjectData } from '@/src/api/projects';
-import { formatMoney, formatNumber, cn } from '@/src/lib/utils';
+import { formatMoney, formatNumber, cn, getProjectTitle } from '@/src/lib/utils';
 
 interface ProjectsListProps {
   fundId: string;
@@ -11,7 +11,7 @@ interface ProjectsListProps {
 }
 
 export const ProjectsList: React.FC<ProjectsListProps> = ({ fundId, className }) => {
-  const { t } = useTranslation('fund_detail');
+  const { t, i18n } = useTranslation('fund_detail');
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'all' | 'active' | 'planned' | 'completed'>('all');
@@ -97,7 +97,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ fundId, className })
                   <div className="pl-3">
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="font-bold text-slate-900 text-sm leading-tight pr-20 group-hover:text-primary-600 transition-colors">
-                        {project.title_uz}
+                        {getProjectTitle(project, i18n.language)}
                       </h3>
                       <div className={cn(
                         'px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shrink-0',

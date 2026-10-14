@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, User as UserIcon, LogOut, Search, Globe2, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { cn, assetUrl } from '@/src/lib/utils';
+import { cn, assetUrl, getFundName } from '@/src/lib/utils';
 import { useAuth } from '@/src/context/AuthContext';
 import { useToast } from '@/src/context/ToastContext';
 import { useLanguage, Language } from '@/src/context/LanguageContext';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { fundsApi } from '@/src/api/funds';
 import { Fund } from '@/src/types';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
+import { useCategoryName } from '@/src/hooks/useCategoryName';
 
 const NAV_LINKS = [
   { name: 'funds', href: '/funds' },
@@ -21,6 +22,7 @@ const NAV_LINKS = [
 ];
 
 export const Header: React.FC = () => {
+  const getCategoryName = useCategoryName();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -182,8 +184,8 @@ export const Header: React.FC = () => {
                               size="xs"
                             />
                             <div className="min-w-0">
-                              <p className="text-sm font-bold text-slate-800 truncate">{fund.name_uz}</p>
-                              <p className="text-xs text-slate-400 truncate">{fund.category}</p>
+                              <p className="text-sm font-bold text-slate-800 truncate">{getFundName(fund, language)}</p>
+                              <p className="text-xs text-slate-400 truncate">{getCategoryName(fund.category)}</p>
                             </div>
                           </button>
                         </li>

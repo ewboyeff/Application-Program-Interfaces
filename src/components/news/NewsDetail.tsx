@@ -8,7 +8,7 @@ import { MOCK_FUNDS } from '@/src/data/mockData';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
 import { useToast } from '@/src/context/ToastContext';
-import { cn, formatDate, assetUrl, API_BASE } from '@/src/lib/utils';
+import { cn, formatDate, assetUrl, API_BASE, getNewsTitle, getNewsContent, getFundName } from '@/src/lib/utils';
 
 const resolveMediaUrl = (url: string) =>
   url.startsWith('http') ? url : `${API_BASE}${url}`;
@@ -21,7 +21,7 @@ interface NewsDetailProps {
 export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
   const navigate = useNavigate();
   const { showToast } = useToast();
-  const { t } = useTranslation('news');
+  const { t, i18n } = useTranslation('news');
 
   if (!news) return null;
 
@@ -70,7 +70,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
                 {news.image_url && (
                   <img
                     src={assetUrl(news.image_url)}
-                    alt={news.title}
+                    alt={getNewsTitle(news, i18n.language)}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 )}
@@ -91,14 +91,14 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
               {/* Content Area */}
               <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar">
                 <h2 className="text-[22px] font-[800] text-[#1E293B] leading-[1.3] mb-4">
-                  {news.title}
+                  {getNewsTitle(news, i18n.language)}
                 </h2>
 
                 {/* Meta Row */}
                 <div className="flex flex-wrap items-center gap-4 mb-4">
                   <div className="flex items-center gap-1.5 text-[#64748B] text-sm">
                     <Calendar className="w-4 h-4" />
-                    <span>{formatDate(news.date)}</span>
+                    <span>{formatDate(news.date, i18n.language)}</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-[#64748B] text-sm">
                     <Clock className="w-4 h-4" />
@@ -121,7 +121,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
 
                 {/* Article Content */}
                 <div className="text-[#374151] text-[15px] leading-[1.8] whitespace-pre-wrap">
-                  {news.content}
+                  {getNewsContent(news, i18n.language)}
                 </div>
 
                 {/* Source link / File download */}
@@ -156,7 +156,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ news, onClose }) => {
                     <div className="flex items-center gap-3">
                       <FundAvatar initials={fund.logo_initials} color={fund.logo_color} size="sm" />
                       <div>
-                        <h4 className="font-bold text-[#1E293B] text-sm">{fund.name_uz}</h4>
+                        <h4 className="font-bold text-[#1E293B] text-sm">{getFundName(fund, i18n.language)}</h4>
                         <GradeBadge grade={fund.indexes.grade} className="scale-75 origin-left" />
                       </div>
                     </div>

@@ -70,7 +70,8 @@ export default function Funds() {
 
   const filteredFunds = useMemo(() => {
     let result = funds.filter((fund) => {
-      const matchesSearch = fundName(fund).toLowerCase().includes(search.toLowerCase());
+      const q = search.toLowerCase();
+      const matchesSearch = fundName(fund).toLowerCase().includes(q) || (fund.name_uz || '').toLowerCase().includes(q);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(fund.category) || fund.category === MULTI_SECTOR_CATEGORY;
       const matchesRegion = selectedRegions.length === 0 || selectedRegions.includes(fund.region);
       const matchesGrade = !selectedGrade || fund.indexes.grade === selectedGrade;

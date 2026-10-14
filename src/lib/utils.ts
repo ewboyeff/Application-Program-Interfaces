@@ -119,13 +119,79 @@ export function dateLocale(lang: string): string {
 }
 
 /**
- * Format date: "2025-04-10" → "10 Apr 2025"
+ * Format date: "2025-04-10" → formatted according to language
  */
-export function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return new Intl.DateTimeFormat('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  }).format(date);
+export function formatDate(dateStr: string, lang = 'uz'): string {
+  try {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat(dateLocale(lang), {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }).format(date);
+  } catch {
+    return dateStr;
+  }
+}
+
+/**
+ * Localized fund name selector
+ */
+export function getFundName(
+  fund: { name_uz?: string; name_ru?: string | null; name_en?: string | null } | null | undefined,
+  lang?: string
+): string {
+  if (!fund) return '';
+  if (lang === 'ru' && fund.name_ru?.trim()) return fund.name_ru;
+  if (lang === 'en' && fund.name_en?.trim()) return fund.name_en;
+  return fund.name_uz || fund.name_ru || fund.name_en || '';
+}
+
+/**
+ * Localized fund description selector
+ */
+export function getFundDesc(
+  fund: { description_uz?: string; description_ru?: string | null; description_en?: string | null } | null | undefined,
+  lang?: string
+): string {
+  if (!fund) return '';
+  if (lang === 'ru' && fund.description_ru?.trim()) return fund.description_ru;
+  if (lang === 'en' && fund.description_en?.trim()) return fund.description_en;
+  return fund.description_uz || fund.description_ru || fund.description_en || '';
+}
+
+/**
+ * Localized project title selector
+ */
+export function getProjectTitle(
+  proj: { title?: string; title_uz?: string | null; title_ru?: string | null; title_en?: string | null } | null | undefined,
+  lang?: string
+): string {
+  if (!proj) return '';
+  if (lang === 'ru' && proj.title_ru?.trim()) return proj.title_ru;
+  if (lang === 'en' && proj.title_en?.trim()) return proj.title_en;
+  return proj.title_uz || proj.title || proj.title_ru || proj.title_en || '';
+}
+
+/**
+ * Localized news helpers
+ */
+export function getNewsTitle(
+  news: { title: string; title_uz?: string | null; title_ru?: string | null; title_en?: string | null } | null | undefined,
+  lang?: string
+): string {
+  if (!news) return '';
+  if (lang === 'ru' && news.title_ru?.trim()) return news.title_ru;
+  if (lang === 'en' && news.title_en?.trim()) return news.title_en;
+  return news.title_uz || news.title;
+}
+
+export function getNewsContent(
+  news: { content: string; content_ru?: string | null; content_en?: string | null } | null | undefined,
+  lang?: string
+): string {
+  if (!news) return '';
+  if (lang === 'ru' && news.content_ru?.trim()) return news.content_ru;
+  if (lang === 'en' && news.content_en?.trim()) return news.content_en;
+  return news.content;
 }
