@@ -9,6 +9,7 @@ import { Layout } from '@/src/components/layout/Layout';
 import { SectionTitle } from '@/src/components/ui/SectionTitle';
 import { FundAvatar } from '@/src/components/ui/FundAvatar';
 import { GradeBadge } from '@/src/components/ui/GradeBadge';
+import { VerifiedBadge } from '@/src/components/ui/VerifiedBadge';
 import { getScoreBg, cn, formatDate, assetUrl, getFundName, getFundDesc, getNewsTitle, getNewsContent } from '@/src/lib/utils';
 import { useDataStore } from '@/src/store/useDataStore';
 import { apiClient } from '@/src/api/client';

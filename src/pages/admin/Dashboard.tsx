@@ -109,10 +109,10 @@ export const AdminDashboard: React.FC = () => {
 
   const gradeData = stats
     ? Object.entries(stats.funds_by_grade)
-        .filter(([, v]) => v > 0)
+        .filter(([, v]) => Number(v) > 0)
         .map(([grade, value]) => ({
           name: GRADE_LABELS[grade] ?? grade,
-          value,
+          value: Number(value),
           color: GRADE_COLORS[grade] ?? '#E2E8F0',
         }))
     : [];

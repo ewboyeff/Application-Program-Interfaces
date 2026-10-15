@@ -8,7 +8,7 @@ const inputCls =
 
 const labelCls = 'text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block';
 
-function FieldGroup({ label, children }: { label: string; children: React.ReactNode }) {
+function FieldGroup({ label, children }: { label: string; children: React.ReactNode; key?: React.Key }) {
   return (
     <div className="space-y-1">
       <label className={labelCls}>{label}</label>

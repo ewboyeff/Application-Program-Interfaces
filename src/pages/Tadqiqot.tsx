@@ -100,7 +100,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="text-[15px] font-bold text-[#1E293B] mb-3">{children}</h3>;
 }
 
-function InfoRow({ label, value }: { label: string; value: string }) {
+function InfoRow({ label, value }: { label: string; value: string; key?: React.Key }) {
   return (
     <div className="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-0">
       <span className="text-sm text-slate-600">{label}</span>

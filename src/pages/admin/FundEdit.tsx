@@ -198,14 +198,14 @@ export const AdminFundEdit: React.FC = () => {
 
     setIsCalculating(true);
     try {
-      const result = await indexesApi.calculateIndex(id, scores);
+      const result: any = await indexesApi.calculateIndex(id, scores);
       updateFund(id, {
         indexes: {
           transparency: Number(result.transparency_score ?? result.transparency ?? 0),
           openness: Number(result.openness_score ?? result.openness ?? 0),
           trust: Number(result.trust_score ?? result.trust ?? 0),
           overall: Number(result.overall_score ?? result.overall ?? 0),
-          grade: result.grade ?? 'unrated',
+          grade: (result.grade ?? 'unrated') as any,
         },
       });
       showToast(`Indeks saqlandi: ${result.overall_score ?? result.overall ?? 0} (${(result.grade ?? 'unrated').toUpperCase()})`, 'success');
